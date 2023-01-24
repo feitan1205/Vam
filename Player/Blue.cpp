@@ -11,7 +11,7 @@ Blue::Blue() :
 	flamecount()
 {
 	m_blueH_ = my::MyLoadGraph(L"Data/blue/Blue.png");
-	LoadDivGraph(L"Data/blue/Idle.png", 4, 4, 1, 48, 48, m_idleH_);
+	LoadDivGraph(L"Data/blue/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
 	//LoadGraph(L"Data/blue/Blue.png", m_blueH_);
 	GetGraphSize(m_blueH_, &sizeX, &sizeY);
 }
@@ -41,7 +41,7 @@ void Blue::Draw()
 	DrawGraph((1280 / 2) - (sizeX / 2), (740 / 2) - (sizeY / 2), m_blueH_, true);
 }
 
-void Blue::IdleAnimation()
+void Blue::IdleAnimation(bool charactervector)
 {
 	flamecount++;
 
@@ -50,20 +50,21 @@ void Blue::IdleAnimation()
 	}
 
 	if (flamecount >= 0 && flamecount < 10) {
-		DrawGraph((1280 / 2) - (sizeX / 2), (740 / 2) - (sizeY / 2), m_idleH_[0], true);
+		DrawExtendGraph((1280 / 2) - (sizeX), (740 / 2) - (sizeY), (1280 / 2) + (sizeX), (740 / 2) + (sizeY), m_idleH_[0], true);
 	}
 	else if (flamecount >= 10 && flamecount < 20) {
-		DrawGraph((1280 / 2) - (sizeX / 2), (740 / 2) - (sizeY / 2), m_idleH_[1], true);
+		DrawExtendGraph((1280 / 2) - (sizeX), (740 / 2) - (sizeY), (1280 / 2) + (sizeX), (740 / 2) + (sizeY), m_idleH_[1], true);
 	}
 	else if (flamecount >= 20 && flamecount < 30) {
-		DrawGraph((1280 / 2) - (sizeX / 2), (740 / 2) - (sizeY / 2), m_idleH_[2], true);
+		DrawExtendGraph((1280 / 2) - (sizeX), (740 / 2) - (sizeY), (1280 / 2) + (sizeX), (740 / 2) + (sizeY), m_idleH_[2], true);
 	}
 	else if (flamecount >= 30 && flamecount < 40) {
-		DrawGraph((1280 / 2) - (sizeX / 2), (740 / 2) - (sizeY / 2), m_idleH_[3], true);
+		DrawExtendGraph((1280 / 2) - (sizeX), (740 / 2) - (sizeY), (1280 / 2) + (sizeX), (740 / 2) + (sizeY), m_idleH_[3], true);
 	}
+
 }
 
-void Blue::MoveAnimation()
+void Blue::MoveAnimation(bool charactervector)
 {
 
 }

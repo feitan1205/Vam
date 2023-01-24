@@ -14,7 +14,8 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	Scene(manager),
 	m_player(nullptr),
 	input_(input),
-	animationcount(40)
+	animationcount(40),
+	charactervector_(true)
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		m_player = new Blue();
@@ -45,14 +46,21 @@ void GameplayingScene::Update(const InputState& input)
 void GameplayingScene::Draw()
 {
 
+	if (input_.IsPressed(InputType::up)) {
+		
+	}
+
+
 	if (input_.IsPressed(InputType::right)) {
-		m_player->MoveAnimation();
+		m_player->MoveAnimation(charactervector_);
+		charactervector_ = true;
 	}
 	else if (input_.IsPressed(InputType::left)) {
-		m_player->MoveAnimation();
+		m_player->MoveAnimation(charactervector_);
+		charactervector_ = false;
 	}
 	else {
-		m_player->IdleAnimation();
+		m_player->IdleAnimation(charactervector_);
 	}
 
 }

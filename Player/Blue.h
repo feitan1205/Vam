@@ -15,8 +15,8 @@ public:
     void Update();
 
     void Draw();
-    void IdleAnimation();
-    void MoveAnimation();
+    void IdleAnimation(bool charactervector);
+    void MoveAnimation(bool charactervector);
 
     int GetHandle() { return m_blueH_; }
 
