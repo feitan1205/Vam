@@ -22,6 +22,7 @@ private:
 
     int m_redH_;
     int m_idleH_[4];
+    int m_moveH_[6];
     int x;
     int y;
     int sizeX;

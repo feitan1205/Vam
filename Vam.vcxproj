@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Enemy\FlyingEye.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Player\Blue.cpp" />
     <ClCompile Include="Player\PlayerBase.cpp" />
     <ClCompile Include="Player\Red.cpp" />
@@ -37,6 +40,9 @@
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy\EnemyBase.h" />
+    <ClInclude Include="Enemy\FlyingEye.h" />
+    <ClInclude Include="Map\Map.h" />
     <ClInclude Include="Player\Blue.h" />
     <ClInclude Include="Player\PlayerBase.h" />
     <ClInclude Include="Player\Red.h" />

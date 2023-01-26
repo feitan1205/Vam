@@ -1,0 +1,25 @@
+#pragma once
+#include "EnemyBase.h"
+#include "../Vector2.h"
+
+class FlyingEye :
+    public EnemyBase
+{
+
+public:
+
+    FlyingEye();
+    ~FlyingEye();
+
+    void Init(Vec2 playerpos);
+    void End();
+    void Update(Vec2 playerpos);
+    void Draw(bool charactervector);
+
+private:
+
+    Vec2 pos_;
+    int handle_[8];
+    int flamecount;
+};
+

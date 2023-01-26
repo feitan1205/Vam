@@ -38,6 +38,9 @@
     <ClCompile Include="Player\Red.cpp" />
     <ClCompile Include="Player\Blue.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Enemy\FlyingEye.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\GameoverScene.h">
@@ -71,5 +74,8 @@
     <ClInclude Include="Player\Red.h" />
     <ClInclude Include="Player\Blue.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="Enemy\EnemyBase.h" />
+    <ClInclude Include="Enemy\FlyingEye.h" />
   </ItemGroup>
 </Project>
