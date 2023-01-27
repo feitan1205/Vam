@@ -15,11 +15,14 @@ public:
     void End();
     void Update(Vec2 playerpos);
     void Draw(bool charactervector);
+    void PlayerMove(Vec2 playermove);
 
 private:
 
     Vec2 pos_;
+    Vec2 vector_;
     int handle_[8];
     int flamecount;
+
 };
 

@@ -12,6 +12,6 @@ public:
 	virtual void End() = 0;
 	virtual void Update(Vec2 playerpos) = 0;
 	virtual void Draw(bool charactervector) = 0;
-
+	virtual void PlayerMove(Vec2 playermove) = 0;
 };
 

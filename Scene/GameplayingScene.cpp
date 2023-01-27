@@ -13,6 +13,8 @@
 #include "../Enemy/EnemyBase.h"
 #include "../Enemy/FlyingEye.h"
 
+constexpr float kplayerspeed = 1.0;
+
 GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input) :
 	Scene(manager),
 	m_player(nullptr),
@@ -21,7 +23,8 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	animationcount(40),
 	charactervector_(false),
 	map(nullptr),
-	playerpos()
+	playerpos(1280/2,740/2),
+	flyingeyeH_()
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		m_player = new Blue();
@@ -49,23 +52,28 @@ void GameplayingScene::Update(const InputState& input)
 	}
 
 	if (input_.IsPressed(InputType::up)) {
-		playerpos.y++;
+		playerpos.y += kplayerspeed;
+		m_enemy->PlayerMove(Vec2(0, kplayerspeed));
 	}
 	if (input_.IsPressed(InputType::down)) {
-		playerpos.y--;
+		playerpos.y -= kplayerspeed;
+		m_enemy->PlayerMove(Vec2(0, kplayerspeed));
 	}
 	if (input_.IsPressed(InputType::right)) {
-		playerpos.x--;
+		playerpos.x -= kplayerspeed;
 		charactervector_ = false;
+		m_enemy->PlayerMove(Vec2(kplayerspeed, 0));
 	}
 	if (input_.IsPressed(InputType::left)) {
-		playerpos.x++;
+		playerpos.x += kplayerspeed;
 		charactervector_ = true;
+		m_enemy->PlayerMove(Vec2(kplayerspeed, 0));
 	}
 
 	if (CheckHitKey(KEY_INPUT_O)) {
 		m_enemy->Init(playerpos);
 	}
+
 	m_enemy->Update(playerpos);
 
 	m_player->Update();
@@ -94,6 +102,8 @@ void GameplayingScene::Draw()
 	else {
 		m_player->IdleAnimation(charactervector_);
 	}
+
+	DrawFormatString(0, 16, 0xffffff, L"%f", playerpos.x, true);
 
 	m_enemy->Draw(true);
 

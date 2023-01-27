@@ -9,7 +9,7 @@
 void TitleScene::FadeInUpdate(const InputState& input)
 {
 	//真っ黒から徐々に表示する場合場合
-	fadeValue_ = 255.0f * (static_cast<float>(fadeTimer_) / static_cast<float>(fade_interval));
+	fadeValue_ = (int)(255.0f * (static_cast<float>(fadeTimer_) / static_cast<float>(fade_interval)));
 	//グラデーションを使って徐々に表示する場合
 	/*fadeTimer_;*/
 	if (--fadeTimer_ == 0)
@@ -17,6 +17,7 @@ void TitleScene::FadeInUpdate(const InputState& input)
 		updateFunc_ = &TitleScene::NormalUpdate;
 		fadeValue_ = 0;
 	}
+
 }
 
 void TitleScene::NormalUpdate(const InputState& input)

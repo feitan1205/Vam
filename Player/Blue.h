@@ -25,8 +25,8 @@ private:
     int m_blueH_;
     int m_idleH_[4];
     int m_moveH_[6];
-    int x;
-    int y;
+    float x;
+    float y;
     int sizeX;
     int sizeY;
     int flamecount;

@@ -2,6 +2,8 @@
 #include "FlyingEye.h"
 #include "../DrawFunctions.h"
 
+constexpr float kspeed = 0.5;
+
 FlyingEye::FlyingEye():
 	flamecount()
 {
@@ -14,21 +16,36 @@ FlyingEye::~FlyingEye()
 
 void FlyingEye::Init(Vec2 playerpos)
 {
-	pos_.x = playerpos.x + (GetRand(100) + 640);
-	pos_.y = playerpos.y + (GetRand(100) + 370);
+
+	int tempx;
+	int tempy;
+
+	while (1) {
+
+		tempx = (GetRand(700));
+		tempy = (GetRand(450));
+
+		if (tempx > 680) break;
+		if (tempy > 400) break;
+	}
 
 	int tmprand = GetRand(3);
 
 	if (tmprand == 1) {
-		pos_.x *= -1;
+		tempx *= -1;
 	}
 	else if (tmprand == 2) {
-		pos_.y *= -1;
+		tempy *= -1;
 	}
 	else if (tmprand == 3) {
-		pos_.x *= -1;
-		pos_.y *= -1;
+		tempx *= -1;
+		tempy *= -1;
 	}
+
+	pos_.x = playerpos.x + tempx;
+	pos_.y = playerpos.y + tempy;
+
+
 }
 
 void FlyingEye::End()
@@ -37,22 +54,19 @@ void FlyingEye::End()
 
 void FlyingEye::Update(Vec2 playerpos)
 {
-	if (playerpos.x > pos_.x) {
-		pos_.x++;
-	}
-	if (playerpos.x < pos_.x) {
-		pos_.x--;
-	}
-	if (playerpos.y < pos_.y) {
-		pos_.y--;
-	}
-	if (playerpos.y > pos_.y) {
-		pos_.y++;
-	}
+
+	vector_ = playerpos - pos_;
+
+	vector_ = vector_.normalize();
+
+	pos_ += vector_;
+
 }
 
 void FlyingEye::Draw(bool charactervector)
 {
+
+	DrawFormatString(0, 0, 0xffffff, L"%d", pos_.x, true);
 
 	flamecount++;
 
@@ -84,5 +98,12 @@ void FlyingEye::Draw(bool charactervector)
 	else if (flamecount >= 70 && flamecount < 80) {
 		DrawRotaGraph(pos_.x, pos_.y, 1.5, 0, handle_[7], true, charactervector);
 	}
+
+}
+
+void FlyingEye::PlayerMove(Vec2 playermove)
+{
+
+	pos_ -= playermove;
 
 }

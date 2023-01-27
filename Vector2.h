@@ -6,8 +6,8 @@
 class Vec2
 {
 public:
-	int x;
-	int y;
+	float x;
+	float y;
 
 public:
 	Vec2()
@@ -15,7 +15,7 @@ public:
 		x = 0;
 		y = 0;
 	}
-	Vec2(int posX, int posY)
+	Vec2(float posX, float posY)
 	{
 		x = posX;
 		y = posY;
@@ -49,35 +49,35 @@ public:
 	}
 
 	// Vec2 = (Vec2 *= float)
-	Vec2 operator*=(int scale)
+	Vec2 operator*=(float scale)
 	{
 		x *= scale;
 		y *= scale;
 		return *this;
 	}
 	// Vec2 = Vec2 * float
-	Vec2 operator*(int scale) const
+	Vec2 operator*(float scale) const
 	{
 		Vec2 temp{ x * scale , y * scale };
 		return temp;
 	}
 
 	// Vec2 = (Vec2 /= float)
-	Vec2 operator/=(int scale)
+	Vec2 operator/=(float scale)
 	{
 		x /= scale;
 		y /= scale;
 		return *this;
 	}
 	// Vec2 = Vec2 / float
-	Vec2 operator/(int scale) const
+	Vec2 operator/(float scale) const
 	{
 		Vec2 temp{ x / scale , y / scale };
 		return temp;
 	}
 
 	// í∑Ç≥ÇÃéÊìæ
-	int length()
+	float length()
 	{
 		return sqrtf((x * x) + (y * y));
 	}
@@ -85,7 +85,7 @@ public:
 	// ê≥ãKâª Vec2 = Vec2.normalize()
 	Vec2 normalize()
 	{
-		int len = length();
+		float len = length();
 		if (len == 0)
 		{
 			return *this;
