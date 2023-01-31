@@ -15,7 +15,7 @@ public:
 	void SetHitBox();
 
 	bool GetIsAttack() { return attackflag_; }
-	int GetAttack1Point() { return attackpoint + GetRand(5); }
+	//int GetAttack1Point() { return attackpoint + GetRand(5); }
 
 private:
 

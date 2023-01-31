@@ -2,7 +2,7 @@
 #include "Attack1.h"
 #include "../DrawFunctions.h"
 
-constexpr int cooldowntime = 50;
+constexpr int cooldowntime = 100;
 
 Attack1::Attack1():
 	flamecount(),

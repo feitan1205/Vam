@@ -8,7 +8,8 @@ Red::Red() :
 	sizeX(),
 	sizeY(),
 	m_redH_(),
-	flamecount()
+	flamecount(),
+	cooldownpercentage_(80)
 {
 	m_redH_ = my::MyLoadGraph(L"Data/red/Red.png");
 	LoadDivGraph(L"Data/red/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
@@ -34,6 +35,7 @@ void Red::End()
 
 void Red::Update()
 {
+	PlayerBase::Update(cooldownpercentage_);
 }
 
 void Red::Draw()
@@ -61,6 +63,9 @@ void Red::IdleAnimation(bool charactervector)
 	else if (flamecount >= 30 && flamecount < 40) {
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[3], true, charactervector);
 	}
+
+	PlayerBase::Draw(charactervector);
+
 }
 
 void Red::MoveAnimation(bool charactervector)
@@ -89,4 +94,7 @@ void Red::MoveAnimation(bool charactervector)
 	else if (flamecount >= 50 && flamecount < 60) {
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[5], true, charactervector);
 	}
+
+	P-layerBase::Draw(charactervector);
+
 }
