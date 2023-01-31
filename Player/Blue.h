@@ -17,6 +17,7 @@ public:
     void IdleAnimation(bool charactervector);
     void MoveAnimation(bool charactervector);
 
+    void SetHitBox();
     int GetHandle() { return m_blueH_; }
 
 private:
@@ -30,6 +31,7 @@ private:
     int sizeY;
     int flamecount;
     int cooldownpercentage_;
-
+    Vec2 minhitbox_;
+    Vec2 maxhitbox_;
 };
 

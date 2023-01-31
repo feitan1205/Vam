@@ -100,3 +100,10 @@ void Blue::MoveAnimation(bool charactervector)
 
 }
 
+void Blue::SetHitBox()
+{
+
+
+
+}
+

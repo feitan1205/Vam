@@ -12,8 +12,10 @@ public:
 	void End();
 	void Update(int cooldownpercentage);
 	void Draw(bool charactervector);
+	void SetHitBox();
 
 	bool GetIsAttack() { return attackflag_; }
+	int GetAttack1Point() { return attackpoint + GetRand(5); }
 
 private:
 
@@ -21,6 +23,7 @@ private:
 	int flamecount;
 	float cooldowntime_;
 	bool attackflag_;
+	int attackpoint;
 
 };
 

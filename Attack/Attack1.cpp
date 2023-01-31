@@ -7,7 +7,8 @@ constexpr int cooldowntime = 50;
 Attack1::Attack1():
 	flamecount(),
 	cooldowntime_(0),
-	attackflag_(false)
+	attackflag_(false),
+	attackpoint(10)
 {
 	attack1H_[0] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_01.png");
 	attack1H_[1] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_02.png");
@@ -65,4 +66,11 @@ void Attack1::Draw(bool charactervector)
 		DrawRotaGraph(640, 370, 4, 0, attack1H_[3], true, charactervector);
 	}
 	
+}
+
+void Attack1::SetHitBox()
+{
+
+
+
 }
