@@ -15,6 +15,7 @@
 
 constexpr float kplayerspeed = 1.0;
 
+
 GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input) :
 	Scene(manager),
 	m_player(nullptr),
@@ -23,7 +24,7 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	animationcount(40),
 	charactervector_(false),
 	map(nullptr),
-	playerpos(1280/2,740/2),
+	playerpos(0,0),
 	flyingeyeH_()
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
@@ -52,27 +53,29 @@ void GameplayingScene::Update(const InputState& input)
 	}
 
 	if (input_.IsPressed(InputType::up)) {
-		playerpos.y += kplayerspeed;
-		m_enemy->PlayerMove(Vec2(0, kplayerspeed));
+		playervector_.y = -1;
+		
 	}
 	if (input_.IsPressed(InputType::down)) {
-		playerpos.y -= kplayerspeed;
-		m_enemy->PlayerMove(Vec2(0, kplayerspeed));
+		playervector_.y = 1;
+		
 	}
 	if (input_.IsPressed(InputType::right)) {
-		playerpos.x -= kplayerspeed;
+		playervector_.x = 1;
 		charactervector_ = false;
-		m_enemy->PlayerMove(Vec2(kplayerspeed, 0));
 	}
 	if (input_.IsPressed(InputType::left)) {
-		playerpos.x += kplayerspeed;
+		playervector_.x = -1;
 		charactervector_ = true;
-		m_enemy->PlayerMove(Vec2(kplayerspeed, 0));
 	}
 
 	if (CheckHitKey(KEY_INPUT_O)) {
 		m_enemy->Init(playerpos);
 	}
+
+	playervector_ = playervector_.normalize();
+
+	playerpos = playerpos + playervector_;
 
 	m_enemy->Update(playerpos);
 
@@ -80,6 +83,8 @@ void GameplayingScene::Update(const InputState& input)
 
 	map->Update(playerpos);
 
+
+	playervector_ = {0, 0};
 }
 
 void GameplayingScene::Draw()
@@ -103,8 +108,9 @@ void GameplayingScene::Draw()
 		m_player->IdleAnimation(charactervector_);
 	}
 
-	DrawFormatString(0, 16, 0xffffff, L"%f", playerpos.x, true);
+	DrawFormatString(0, 32, 0xffffff, L"%f", playerpos.x, true);
+	DrawFormatString(0, 48, 0xffffff, L"%f", playerpos.y, true);
 
-	m_enemy->Draw(true);
+	m_enemy->Draw(true,playerpos);
 
 }

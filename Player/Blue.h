@@ -13,7 +13,6 @@ public:
     void Init();
     void End();
     void Update();
-
     void Draw();
     void IdleAnimation(bool charactervector);
     void MoveAnimation(bool charactervector);
@@ -25,8 +24,8 @@ private:
     int m_blueH_;
     int m_idleH_[4];
     int m_moveH_[6];
-    float x;
-    float y;
+    float posx_;
+    float posy_;
     int sizeX;
     int sizeY;
     int flamecount;

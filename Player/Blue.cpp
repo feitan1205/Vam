@@ -3,8 +3,8 @@
 #include "../DrawFunctions.h"
 
 Blue::Blue() :
-	x(),
-	y(),
+	posx_(),
+	posy_(),
 	sizeX(),
 	sizeY(),
 	m_blueH_(),
@@ -35,6 +35,7 @@ void Blue::End()
 
 void Blue::Update()
 {
+	PlayerBase::Update();
 }
 
 void Blue::Draw()
@@ -61,6 +62,10 @@ void Blue::IdleAnimation(bool charactervector)
 	}
 	else if (flamecount >= 30 && flamecount < 40) {
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[3], true, charactervector);
+	}
+
+	if (CheckHitKey(KEY_INPUT_9)) {
+		PlayerBase::Draw(charactervector);
 	}
 
 }
@@ -91,5 +96,11 @@ void Blue::MoveAnimation(bool charactervector)
 	else if (flamecount >= 50 && flamecount < 60) {
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[5], true, charactervector);
 	}
+
+
+	if (CheckHitKey(KEY_INPUT_9)) {
+		PlayerBase::Draw(charactervector);
+	}
+
 }
 

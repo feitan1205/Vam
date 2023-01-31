@@ -20,6 +20,7 @@ private:
 	bool charactervector_;		//右：false、左：true
 
 	Vec2 playerpos;
+	Vec2 playervector_;
 
 	Map* map;
 

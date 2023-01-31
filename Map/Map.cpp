@@ -9,8 +9,8 @@ Map::Map():
 	mappos_()
 {
 	groundH_ = my::MyLoadGraph(L"Data/maptip/jimen1.png");
-	startmappos_.x = -(32 * 32);
-	startmappos_.y = -(32 * 16);
+	startmappos_.x = -(32 * 32 * 2);
+	startmappos_.y = -(16 * 32 * 2);
 
 	SetMapData();
 
@@ -31,8 +31,8 @@ void Map::End()
 
 void Map::Update(Vec2 playerpos)
 {
-	mappos_.x = startmappos_.x + playerpos.x;
-	mappos_.y = startmappos_.y + playerpos.y;
+	mappos_.x = playerpos.x;
+	mappos_.y = playerpos.y;
 }
 
 void Map::Draw()
@@ -42,7 +42,8 @@ void Map::Draw()
 			for (int i = 0; i < map_[y][x].height; i++) {
 				for (int j = 0; j < map_[y][x].width; j++) {
 					if (map_[y][x].data[i][j] == 1) {
-						DrawGraph((mappos_.x) + j * 32 + ((32 * 32) * x),(mappos_.y) - i * 32 + ((32 * 16) * y), groundH_, true);
+						DrawGraph(startmappos_.x - mappos_.x + (32 * j) + (32 * 32 * x), 
+							startmappos_.y - mappos_.y + (32 * i) + (32 * 16 * y), groundH_, true);
 					}
 				}
 			}

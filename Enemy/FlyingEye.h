@@ -14,7 +14,7 @@ public:
     void Init(Vec2 playerpos);
     void End();
     void Update(Vec2 playerpos);
-    void Draw(bool charactervector);
+    void Draw(bool charactervector,Vec2 playerpos);
     void PlayerMove(Vec2 playermove);
 
 private:
