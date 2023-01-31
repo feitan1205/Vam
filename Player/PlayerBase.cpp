@@ -11,12 +11,19 @@ PlayerBase::~PlayerBase()
 	delete attack1;
 }
 
-void PlayerBase::Update()
+void PlayerBase::Init(int cooldownpercentage)
 {
-	attack1->Update();
+	attack1->Init(cooldownpercentage);
+}
+
+void PlayerBase::Update(int cooldownpercentage)
+{
+	attack1->Update(cooldownpercentage);
 }
 
 void PlayerBase::Draw(bool charactervector)
 {
-	attack1->Draw(charactervector);
+	if (attack1->GetIsAttack()) {
+		attack1->Draw(charactervector);
+	}
 }

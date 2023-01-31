@@ -8,7 +8,8 @@ Blue::Blue() :
 	sizeX(),
 	sizeY(),
 	m_blueH_(),
-	flamecount()
+	flamecount(),
+	cooldownpercentage_(100)
 {
 	m_blueH_ = my::MyLoadGraph(L"Data/blue/Blue.png");
 	LoadDivGraph(L"Data/blue/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
@@ -35,7 +36,7 @@ void Blue::End()
 
 void Blue::Update()
 {
-	PlayerBase::Update();
+	PlayerBase::Update(cooldownpercentage_);
 }
 
 void Blue::Draw()
@@ -64,9 +65,7 @@ void Blue::IdleAnimation(bool charactervector)
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[3], true, charactervector);
 	}
 
-	if (CheckHitKey(KEY_INPUT_9)) {
-		PlayerBase::Draw(charactervector);
-	}
+	PlayerBase::Draw(charactervector);
 
 }
 
@@ -97,10 +96,7 @@ void Blue::MoveAnimation(bool charactervector)
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[5], true, charactervector);
 	}
 
-
-	if (CheckHitKey(KEY_INPUT_9)) {
-		PlayerBase::Draw(charactervector);
-	}
+	PlayerBase::Draw(charactervector);
 
 }
 

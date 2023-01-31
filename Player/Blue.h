@@ -29,5 +29,7 @@ private:
     int sizeX;
     int sizeY;
     int flamecount;
+    int cooldownpercentage_;
+
 };
 
