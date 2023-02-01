@@ -35,5 +35,7 @@ public:
 
 	void Update(const InputState& input);
 	void Draw();
+
+	bool CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2);
 };
 

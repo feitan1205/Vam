@@ -71,6 +71,13 @@ void Attack1::Draw(bool charactervector)
 void Attack1::SetHitBox()
 {
 
-
+	if (flamecount_ >= 0 && flamecount_ < 5) {
+	}
+	else if (flamecount_ >= 5 && flamecount_ < 10) {
+	}
+	else if (flamecount_ >= 10 && flamecount_ < 15) {
+	}
+	else if (flamecount_ >= 15 && flamecount_ < 20) {
+	}
 
 }

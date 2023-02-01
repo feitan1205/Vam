@@ -3,9 +3,12 @@
 #include "../DrawFunctions.h"
 
 constexpr float kspeed = 0.5;
+constexpr int standardcooldowntime = 30;
 
 FlyingEye::FlyingEye():
-	flamecount_()
+	flamecount_(),
+	attackpoint_(2),
+	cooldowntime_()
 {
 	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, handle_);
 }
@@ -16,7 +19,9 @@ FlyingEye::~FlyingEye()
 
 void FlyingEye::Init(Vec2 playerpos)
 {
-
+	
+	
+	
 	int tempx;
 	int tempy;
 
@@ -54,6 +59,8 @@ void FlyingEye::End()
 
 void FlyingEye::Update(Vec2 playerpos)
 {
+
+	cooldowntime_--;
 
 	vector_ = playerpos - pos_;
 
@@ -100,7 +107,7 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[7], true, charactervector);
 	}
 
-	DrawBox(minhitbox_.x + 640, minhitbox_.y + 370, maxhitbox_.x + 650, maxhitbox_.y + 380, 0x000000, false);
+	DrawBox(minhitbox_.x + 640 - playerpos.x, minhitbox_.y + 370 - playerpos.y, maxhitbox_.x + 640 - playerpos.x, maxhitbox_.y + 370 - playerpos.y, 0x000000, false);
 
 }
 
@@ -114,9 +121,16 @@ void FlyingEye::PlayerMove(Vec2 playermove)
 void FlyingEye::SetHitBox(Vec2 playerpos)
 {
 
-	minhitbox_.x = pos_.x - playerpos.x - 10;
-	minhitbox_.y = pos_.y - playerpos.y - 10;
-	maxhitbox_.x = pos_.x - playerpos.x + 10;
-	maxhitbox_.y = pos_.y - playerpos.y + 10;
+	minhitbox_.x = pos_.x - 20;
+	minhitbox_.y = pos_.y - 10;
+	maxhitbox_.x = pos_.x + 20;
+	maxhitbox_.y = pos_.y + 20;
+
+}
+
+void FlyingEye::SetCoolDownTime()
+{
+
+	cooldowntime_ = standardcooldowntime;
 
 }

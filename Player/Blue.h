@@ -20,6 +20,11 @@ public:
     void SetHitBox(Vec2 playerpos);
     int GetHandle() { return m_blueH_; }
 
+    void Damage(int enemyattackpoint);
+
+    Vec2 GetMinHitBox() { return minhitbox_; }
+    Vec2 GetMaxHitBox() { return maxhitbox_; }
+
 private:
 
     int m_blueH_;

@@ -18,6 +18,13 @@ public:
     void PlayerMove(Vec2 playermove);
 
     void SetHitBox(Vec2 playerpos);
+    void SetCoolDownTime();
+
+    Vec2 GetMinHitBox() { return minhitbox_; }
+    Vec2 GetMaxHitBox() { return maxhitbox_; }
+
+    int GetCoolDownTime() { return cooldowntime_; }
+    int GetAttackPoint() { return attackpoint_; }
 
 private:
 
@@ -27,6 +34,11 @@ private:
     int flamecount_;
     Vec2 minhitbox_;
     Vec2 maxhitbox_;
+
+private:
+
+    int attackpoint_;
+    int cooldowntime_;
 
 };
 

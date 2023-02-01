@@ -16,6 +16,7 @@
 constexpr float kplayerspeed = 1.0;
 
 
+
 GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input) :
 	Scene(manager),
 	player_(nullptr),
@@ -73,6 +74,14 @@ void GameplayingScene::Update(const InputState& input)
 	player_->SetHitBox(playerpos_);
 	enemy_->SetHitBox(playerpos_);
 
+	if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox())) {
+		//printfDx(L"・・・・");
+		if (enemy_->GetCoolDownTime() <= 0) {
+			player_->Damage(enemy_->GetAttackPoint());
+			enemy_->SetCoolDownTime();
+		}
+	}
+
 	if (CheckHitKey(KEY_INPUT_O)) {
 		enemy_->Init(playerpos_);
 	}
@@ -110,11 +119,19 @@ void GameplayingScene::Draw()
 	}
 	else {
 		player_->IdleAnimation(charactervector_);
-	}
-
-	DrawFormatString(0, 32, 0xffffff, L"%f", playerpos_.x, true);
-	DrawFormatString(0, 48, 0xffffff, L"%f", playerpos_.y, true);
+	}	
 
 	enemy_->Draw(true,playerpos_);
 
+}
+
+bool GameplayingScene::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2)
+{
+
+	if (minhitbox1.y > maxhitbox2.y)		return false;
+	if (maxhitbox1.y < minhitbox2.y)		return false;
+	if (minhitbox1.x > maxhitbox2.x)		return false;
+	if (maxhitbox1.x < minhitbox2.x)		return false;
+
+	return true;
 }

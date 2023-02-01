@@ -22,6 +22,11 @@ public:
     int GetHandle() { return m_redH_; }
     void SetHitBox(Vec2 playerpos);
 
+    void Damage(int enemyattackpoint) {};
+
+    Vec2 GetMinHitBox() { return minhitbox_; }
+    Vec2 GetMaxHitBox() { return maxhitbox_; }
+
 private:
 
     int m_redH_;
@@ -31,4 +36,6 @@ private:
     int sizeY_;
     int flamecount_;
     int cooldownpercentage_;
+    Vec2 minhitbox_;
+    Vec2 maxhitbox_;
 };

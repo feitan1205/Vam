@@ -21,6 +21,11 @@ public:
 	virtual void MoveAnimation(bool charactervector) = 0;
 	virtual void SetHitBox(Vec2 playerpos) = 0;
 
+	virtual void Damage(int enemyattackpoint) = 0;
+
+	virtual Vec2 GetMinHitBox() = 0;
+	virtual Vec2 GetMaxHitBox() = 0;
+
 protected:
 
 	Vec2 pos_;

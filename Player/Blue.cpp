@@ -40,7 +40,7 @@ void Blue::Update(Vec2 playerpos)
 {
 	PlayerBase::Update(cooldownpercentage_);
 
-	hppercentage_ = nowhp_ / maxhp_;
+	hppercentage_ = static_cast <float>(nowhp_) / static_cast <float>(maxhp_);
 
 	playerpos_ = playerpos;
 
@@ -72,12 +72,15 @@ void Blue::IdleAnimation(bool charactervector)
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[3], true, charactervector);
 	}
 
+	DrawBox((1280 / 2) - 20 - 1, (740 / 2) + 27 - 1, (1280 / 2) - 20 + (40 * 1) + 1, (740 / 2) + 35 + 1, 0x000000, true);
 	DrawBox((1280 / 2) - 20 , (740 / 2) + 27 , (1280 / 2) - 20 + (40 * hppercentage_), (740 / 2) + 35,0xff0000, true);
 
 	DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 
 	PlayerBase::Draw(charactervector);
-
+	
+	DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
+	DrawFormatString(0, 64, 0xffffff, L"%f", minhitbox_.y, true);
 }
 
 void Blue::MoveAnimation(bool charactervector)
@@ -107,11 +110,15 @@ void Blue::MoveAnimation(bool charactervector)
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[5], true, charactervector);
 	}
 
+	DrawBox((1280 / 2) - 20 - 1, (740 / 2) + 27 - 1, (1280 / 2) - 20 + (40 * 1) + 1, (740 / 2) + 35 + 1, 0x000000, true);
 	DrawBox((1280 / 2) - 20, (740 / 2) + 27, (1280 / 2) - 20 + (40 * hppercentage_), (740 / 2) + 35, 0xff0000, true);
 
 	DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 
 	PlayerBase::Draw(charactervector);
+
+	DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
+	DrawFormatString(0, 64, 0xffffff, L"%f", minhitbox_.y, true);
 
 }
 
@@ -122,6 +129,13 @@ void Blue::SetHitBox(Vec2 playerpos)
 	minhitbox_.y = playerpos.y - 10;
 	maxhitbox_.x = playerpos.x + 10;
 	maxhitbox_.y = playerpos.y + 10;
+
+}
+
+void Blue::Damage(int enemyattackpoint)
+{
+
+	nowhp_ -= enemyattackpoint;
 
 }
 
