@@ -2,14 +2,16 @@
 #include "Blue.h"
 #include "../DrawFunctions.h"
 
-Blue::Blue() :
-	posx_(),
-	posy_(),
+Blue::Blue(Vec2 playerpos) :
 	sizeX(),
 	sizeY(),
 	m_blueH_(),
 	flamecount(),
-	cooldownpercentage_(100)
+	cooldownpercentage_(100),
+	playerpos_(playerpos),
+	maxhp_(100),
+	nowhp_(100),
+	hppercentage_()
 {
 	m_blueH_ = my::MyLoadGraph(L"Data/blue/Blue.png");
 	LoadDivGraph(L"Data/blue/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
@@ -34,9 +36,14 @@ void Blue::End()
 {
 }
 
-void Blue::Update()
+void Blue::Update(Vec2 playerpos)
 {
 	PlayerBase::Update(cooldownpercentage_);
+
+	hppercentage_ = nowhp_ / maxhp_;
+
+	playerpos_ = playerpos;
+
 }
 
 void Blue::Draw()
@@ -64,6 +71,10 @@ void Blue::IdleAnimation(bool charactervector)
 	else if (flamecount >= 30 && flamecount < 40) {
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[3], true, charactervector);
 	}
+
+	DrawBox((1280 / 2) - 20 , (740 / 2) + 27 , (1280 / 2) - 20 + (40 * hppercentage_), (740 / 2) + 35,0xff0000, true);
+
+	DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 
 	PlayerBase::Draw(charactervector);
 
@@ -96,14 +107,21 @@ void Blue::MoveAnimation(bool charactervector)
 		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[5], true, charactervector);
 	}
 
+	DrawBox((1280 / 2) - 20, (740 / 2) + 27, (1280 / 2) - 20 + (40 * hppercentage_), (740 / 2) + 35, 0xff0000, true);
+
+	DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
+
 	PlayerBase::Draw(charactervector);
 
 }
 
-void Blue::SetHitBox()
+void Blue::SetHitBox(Vec2 playerpos)
 {
 
-
+	minhitbox_.x = playerpos.x - 10;
+	minhitbox_.y = playerpos.y - 10;
+	maxhitbox_.x = playerpos.x + 10;
+	maxhitbox_.y = playerpos.y + 10;
 
 }
 

@@ -2,28 +2,33 @@
 #include "../Attack/Attack1.h"
 
 PlayerBase::PlayerBase() 
-{
-	attack1 = new Attack1();
+{	
+	attack1_ = new Attack1();
 }
+
+PlayerBase::PlayerBase(Vec2 playerpos)
+{
+}
+	
 
 PlayerBase::~PlayerBase()
 {
-	delete attack1;
+	delete attack1_;
 }
 
 void PlayerBase::Init(int cooldownpercentage)
 {
-	attack1->Init(cooldownpercentage);
+	attack1_->Init(cooldownpercentage);
 }
 
 void PlayerBase::Update(int cooldownpercentage)
 {
-	attack1->Update(cooldownpercentage);
+	attack1_->Update(cooldownpercentage);
 }
 
 void PlayerBase::Draw(bool charactervector)
 {
-	if (attack1->GetIsAttack()) {
-		attack1->Draw(charactervector);
+	if (attack1_->GetIsAttack()) {
+		attack1_->Draw(charactervector);
 	}
 }

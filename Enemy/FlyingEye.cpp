@@ -5,7 +5,7 @@
 constexpr float kspeed = 0.5;
 
 FlyingEye::FlyingEye():
-	flamecount()
+	flamecount_()
 {
 	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, handle_);
 }
@@ -69,36 +69,38 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 	DrawFormatString(0, 0, 0xffffff, L"%f", pos_.x, true);
 	DrawFormatString(0, 16, 0xffffff, L"%f", pos_.y, true);
 
-	flamecount++;
+	flamecount_++;
 
-	if (flamecount >= 80) {
-		flamecount = 0;
+	if (flamecount_ >= 80) {
+		flamecount_ = 0;
 	}
 
-	if (flamecount >= 0 && flamecount < 10) {
+	if (flamecount_ >= 0 && flamecount_ < 10) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[0], true, charactervector);
 	}
-	else if (flamecount >= 10 && flamecount < 20) {
+	else if (flamecount_ >= 10 && flamecount_ < 20) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[1], true, charactervector);
 	}
-	else if (flamecount >= 20 && flamecount < 30) {
+	else if (flamecount_ >= 20 && flamecount_ < 30) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[2], true, charactervector);
 	}
-	else if (flamecount >= 30 && flamecount < 40) {
+	else if (flamecount_ >= 30 && flamecount_ < 40) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[3], true, charactervector);
 	}
-	else if (flamecount >= 40 && flamecount < 50) {
+	else if (flamecount_ >= 40 && flamecount_ < 50) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[4], true, charactervector);
 	}
-	else if (flamecount >= 50 && flamecount < 60) {
+	else if (flamecount_ >= 50 && flamecount_ < 60) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[5], true, charactervector);
 	}
-	else if (flamecount >= 60 && flamecount < 70) {
+	else if (flamecount_ >= 60 && flamecount_ < 70) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[6], true, charactervector);
 	}
-	else if (flamecount >= 70 && flamecount < 80) {
+	else if (flamecount_ >= 70 && flamecount_ < 80) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[7], true, charactervector);
 	}
+
+	DrawBox(minhitbox_.x + 640, minhitbox_.y + 370, maxhitbox_.x + 650, maxhitbox_.y + 380, 0x000000, false);
 
 }
 
@@ -106,5 +108,15 @@ void FlyingEye::PlayerMove(Vec2 playermove)
 {
 
 	pos_ -= playermove;
+
+}
+
+void FlyingEye::SetHitBox(Vec2 playerpos)
+{
+
+	minhitbox_.x = pos_.x - playerpos.x - 10;
+	minhitbox_.y = pos_.y - playerpos.y - 10;
+	maxhitbox_.x = pos_.x - playerpos.x + 10;
+	maxhitbox_.y = pos_.y - playerpos.y + 10;
 
 }

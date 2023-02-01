@@ -17,12 +17,16 @@ public:
     void Draw(bool charactervector,Vec2 playerpos);
     void PlayerMove(Vec2 playermove);
 
+    void SetHitBox(Vec2 playerpos);
+
 private:
 
     Vec2 pos_;
     Vec2 vector_;
     int handle_[8];
-    int flamecount;
+    int flamecount_;
+    Vec2 minhitbox_;
+    Vec2 maxhitbox_;
 
 };
 

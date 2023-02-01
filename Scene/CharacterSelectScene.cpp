@@ -12,21 +12,21 @@ void CharacterSelectScene::NormalUpdate(const InputState& input)
 {
 	//次へのボタンが押されたら次のシーンへ行く
 	for (int i = 0; i < static_cast<int>(Character::charactermax); i++) {
-		if (CheckHit(characterbord.x + 116 * i, characterbord.y + 3, 110 * (i + 1), 110 * (i + 1))) {
+		if (CheckHit(characterbord_.x + 116 * i, characterbord_.y + 3, 110 * (i + 1), 110 * (i + 1))) {
 			if (input.IsTriggered(InputType::next) && i == static_cast<int>(Character::blue))
 			{
-				m_selectcharacter = static_cast<int>(Character::blue);
-				m_selectflag = true;
+				selectcharacter_ = static_cast<int>(Character::blue);
+				selectflag_ = true;
 			}
 			if (input.IsTriggered(InputType::next) && i == static_cast<int>(Character::red))
 			{
-				m_selectcharacter = static_cast<int>(Character::red);
-				m_selectflag = true;
+				selectcharacter_ = static_cast<int>(Character::red);
+				selectflag_ = true;
 			}
 		}
 	}
 
-	if (m_selectflag && CheckHit(m_startbutton.x, m_startbutton.y, m_startbutton.x + m_startbuttonsizeX, m_startbutton.y + m_startbuttonsizeX)) {
+	if (selectflag_ && CheckHit(startbutton_.x, startbutton_.y, startbutton_.x + startbuttonsizeX_, startbutton_.y + startbuttonsizeX_)) {
 		if (input.IsTriggered(InputType::next))
 		{
 			updateFunc_ = &CharacterSelectScene::FadeOutUpdate;
@@ -39,7 +39,7 @@ void CharacterSelectScene::FadeOutUpdate(const InputState& input)
 	fadeValue_ = 255.0f * (static_cast<float>(fadeTimer_) / static_cast<float>(fade_interval));
 	if (++fadeTimer_ == fade_interval)
 	{
-		manager_.ChangeScene(new GameplayingScene(manager_, m_selectcharacter, input));
+		manager_.ChangeScene(new GameplayingScene(manager_, selectcharacter_, input));
 		return;
 	}
 }
@@ -47,32 +47,36 @@ void CharacterSelectScene::FadeOutUpdate(const InputState& input)
 CharacterSelectScene::CharacterSelectScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&CharacterSelectScene::NormalUpdate),
-	m_selectflag(false),
-	m_selectcharacter(-1)
+	selectflag_(false),
+	selectcharacter_(-1)
 {
+
+	blue_ = new Blue(Vec2(0, 0));
+	red_ = new Red(Vec2(0, 0));
+
 	m_background = my::MyLoadGraph(L"Data/background/red.jpg");
-	m_characterbordH = my::MyLoadGraph(L"Data/img/Characterbord.png");
-	m_startbuttonH = my::MyLoadGraph(L"Data/img/startbutton.png");
+	characterbordH_ = my::MyLoadGraph(L"Data/img/Characterbord.png");
+	startbuttonH_ = my::MyLoadGraph(L"Data/img/startbutton.png");
 
-	characterbord.x = ((1280 / 2) - ((1280 / 2) / 4) * 2);
-	characterbord.y = 45;
+	characterbord_.x = ((1280 / 2) - ((1280 / 2) / 4) * 2);
+	characterbord_.y = 45;
 
-	selectcharacterbord.x = characterbord.x + 15;
-	selectcharacterbord.y = 610 + 5;
+	selectcharacterbord_.x = characterbord_.x + 15;
+	selectcharacterbord_.y = 610 + 5;
 
-	m_startbutton.x = ((1280 / 2) + ((1280 / 2) / 8) * 2);
-	m_startbutton.y = 630;
+	startbutton_.x = ((1280 / 2) + ((1280 / 2) / 8) * 2);
+	startbutton_.y = 630;
 
-	GetGraphSize(m_characterbordH, &characterbordsizeX, &characterbordsizeY);
-	GetGraphSize(m_startbuttonH, &m_startbuttonsizeX, &m_startbuttonsizeY);
+	GetGraphSize(characterbordH_, &characterbordsizeX_, &characterbordsizeY_);
+	GetGraphSize(startbuttonH_, &startbuttonsizeX_, &startbuttonsizeY_);
 }
 
 CharacterSelectScene::~CharacterSelectScene()
 {
 	DeleteGraph(m_background);
-	DeleteGraph(m_bulletinbordH);
-	DeleteGraph(m_characterbordH);
-	DeleteGraph(m_startbuttonH);
+	DeleteGraph(bulletinbordH_);
+	DeleteGraph(characterbordH_);
+	DeleteGraph(startbuttonH_);
 }
 
 void CharacterSelectScene::Update(const InputState& input)
@@ -94,13 +98,13 @@ void CharacterSelectScene::Draw()
 	//キャラクターボックスの描画
 	for (int i = 0; i < static_cast<int>(Character::charactermax); i++) {
 
-		DrawExtendGraph(characterbord.x + 120 * i + 10, characterbord.y, characterbord.x + 120 * (i + 1) - 10, 150, m_characterbordH, true);
+		DrawExtendGraph(characterbord_.x + 120 * i + 10, characterbord_.y, characterbord_.x + 120 * (i + 1) - 10, 150, characterbordH_, true);
 
 		if (i == static_cast<int>(Character::blue)) {
-			DrawExtendGraph(characterbord.x + 120 * i + 10, characterbord.y + 10, characterbord.x + 120 * (i + 1) - 10, 150 - 10, blue.GetHandle(), true);
+			DrawExtendGraph(characterbord_.x + 120 * i + 10, characterbord_.y + 10, characterbord_.x + 120 * (i + 1) - 10, 150 - 10, blue_->GetHandle(), true);
 		}
 		if (i == static_cast<int>(Character::red)) {
-			DrawExtendGraph(characterbord.x + 120 * i + 10, characterbord.y + 10, characterbord.x + 120 * (i + 1) - 10, 150 - 10, red.GetHandle(), true);
+			DrawExtendGraph(characterbord_.x + 120 * i + 10, characterbord_.y + 10, characterbord_.x + 120 * (i + 1) - 10, 150 - 10, red_->GetHandle(), true);
 		}
 	}
 
@@ -109,16 +113,16 @@ void CharacterSelectScene::Draw()
 	DrawBox((1280 / 2) - ((1280 / 2) / 4) * 2 + 10, 610, (1280 / 2) - ((1280 / 2) / 4) * 2 + 80 + 10, 610 + 80, 0x000000, false);
 	DrawBox((1280 / 2) - ((1280 / 2) / 4) * 2 + 10, 610, (1280 / 2) + ((1280 / 2) / 4) * 2 - 10, 610 + 80, 0x000000, false);
 
-	DrawExtendGraph(selectcharacterbord.x, selectcharacterbord.y, selectcharacterbord.x + 70, selectcharacterbord.y + 70, m_characterbordH, true);
+	DrawExtendGraph(selectcharacterbord_.x, selectcharacterbord_.y, selectcharacterbord_.x + 70, selectcharacterbord_.y + 70, characterbordH_, true);
 
-	if (m_selectflag) {
-		if (m_selectcharacter == static_cast<int>(Character::blue)) {
-			DrawExtendGraph(selectcharacterbord.x, selectcharacterbord.y, selectcharacterbord.x + 70, selectcharacterbord.y + 70, blue.GetHandle(), true);
+	if (selectflag_) {
+		if (selectcharacter_ == static_cast<int>(Character::blue)) {
+			DrawExtendGraph(selectcharacterbord_.x, selectcharacterbord_.y, selectcharacterbord_.x + 70, selectcharacterbord_.y + 70, blue_->GetHandle(), true);
 		}
-		if (m_selectcharacter == static_cast<int>(Character::red)) {
-			DrawExtendGraph(selectcharacterbord.x, selectcharacterbord.y, selectcharacterbord.x + 70, selectcharacterbord.y + 70, red.GetHandle(), true);
+		if (selectcharacter_ == static_cast<int>(Character::red)) {
+			DrawExtendGraph(selectcharacterbord_.x, selectcharacterbord_.y, selectcharacterbord_.x + 70, selectcharacterbord_.y + 70, red_->GetHandle(), true);
 		}
-		DrawGraph(m_startbutton.x, m_startbutton.y, m_startbuttonH, false);
+		DrawGraph(startbutton_.x, startbutton_.y, startbuttonH_, false);
 	}
 
 	int mouseX = 0;
@@ -126,7 +130,7 @@ void CharacterSelectScene::Draw()
 
 	GetMousePoint(&mouseX, &mouseY);
 	DrawFormatString(0, 0, 0xffffff, L"%d", mouseX, true);
-	DrawFormatString(0, 16, 0xffffff, L"%d", characterbord.x, true);
+	DrawFormatString(0, 16, 0xffffff, L"%d", characterbord_.x, true);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue_);
 	//画面全体を真っ黒に塗りつぶす

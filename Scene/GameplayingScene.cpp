@@ -18,24 +18,25 @@ constexpr float kplayerspeed = 1.0;
 
 GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input) :
 	Scene(manager),
-	m_player(nullptr),
-	m_enemy(nullptr),
+	player_(nullptr),
+	enemy_(nullptr),
 	input_(input),
-	animationcount(40),
+	animationcount_(40),
 	charactervector_(false),
-	map(nullptr),
-	playerpos(0,0),
+	map_(nullptr),
+	playerpos_(0,0),
 	flyingeyeH_()
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
-		m_player = new Blue();
+		player_ = new Blue(playerpos_);
 	}
 	else if (selectcharacter == static_cast<int>(Character::red)) {
-		m_player = new Red();
+		player_ = new Red(playerpos_);
 	}
-	m_enemy = new FlyingEye();
-	map = new Map();
-	map->Init();
+	enemy_ = new FlyingEye();
+	enemy_->Init(playerpos_);
+	map_ = new Map();
+	map_->Init();
 
 }
 
@@ -69,19 +70,22 @@ void GameplayingScene::Update(const InputState& input)
 		charactervector_ = true;
 	}
 
+	player_->SetHitBox(playerpos_);
+	enemy_->SetHitBox(playerpos_);
+
 	if (CheckHitKey(KEY_INPUT_O)) {
-		m_enemy->Init(playerpos);
+		enemy_->Init(playerpos_);
 	}
 
 	playervector_ = playervector_.normalize();
 
-	playerpos = playerpos + playervector_;
+	playerpos_ = playerpos_ + playervector_;
 
-	m_enemy->Update(playerpos);
+	enemy_->Update(playerpos_);
 
-	m_player->Update();
+	player_->Update(playerpos_);
 
-	map->Update(playerpos);
+	map_->Update(playerpos_);
 
 
 	playervector_ = {0, 0};
@@ -90,27 +94,27 @@ void GameplayingScene::Update(const InputState& input)
 void GameplayingScene::Draw()
 {
 
-	map->Draw();
+	map_->Draw();
 
 	if (input_.IsPressed(InputType::up)) {
-		m_player->MoveAnimation(charactervector_);
+		player_->MoveAnimation(charactervector_);
 	}
 	else if (input_.IsPressed(InputType::down)) {
-		m_player->MoveAnimation(charactervector_);
+		player_->MoveAnimation(charactervector_);
 	}
 	else if (input_.IsPressed(InputType::right)) {
-		m_player->MoveAnimation(charactervector_);		
+		player_->MoveAnimation(charactervector_);		
 	}
 	else if (input_.IsPressed(InputType::left)) {
-		m_player->MoveAnimation(charactervector_);
+		player_->MoveAnimation(charactervector_);
 	}
 	else {
-		m_player->IdleAnimation(charactervector_);
+		player_->IdleAnimation(charactervector_);
 	}
 
-	DrawFormatString(0, 32, 0xffffff, L"%f", playerpos.x, true);
-	DrawFormatString(0, 48, 0xffffff, L"%f", playerpos.y, true);
+	DrawFormatString(0, 32, 0xffffff, L"%f", playerpos_.x, true);
+	DrawFormatString(0, 48, 0xffffff, L"%f", playerpos_.y, true);
 
-	m_enemy->Draw(true,playerpos);
+	enemy_->Draw(true,playerpos_);
 
 }

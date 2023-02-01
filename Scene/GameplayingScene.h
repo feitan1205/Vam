@@ -14,17 +14,17 @@ class GameplayingScene : public Scene
 {
 private:
 
-	PlayerBase* m_player;
+	PlayerBase* player_;
 	const InputState& input_;
-	int animationcount;
+	int animationcount_;
 	bool charactervector_;		//右：false、左：true
 
-	Vec2 playerpos;
+	Vec2 playerpos_;
 	Vec2 playervector_;
 
-	Map* map;
+	Map* map_;
 
-	EnemyBase* m_enemy;
+	EnemyBase* enemy_;
 	int flyingeyeH_[8];
 
 public:

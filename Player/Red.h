@@ -1,32 +1,34 @@
 #pragma once
 #include "PlayerBase.h"
+#include "../Vector2.h"
+
+
 class Red :
     public PlayerBase
 {
 public:
 
-    Red();
+    Red(Vec2 playerpos);
     ~Red();
 
     void Init();
     void End();
-    void Update();
+    void Update(Vec2 playerpos);
 
     void Draw();
     void IdleAnimation(bool charactervector);
     void MoveAnimation(bool charactervector);
 
     int GetHandle() { return m_redH_; }
+    void SetHitBox(Vec2 playerpos);
 
 private:
 
     int m_redH_;
     int m_idleH_[4];
     int m_moveH_[6];
-    int x;
-    int y;
-    int sizeX;
-    int sizeY;
-    int flamecount;
+    int sizeX_;
+    int sizeY_;
+    int flamecount_;
     int cooldownpercentage_;
 };

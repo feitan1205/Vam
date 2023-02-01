@@ -32,22 +32,22 @@ private:
 
 private:
 
-	int m_bulletinbordH;
-	int m_characterbordH;
-	int m_startbuttonH;
-	Vec2 characterbord;
-	Vec2 selectcharacterbord;
-	int characterbordsizeX;
-	int characterbordsizeY;
-	Vec2 m_startbutton;
-	int m_startbuttonsizeX;
-	int m_startbuttonsizeY;
+	int bulletinbordH_;
+	int characterbordH_;
+	int startbuttonH_;
+	Vec2 characterbord_;
+	Vec2 selectcharacterbord_;
+	int characterbordsizeX_;
+	int characterbordsizeY_;
+	Vec2 startbutton_;
+	int startbuttonsizeX_;
+	int startbuttonsizeY_;
 
-	bool m_selectflag;
-	int m_selectcharacter;
+	bool selectflag_;
+	int selectcharacter_;
 
-	Blue blue;
-	Red red;
+	Blue* blue_;
+	Red* red_;
 
 public:
 

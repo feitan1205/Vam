@@ -14,6 +14,9 @@ public:
 	virtual void Draw(bool charactervector,Vec2 playerpos) = 0;
 	virtual void PlayerMove(Vec2 playermove) = 0;
 
+	virtual void SetHitBox(Vec2 playerpos) = 0;
+
+
 private:
 
 

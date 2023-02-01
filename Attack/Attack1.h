@@ -20,10 +20,10 @@ public:
 private:
 
 	int attack1H_[4];
-	int flamecount;
+	int flamecount_;
 	float cooldowntime_;
 	bool attackflag_;
-	int attackpoint;
+	int attackpoint_;
 
 };
 
