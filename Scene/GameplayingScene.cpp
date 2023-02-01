@@ -82,6 +82,12 @@ void GameplayingScene::Update(const InputState& input)
 		}
 	}
 
+	if (player_->GetIsAttack1()) {
+		if (CheckHit(player_->GetAttackMinHitBox(), player_->GetAttackMaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox())) {
+			enemy_->Init(playerpos_);
+		}
+	}
+
 	if (CheckHitKey(KEY_INPUT_O)) {
 		enemy_->Init(playerpos_);
 	}
@@ -95,7 +101,6 @@ void GameplayingScene::Update(const InputState& input)
 	player_->Update(playerpos_,charactervector_);
 
 	map_->Update(playerpos_);
-
 
 	playervector_ = {0, 0};
 }

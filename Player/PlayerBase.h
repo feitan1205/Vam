@@ -15,7 +15,7 @@ public:
 	virtual void Init(int cooldownpercentage);
 	virtual void End() = 0;
 	virtual void Update(Vec2 playerpos, bool charactervector) = 0;
-	virtual void Update(int cooldownpercentage, bool charactervector);
+	virtual void Update(int cooldownpercentage, bool charactervector,Vec2 playerpos);
 	virtual void Draw(bool charactervector);
 	virtual void IdleAnimation(bool charactervector) = 0;
 	virtual void MoveAnimation(bool charactervector) = 0;
@@ -25,6 +25,10 @@ public:
 
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
+
+	bool GetIsAttack1();
+	Vec2 GetAttackMinHitBox();
+	Vec2 GetAttackMaxHitBox();
 
 protected:
 

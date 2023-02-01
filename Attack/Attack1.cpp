@@ -32,8 +32,10 @@ void Attack1::End()
 {
 }
 
-void Attack1::Update(int cooldownpercentage,bool charactervector)
+void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 {
+
+	playerpos_ = playerpos;
 
 	cooldowntime_--;
 
@@ -42,7 +44,7 @@ void Attack1::Update(int cooldownpercentage,bool charactervector)
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 	}
 
-	if (!attackflag_) {
+	if (!attackflag_){
 		attackvector_ = charactervector;
 	}
 
@@ -52,37 +54,70 @@ void Attack1::Draw()
 {
 	flamecount_++;
 
-	if (flamecount_ >= 20) {
+	/*if (flamecount_ >= 20) {
 		flamecount_ = 0;
 		attackflag_ = false;
 		return;
-	}
+	}*/
 
-	if (flamecount_ >= 0 && flamecount_ < 5) {
+	//if (flamecount_ >= 0 && flamecount_ < 5)
+	{
 		DrawRotaGraph(640, 370, 4, 0, attack1H_[0], true, attackvector_);
+		DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 	}
-	else if (flamecount_ >= 5 && flamecount_ < 10) {
-		DrawRotaGraph(640, 370, 4, 0, attack1H_[1], true, attackvector_);
+	/*else if (flamecount_ >= 5 && flamecount_ < 10) 
+	{
+		DrawRotaGraph(640, 370, 4, 0, attack1H_[1], true, attackvector_);		
+		DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 	}
-	else if (flamecount_ >= 10 && flamecount_ < 15) {
+	else if (flamecount_ >= 10 && flamecount_ < 15) 
+	{
 		DrawRotaGraph(640, 370, 4, 0, attack1H_[2], true, attackvector_);
+		DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 	}
-	else if (flamecount_ >= 15 && flamecount_ < 20) {
+	else if (flamecount_ >= 15 && flamecount_ < 20)
+	{
 		DrawRotaGraph(640, 370, 4, 0, attack1H_[3], true, attackvector_);
-	}
-	
+		DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
+	}*/
+
 }
 
 void Attack1::SetHitBox()
 {
+	int rightorleft = 1;
 
-	if (flamecount_ >= 0 && flamecount_ < 5) {
+	if (attackvector_) {
+		rightorleft = -1;
 	}
-	else if (flamecount_ >= 5 && flamecount_ < 10) {
+
+	//if (flamecount_ >= 0 && flamecount_ < 5)
+	{
+		minhitbox_.x = playerpos_.x - (rightorleft * 0);
+		minhitbox_.y = playerpos_.y - 50;
+		maxhitbox_.x = playerpos_.x + (rightorleft * 50);
+		maxhitbox_.y = playerpos_.y - 10;
 	}
-	else if (flamecount_ >= 10 && flamecount_ < 15) {
+	/*else if (flamecount_ >= 5 && flamecount_ < 10) 
+	{
+		minhitbox_.x = playerpos_.x + (rightorleft * 20);
+		minhitbox_.y = playerpos_.y - 30;
+		maxhitbox_.x = playerpos_.x + (rightorleft * 60);
+		maxhitbox_.y = playerpos_.y + 20;
 	}
-	else if (flamecount_ >= 15 && flamecount_ < 20) {
+	else if (flamecount_ >= 10 && flamecount_ < 15) 
+	{
+		minhitbox_.x = playerpos_.x - (rightorleft * 50);
+		minhitbox_.y = playerpos_.y + 10;
+		maxhitbox_.x = playerpos_.x + (rightorleft * 60);
+		maxhitbox_.y = playerpos_.y + 45;
 	}
+	else if (flamecount_ >= 15 && flamecount_ < 20) 
+	{
+		minhitbox_.x = playerpos_.x - (rightorleft * 40);
+		minhitbox_.y = playerpos_.y + 0;
+		maxhitbox_.x = playerpos_.x + (rightorleft * 0);
+		maxhitbox_.y = playerpos_.y + 50;
+	}*/
 
 }

@@ -21,9 +21,10 @@ void PlayerBase::Init(int cooldownpercentage)
 	attack1_->Init(cooldownpercentage);
 }
 
-void PlayerBase::Update(int cooldownpercentage, bool charactervector)
+void PlayerBase::Update(int cooldownpercentage, bool charactervector,Vec2 playerpos)
 {
-	attack1_->Update(cooldownpercentage,charactervector);
+	attack1_->Update(cooldownpercentage,charactervector,playerpos);
+	attack1_->SetHitBox();
 }
 
 void PlayerBase::Draw(bool charactervector)
@@ -31,4 +32,19 @@ void PlayerBase::Draw(bool charactervector)
 	if (attack1_->GetIsAttack()) {
 		attack1_->Draw();
 	}
+}
+
+bool PlayerBase::GetIsAttack1()
+{
+	return attack1_->GetIsAttack();
+}
+
+Vec2 PlayerBase::GetAttackMinHitBox()
+{
+	return attack1_->GetAttack1MinHitBox();
+}
+
+Vec2 PlayerBase::GetAttackMaxHitBox()
+{
+	return attack1_->GetAttack1MaxHitBox();;
 }

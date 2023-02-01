@@ -33,7 +33,7 @@ void Red::End()
 
 void Red::Update(Vec2 playerpos, bool charactervector)
 {
-	PlayerBase::Update(cooldownpercentage_, charactervector);
+	PlayerBase::Update(cooldownpercentage_, charactervector,playerpos);
 }
 
 void Red::Draw()
