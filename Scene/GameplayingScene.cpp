@@ -92,7 +92,7 @@ void GameplayingScene::Update(const InputState& input)
 
 	enemy_->Update(playerpos_);
 
-	player_->Update(playerpos_);
+	player_->Update(playerpos_,charactervector_);
 
 	map_->Update(playerpos_);
 

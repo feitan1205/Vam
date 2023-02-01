@@ -21,14 +21,14 @@ void PlayerBase::Init(int cooldownpercentage)
 	attack1_->Init(cooldownpercentage);
 }
 
-void PlayerBase::Update(int cooldownpercentage)
+void PlayerBase::Update(int cooldownpercentage, bool charactervector)
 {
-	attack1_->Update(cooldownpercentage);
+	attack1_->Update(cooldownpercentage,charactervector);
 }
 
 void PlayerBase::Draw(bool charactervector)
 {
 	if (attack1_->GetIsAttack()) {
-		attack1_->Draw(charactervector);
+		attack1_->Draw();
 	}
 }

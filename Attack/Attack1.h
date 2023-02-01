@@ -10,8 +10,8 @@ public:
 
 	void Init(int cooldownpercentage);
 	void End();
-	void Update(int cooldownpercentage);
-	void Draw(bool charactervector);
+	void Update(int cooldownpercentage,bool charactervector);
+	void Draw();
 	void SetHitBox();
 
 	bool GetIsAttack() { return attackflag_; }
@@ -24,6 +24,7 @@ private:
 	float cooldowntime_;
 	bool attackflag_;
 	int attackpoint_;
+	bool attackvector_;
 
 };
 

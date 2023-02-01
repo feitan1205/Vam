@@ -13,7 +13,7 @@ public:
 
     void Init();
     void End();
-    void Update(Vec2 playerpos);
+    void Update(Vec2 playerpos, bool charactervector);
 
     void Draw();
     void IdleAnimation(bool charactervector);

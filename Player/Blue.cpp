@@ -36,9 +36,9 @@ void Blue::End()
 {
 }
 
-void Blue::Update(Vec2 playerpos)
+void Blue::Update(Vec2 playerpos, bool charactervector)
 {
-	PlayerBase::Update(cooldownpercentage_);
+	PlayerBase::Update(cooldownpercentage_, charactervector);
 
 	hppercentage_ = static_cast <float>(nowhp_) / static_cast <float>(maxhp_);
 

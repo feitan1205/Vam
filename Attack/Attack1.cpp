@@ -8,7 +8,8 @@ Attack1::Attack1():
 	flamecount_(),
 	cooldowntime_(0),
 	attackflag_(false),
-	attackpoint_(10)
+	attackpoint_(10),
+	attackvector_()
 {
 	attack1H_[0] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_01.png");
 	attack1H_[1] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_02.png");
@@ -31,7 +32,7 @@ void Attack1::End()
 {
 }
 
-void Attack1::Update(int cooldownpercentage)
+void Attack1::Update(int cooldownpercentage,bool charactervector)
 {
 
 	cooldowntime_--;
@@ -41,9 +42,13 @@ void Attack1::Update(int cooldownpercentage)
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 	}
 
+	if (!attackflag_) {
+		attackvector_ = charactervector;
+	}
+
 }
 
-void Attack1::Draw(bool charactervector)
+void Attack1::Draw()
 {
 	flamecount_++;
 
@@ -54,16 +59,16 @@ void Attack1::Draw(bool charactervector)
 	}
 
 	if (flamecount_ >= 0 && flamecount_ < 5) {
-		DrawRotaGraph(640, 370, 4, 0, attack1H_[0], true, charactervector);
+		DrawRotaGraph(640, 370, 4, 0, attack1H_[0], true, attackvector_);
 	}
 	else if (flamecount_ >= 5 && flamecount_ < 10) {
-		DrawRotaGraph(640, 370, 4, 0, attack1H_[1], true, charactervector);
+		DrawRotaGraph(640, 370, 4, 0, attack1H_[1], true, attackvector_);
 	}
 	else if (flamecount_ >= 10 && flamecount_ < 15) {
-		DrawRotaGraph(640, 370, 4, 0, attack1H_[2], true, charactervector);
+		DrawRotaGraph(640, 370, 4, 0, attack1H_[2], true, attackvector_);
 	}
 	else if (flamecount_ >= 15 && flamecount_ < 20) {
-		DrawRotaGraph(640, 370, 4, 0, attack1H_[3], true, charactervector);
+		DrawRotaGraph(640, 370, 4, 0, attack1H_[3], true, attackvector_);
 	}
 	
 }
