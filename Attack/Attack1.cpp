@@ -8,7 +8,7 @@ Attack1::Attack1():
 	flamecount_(),
 	cooldowntime_(0),
 	attackflag_(false),
-	attackpoint_(10),
+	attackpoint_(1),
 	attackvector_()
 {
 	attack1H_[0] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_01.png");
@@ -54,18 +54,19 @@ void Attack1::Draw()
 {
 	flamecount_++;
 
-	/*if (flamecount_ >= 20) {
+	if (flamecount_ >= 20) 
+	{
 		flamecount_ = 0;
 		attackflag_ = false;
 		return;
-	}*/
+	}
 
-	//if (flamecount_ >= 0 && flamecount_ < 5)
+	if (flamecount_ >= 0 && flamecount_ < 5)
 	{
 		DrawRotaGraph(640, 370, 4, 0, attack1H_[0], true, attackvector_);
 		DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 	}
-	/*else if (flamecount_ >= 5 && flamecount_ < 10) 
+	else if (flamecount_ >= 5 && flamecount_ < 10) 
 	{
 		DrawRotaGraph(640, 370, 4, 0, attack1H_[1], true, attackvector_);		
 		DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
@@ -79,7 +80,10 @@ void Attack1::Draw()
 	{
 		DrawRotaGraph(640, 370, 4, 0, attack1H_[3], true, attackvector_);
 		DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
-	}*/
+	}
+
+	DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
+	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true);
 
 }
 
@@ -91,33 +95,65 @@ void Attack1::SetHitBox()
 		rightorleft = -1;
 	}
 
-	//if (flamecount_ >= 0 && flamecount_ < 5)
-	{
-		minhitbox_.x = playerpos_.x - (rightorleft * 0);
-		minhitbox_.y = playerpos_.y - 50;
-		maxhitbox_.x = playerpos_.x + (rightorleft * 50);
-		maxhitbox_.y = playerpos_.y - 10;
+	if (!attackvector_) {
+		if (flamecount_ >= 0 && flamecount_ < 5)
+		{
+			minhitbox_.x = playerpos_.x - (rightorleft * 0);
+			minhitbox_.y = playerpos_.y - 50;
+			maxhitbox_.x = playerpos_.x + (rightorleft * 50);
+			maxhitbox_.y = playerpos_.y - 10;
+		}
+		else if (flamecount_ >= 5 && flamecount_ < 10)
+		{
+			minhitbox_.x = playerpos_.x + (rightorleft * 20);
+			minhitbox_.y = playerpos_.y - 30;
+			maxhitbox_.x = playerpos_.x + (rightorleft * 60);
+			maxhitbox_.y = playerpos_.y + 20;
+		}
+		else if (flamecount_ >= 10 && flamecount_ < 15)
+		{
+			minhitbox_.x = playerpos_.x - (rightorleft * 50);
+			minhitbox_.y = playerpos_.y + 10;
+			maxhitbox_.x = playerpos_.x + (rightorleft * 60);
+			maxhitbox_.y = playerpos_.y + 45;
+		}
+		else if (flamecount_ >= 15 && flamecount_ < 20)
+		{
+			minhitbox_.x = playerpos_.x - (rightorleft * 40);
+			minhitbox_.y = playerpos_.y + 0;
+			maxhitbox_.x = playerpos_.x + (rightorleft * 0);
+			maxhitbox_.y = playerpos_.y + 50;
+		}
 	}
-	/*else if (flamecount_ >= 5 && flamecount_ < 10) 
-	{
-		minhitbox_.x = playerpos_.x + (rightorleft * 20);
-		minhitbox_.y = playerpos_.y - 30;
-		maxhitbox_.x = playerpos_.x + (rightorleft * 60);
-		maxhitbox_.y = playerpos_.y + 20;
+	else if (attackvector_) {
+		if (flamecount_ >= 0 && flamecount_ < 5)
+		{
+			maxhitbox_.x = playerpos_.x - (rightorleft * 0);
+			minhitbox_.y = playerpos_.y - 50;
+			minhitbox_.x = playerpos_.x + (rightorleft * 50);
+			maxhitbox_.y = playerpos_.y - 10;
+		}
+		else if (flamecount_ >= 5 && flamecount_ < 10)
+		{
+			maxhitbox_.x = playerpos_.x + (rightorleft * 20);
+			minhitbox_.y = playerpos_.y - 30;
+			minhitbox_.x = playerpos_.x + (rightorleft * 60);
+			maxhitbox_.y = playerpos_.y + 20;
+		}
+		else if (flamecount_ >= 10 && flamecount_ < 15)
+		{
+			maxhitbox_.x = playerpos_.x - (rightorleft * 50);
+			minhitbox_.y = playerpos_.y + 10;
+			minhitbox_.x = playerpos_.x + (rightorleft * 60);
+			maxhitbox_.y = playerpos_.y + 45;
+		}
+		else if (flamecount_ >= 15 && flamecount_ < 20)
+		{
+			maxhitbox_.x = playerpos_.x - (rightorleft * 40);
+			minhitbox_.y = playerpos_.y + 0;
+			minhitbox_.x = playerpos_.x + (rightorleft * 0);
+			maxhitbox_.y = playerpos_.y + 50;
+		}
 	}
-	else if (flamecount_ >= 10 && flamecount_ < 15) 
-	{
-		minhitbox_.x = playerpos_.x - (rightorleft * 50);
-		minhitbox_.y = playerpos_.y + 10;
-		maxhitbox_.x = playerpos_.x + (rightorleft * 60);
-		maxhitbox_.y = playerpos_.y + 45;
-	}
-	else if (flamecount_ >= 15 && flamecount_ < 20) 
-	{
-		minhitbox_.x = playerpos_.x - (rightorleft * 40);
-		minhitbox_.y = playerpos_.y + 0;
-		maxhitbox_.x = playerpos_.x + (rightorleft * 0);
-		maxhitbox_.y = playerpos_.y + 50;
-	}*/
 
 }

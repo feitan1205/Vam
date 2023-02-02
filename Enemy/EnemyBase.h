@@ -14,15 +14,19 @@ public:
 	virtual void Draw(bool charactervector,Vec2 playerpos) = 0;
 	virtual void PlayerMove(Vec2 playermove) = 0;
 
+	virtual void Damage(int attackpoint) = 0;
+
 	virtual void SetHitBox(Vec2 playerpos) = 0;
 	virtual void SetCoolDownTime() = 0;
 
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
-
+	virtual int GetNowHP() = 0;
 	virtual int GetCoolDownTime() = 0;
 	virtual int GetAttackPoint() = 0;
 
+	virtual void Attack1Hit(bool attack1hit) = 0;
+	virtual bool IsHitAttack1() = 0;
 private:
 
 

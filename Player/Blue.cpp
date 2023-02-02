@@ -22,10 +22,17 @@ Blue::Blue(Vec2 playerpos) :
 
 Blue::~Blue()
 {
+
 	DeleteGraph(m_blueH_);
+
 	for (int i = 0; i < 4; i++) {
 		DeleteGraph(m_idleH_[i]);
 	}
+
+	for (int i = 0; i < 6; i++) {
+		DeleteGraph(m_moveH_[i]);
+	}
+
 }
 
 void Blue::Init()
@@ -79,8 +86,8 @@ void Blue::IdleAnimation(bool charactervector)
 
 	PlayerBase::Draw(charactervector);
 	
-	DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
-	DrawFormatString(0, 64, 0xffffff, L"%f", minhitbox_.y, true);
+	/*DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
+	DrawFormatString(0, 64, 0xffffff, L"%f", minhitbox_.y, true);*/
 }
 
 void Blue::MoveAnimation(bool charactervector)
@@ -116,9 +123,6 @@ void Blue::MoveAnimation(bool charactervector)
 	DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 
 	PlayerBase::Draw(charactervector);
-
-	DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
-	DrawFormatString(0, 64, 0xffffff, L"%f", minhitbox_.y, true);
 
 }
 

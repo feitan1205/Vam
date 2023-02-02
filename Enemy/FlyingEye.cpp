@@ -8,44 +8,78 @@ constexpr int standardcooldowntime = 30;
 FlyingEye::FlyingEye():
 	flamecount_(),
 	attackpoint_(2),
-	cooldowntime_()
+	cooldowntime_(),
+	tmprand_(),
+	nowhp_(100),
+	temphp_(),
+	damagepoint_(),
+	damageflag_(),
+	attack1hit_(false),
+	damagedrawframe_()
 {
 	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, handle_);
 }
 
 FlyingEye::~FlyingEye()
 {
+	for (int i = 0; i < 8; i++) {
+		DeleteGraph(handle_[i]);
+	}
 }
 
 void FlyingEye::Init(Vec2 playerpos)
 {
-	
-	
-	
-	int tempx;
-	int tempy;
+	nowhp_ = 100;
+		
+	int tempx = 0;
+	int tempy = 0;
+	bool issetpos = true;
 
-	while (1) {
+	while (issetpos) {
 
 		tempx = (GetRand(700));
 		tempy = (GetRand(450));
 
-		if (tempx > 680) break;
-		if (tempy > 400) break;
+		if (tempx > 680){
+
+			if (GetRand(1) == 0) {
+				tempx *= 1;
+			}
+			else {
+				tempx *= -1;
+			}
+
+			issetpos = false;
+
+		}
+
+		if (tempy > 400) {
+
+			if (GetRand(1) == 0) {
+				tempy *= 1;
+			}
+			else {
+				tempy *= -1;
+			}
+
+			issetpos = false;
+
+		}
+		
 	}
 
-	int tmprand = GetRand(3);
+	/*tmprand_ = GetRand(3);
 
-	if (tmprand == 1) {
+	if (tmprand_ == 1) {
 		tempx *= -1;
 	}
-	else if (tmprand == 2) {
+	else if (tmprand_ == 2) {
 		tempy *= -1;
 	}
-	else if (tmprand == 3) {
+	else if (tmprand_ == 3) {
 		tempx *= -1;
 		tempy *= -1;
-	}
+	}*/
 
 	pos_.x = playerpos.x + tempx;
 	pos_.y = playerpos.y + tempy;
@@ -59,7 +93,6 @@ void FlyingEye::End()
 
 void FlyingEye::Update(Vec2 playerpos)
 {
-
 	cooldowntime_--;
 
 	vector_ = playerpos - pos_;
@@ -67,6 +100,26 @@ void FlyingEye::Update(Vec2 playerpos)
 	vector_ = vector_.normalize();
 
 	pos_ += (vector_ * kspeed);
+
+	if (attack1hit_ && damagedrawframe_ == 30) {
+		damagepoint_ = temphp_ - nowhp_;
+	}
+
+	if (attack1hit_) {
+		damagedrawframe_--;
+	}
+	else {
+		damagedrawframe_ = 30;
+	}
+
+
+	flamecount_++;
+
+	if (flamecount_ >= 80) {
+		flamecount_ = 0;
+	}
+
+	temphp_ = nowhp_;
 
 }
 
@@ -76,11 +129,7 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 	DrawFormatString(0, 0, 0xffffff, L"%f", pos_.x, true);
 	DrawFormatString(0, 16, 0xffffff, L"%f", pos_.y, true);
 
-	flamecount_++;
-
-	if (flamecount_ >= 80) {
-		flamecount_ = 0;
-	}
+	
 
 	if (flamecount_ >= 0 && flamecount_ < 10) {
 		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, handle_[0], true, charactervector);
@@ -109,12 +158,25 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 
 	DrawBox(minhitbox_.x + 640 - playerpos.x, minhitbox_.y + 370 - playerpos.y, maxhitbox_.x + 640 - playerpos.x, maxhitbox_.y + 370 - playerpos.y, 0x000000, false);
 
+	//DrawFormatString(0, 0, 0xffffff, L"%d", tmprand_, true);
+
+	if (damagedrawframe_ >= 0 && damagedrawframe_ != 30) {
+		DrawFormatString(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 0xffffff, L"%d", damagepoint_, true);
+	}
 }
 
 void FlyingEye::PlayerMove(Vec2 playermove)
 {
 
 	pos_ -= playermove;
+
+}
+
+void FlyingEye::Damage(int attackpoint)
+{
+
+	nowhp_ -= attackpoint;
+	
 
 }
 

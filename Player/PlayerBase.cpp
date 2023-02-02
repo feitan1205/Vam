@@ -34,6 +34,11 @@ void PlayerBase::Draw(bool charactervector)
 	}
 }
 
+int PlayerBase::GetAttackPoint()
+{
+	return attack1_->GetAttack1Point();
+}
+
 bool PlayerBase::GetIsAttack1()
 {
 	return attack1_->GetIsAttack();

@@ -41,6 +41,15 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 
 }
 
+GameplayingScene::~GameplayingScene()
+{
+
+	delete player_;
+	delete enemy_;
+	delete map_;
+
+}
+
 void GameplayingScene::Update(const InputState& input)
 {
 
@@ -74,6 +83,15 @@ void GameplayingScene::Update(const InputState& input)
 	player_->SetHitBox(playerpos_);
 	enemy_->SetHitBox(playerpos_);
 
+	playervector_ = playervector_.normalize();
+	playerpos_ = playerpos_ + playervector_;
+
+	enemy_->Update(playerpos_);
+
+	player_->Update(playerpos_,charactervector_);
+
+	map_->Update(playerpos_);
+
 	if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox())) {
 		//printfDx(L"・・・・");
 		if (enemy_->GetCoolDownTime() <= 0) {
@@ -83,26 +101,24 @@ void GameplayingScene::Update(const InputState& input)
 	}
 
 	if (player_->GetIsAttack1()) {
-		if (CheckHit(player_->GetAttackMinHitBox(), player_->GetAttackMaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox())) {
-			enemy_->Init(playerpos_);
+		if (CheckHit(player_->GetAttackMinHitBox(), player_->GetAttackMaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox()) && !enemy_->IsHitAttack1()) {
+			enemy_->Damage(player_->GetAttackPoint());
+			enemy_->Attack1Hit(true);
+			if (enemy_->GetNowHP() <= 0) {
+				enemy_->Init(playerpos_);
+			}
 		}
+	}
+	else {
+		enemy_->Attack1Hit(false);
 	}
 
 	if (CheckHitKey(KEY_INPUT_O)) {
 		enemy_->Init(playerpos_);
 	}
 
-	playervector_ = playervector_.normalize();
-
-	playerpos_ = playerpos_ + playervector_;
-
-	enemy_->Update(playerpos_);
-
-	player_->Update(playerpos_,charactervector_);
-
-	map_->Update(playerpos_);
-
 	playervector_ = {0, 0};
+
 }
 
 void GameplayingScene::Draw()

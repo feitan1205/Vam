@@ -31,7 +31,7 @@ public:
 	GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input);
 
 
-	~GameplayingScene() {}
+	~GameplayingScene();
 
 	void Update(const InputState& input);
 	void Draw();

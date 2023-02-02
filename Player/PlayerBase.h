@@ -20,12 +20,12 @@ public:
 	virtual void IdleAnimation(bool charactervector) = 0;
 	virtual void MoveAnimation(bool charactervector) = 0;
 	virtual void SetHitBox(Vec2 playerpos) = 0;
-
 	virtual void Damage(int enemyattackpoint) = 0;
 
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
 
+	int GetAttackPoint();
 	bool GetIsAttack1();
 	Vec2 GetAttackMinHitBox();
 	Vec2 GetAttackMaxHitBox();

@@ -18,8 +18,13 @@ Red::Red(Vec2 playerpos) :
 Red::~Red()
 {
 	DeleteGraph(m_redH_);
+
 	for (int i = 0; i < 4; i++) {
 		DeleteGraph(m_idleH_[i]);
+	}
+
+	for (int i = 0; i < 6; i++) {
+		DeleteGraph(m_moveH_[i]);
 	}
 }
 
