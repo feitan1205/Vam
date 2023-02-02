@@ -2,6 +2,7 @@
 #include "../Vector2.h"
 
 class Attack1;
+class Attack2;
 
 class PlayerBase
 {
@@ -25,15 +26,20 @@ public:
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
 
-	int GetAttackPoint();
+	int GetAttack1Point();
 	bool GetIsAttack1();
-	Vec2 GetAttackMinHitBox();
-	Vec2 GetAttackMaxHitBox();
+	Vec2 GetAttack1MinHitBox();
+	Vec2 GetAttack1MaxHitBox();
+	int GetAttack2Point();
+	bool GetIsAttack2();
+	Vec2 GetAttack2MinHitBox();
+	Vec2 GetAttack2MaxHitBox();
 
 protected:
 
 	Vec2 pos_;
 	Attack1* attack1_;
+	Attack2* attack2_;
 
 };
 

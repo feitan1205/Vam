@@ -16,7 +16,6 @@ Red::Red(Vec2 playerpos) :
 	m_redH_ = my::MyLoadGraph(L"Data/red/Red.png");
 	LoadDivGraph(L"Data/red/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
 	LoadDivGraph(L"Data/red/Move.png", 6, 6, 1, 24, 24, m_moveH_);
-	//LoadGraph(L"Data/blue/Blue.png", m_blueH_);
 	GetGraphSize(m_redH_, &sizeX, &sizeY);
 }
 

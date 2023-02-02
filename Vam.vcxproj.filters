@@ -42,6 +42,7 @@
     <ClCompile Include="Enemy\EnemyBase.cpp" />
     <ClCompile Include="Enemy\FlyingEye.cpp" />
     <ClCompile Include="Attack\Attack1.cpp" />
+    <ClCompile Include="Attack\Attack2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\GameoverScene.h">
@@ -79,5 +80,6 @@
     <ClInclude Include="Enemy\EnemyBase.h" />
     <ClInclude Include="Enemy\FlyingEye.h" />
     <ClInclude Include="Attack\Attack1.h" />
+    <ClInclude Include="Attack\Attack2.h" />
   </ItemGroup>
 </Project>

@@ -29,6 +29,8 @@ public:
 
     void Attack1Hit(bool attack1hit) { attack1hit_ = attack1hit; }
     bool IsHitAttack1() { return attack1hit_; }
+    void Attack2Hit(bool attack2hit) { attack2hit_ = attack2hit; }
+    bool IsHitAttack2() { return attack2hit_; }
 
 private:
 
@@ -50,6 +52,7 @@ private:
     int attackpoint_;
     int cooldowntime_;
     bool attack1hit_;
+    bool attack2hit_;
 
 };
 

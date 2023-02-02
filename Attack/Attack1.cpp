@@ -82,8 +82,8 @@ void Attack1::Draw()
 		DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
 	}
 
-	DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
-	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true);
+	/*DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
+	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true);*/
 
 }
 

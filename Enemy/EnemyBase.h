@@ -27,6 +27,8 @@ public:
 
 	virtual void Attack1Hit(bool attack1hit) = 0;
 	virtual bool IsHitAttack1() = 0;
+	virtual void Attack2Hit(bool attack2hit) = 0;
+	virtual bool IsHitAttack2() = 0;
 private:
 
 

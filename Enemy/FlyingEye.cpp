@@ -15,6 +15,7 @@ FlyingEye::FlyingEye():
 	damagepoint_(),
 	damageflag_(),
 	attack1hit_(false),
+	attack2hit_(false),
 	damagedrawframe_()
 {
 	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, handle_);
@@ -101,11 +102,11 @@ void FlyingEye::Update(Vec2 playerpos)
 
 	pos_ += (vector_ * kspeed);
 
-	if (attack1hit_ && damagedrawframe_ == 30) {
+	if (attack1hit_ || attack2hit_ && damagedrawframe_ == 30) {
 		damagepoint_ = temphp_ - nowhp_;
 	}
 
-	if (attack1hit_) {
+	if (attack1hit_ || attack2hit_) {
 		damagedrawframe_--;
 	}
 	else {

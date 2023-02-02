@@ -101,8 +101,8 @@ void GameplayingScene::Update(const InputState& input)
 	}
 
 	if (player_->GetIsAttack1()) {
-		if (CheckHit(player_->GetAttackMinHitBox(), player_->GetAttackMaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox()) && !enemy_->IsHitAttack1()) {
-			enemy_->Damage(player_->GetAttackPoint());
+		if (CheckHit(player_->GetAttack1MinHitBox(), player_->GetAttack1MaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox()) && !enemy_->IsHitAttack1()) {
+			enemy_->Damage(player_->GetAttack1Point());
 			enemy_->Attack1Hit(true);
 			if (enemy_->GetNowHP() <= 0) {
 				enemy_->Init(playerpos_);
@@ -111,6 +111,19 @@ void GameplayingScene::Update(const InputState& input)
 	}
 	else {
 		enemy_->Attack1Hit(false);
+	}
+
+	if (player_->GetIsAttack2()) {
+		if (CheckHit(player_->GetAttack2MinHitBox(), player_->GetAttack2MaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox()) && !enemy_->IsHitAttack2()) {
+			enemy_->Damage(player_->GetAttack2Point());
+			enemy_->Attack2Hit(true);
+			if (enemy_->GetNowHP() <= 0) {
+				enemy_->Init(playerpos_);
+			}
+		}
+	}
+	else {
+		enemy_->Attack2Hit(false);
 	}
 
 	if (CheckHitKey(KEY_INPUT_O)) {
