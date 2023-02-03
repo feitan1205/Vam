@@ -17,6 +17,8 @@ public:
     void Draw(bool charactervector,Vec2 playerpos);
     void PlayerMove(Vec2 playermove);
     void Damage(int attackpoint);
+    void Death();
+    bool GetIsEnabled() { if (isEnabled_ && isEnabledexp_) { return false; } else { return true; } }
 
     void SetHitBox(Vec2 playerpos);
     void SetCoolDownTime();
@@ -37,6 +39,7 @@ private:
     Vec2 pos_;
     Vec2 vector_;
     int handle_[8];
+    int expH_;
     int flamecount_;
     Vec2 minhitbox_;
     Vec2 maxhitbox_;
@@ -53,6 +56,8 @@ private:
     int cooldowntime_;
     bool attack1hit_;
     bool attack2hit_;
+    bool isEnabled_;
+    bool isEnabledexp_;
 
 };
 

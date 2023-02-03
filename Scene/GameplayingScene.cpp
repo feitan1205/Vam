@@ -20,7 +20,7 @@ constexpr float kplayerspeed = 1.0;
 GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input) :
 	Scene(manager),
 	player_(nullptr),
-	enemy_(nullptr),
+	//enemy_(nullptr),
 	input_(input),
 	animationcount_(40),
 	charactervector_(false),
@@ -34,8 +34,12 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	else if (selectcharacter == static_cast<int>(Character::red)) {
 		player_ = new Red(playerpos_);
 	}
-	enemy_ = new FlyingEye();
-	enemy_->Init(playerpos_);
+	
+	enemies_.push_back(std::make_shared<FlyingEye>());
+
+	for (auto& enem : enemies_) {
+		enem->Init(playerpos_);
+	}
 	map_ = new Map();
 	map_->Init();
 
@@ -45,7 +49,6 @@ GameplayingScene::~GameplayingScene()
 {
 
 	delete player_;
-	delete enemy_;
 	delete map_;
 
 }
@@ -81,54 +84,80 @@ void GameplayingScene::Update(const InputState& input)
 	}
 
 	player_->SetHitBox(playerpos_);
-	enemy_->SetHitBox(playerpos_);
+	//enemy_->SetHitBox(playerpos_);
+
+	for (auto& enem : enemies_) {
+		enem->SetHitBox(playerpos_);
+	}
 
 	playervector_ = playervector_.normalize();
 	playerpos_ = playerpos_ + playervector_;
 
-	enemy_->Update(playerpos_);
+	//enemy_->Update(playerpos_);
+	for (auto& enem : enemies_) {
+		enem->Update(playerpos_);
+	}
 
 	player_->Update(playerpos_,charactervector_);
 
 	map_->Update(playerpos_);
 
-	if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox())) {
-		//printfDx(L"・・・・");
-		if (enemy_->GetCoolDownTime() <= 0) {
-			player_->Damage(enemy_->GetAttackPoint());
-			enemy_->SetCoolDownTime();
-		}
-	}
-
-	if (player_->GetIsAttack1()) {
-		if (CheckHit(player_->GetAttack1MinHitBox(), player_->GetAttack1MaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox()) && !enemy_->IsHitAttack1()) {
-			enemy_->Damage(player_->GetAttack1Point());
-			enemy_->Attack1Hit(true);
-			if (enemy_->GetNowHP() <= 0) {
-				enemy_->Init(playerpos_);
+	for (auto& enem : enemies_) {
+		if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox())) {
+			//printfDx(L"・・・・");
+			if (enem->GetCoolDownTime() <= 0) {
+				player_->Damage(enem->GetAttackPoint());
+				enem->SetCoolDownTime();
 			}
 		}
 	}
-	else {
-		enemy_->Attack1Hit(false);
-	}
 
-	if (player_->GetIsAttack2()) {
-		if (CheckHit(player_->GetAttack2MinHitBox(), player_->GetAttack2MaxHitBox(), enemy_->GetMinHitBox(), enemy_->GetMaxHitBox()) && !enemy_->IsHitAttack2()) {
-			enemy_->Damage(player_->GetAttack2Point());
-			enemy_->Attack2Hit(true);
-			if (enemy_->GetNowHP() <= 0) {
-				enemy_->Init(playerpos_);
+	for (auto& enem : enemies_) {
+		if (player_->GetIsAttack1()) {
+			if (CheckHit(player_->GetAttack1MinHitBox(), player_->GetAttack1MaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox()) && !enem->IsHitAttack1()) {
+				enem->Damage(player_->GetAttack1Point());
+				enem->Attack1Hit(true);
+				if (enem->GetNowHP() <= 0) {
+					enem->Death();
+				}
 			}
 		}
-	}
-	else {
-		enemy_->Attack2Hit(false);
+		else {
+			enem->Attack1Hit(false);
+		}
 	}
 
-	if (CheckHitKey(KEY_INPUT_O)) {
-		enemy_->Init(playerpos_);
+	for (auto& enem : enemies_) {
+		if (player_->GetIsAttack2()) {
+			if (CheckHit(player_->GetAttack2MinHitBox(), player_->GetAttack2MaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox()) && !enem->IsHitAttack2()) {
+				enem->Damage(player_->GetAttack2Point());
+				enem->Attack2Hit(true);
+				if (enem->GetNowHP() <= 0) {
+					enem->Death();
+				}
+			}
+		}
+		else {
+			enem->Attack2Hit(false);
+		}
 	}
+
+	auto rmIt = std::remove_if(enemies_.begin(), enemies_.end(),
+		[](const std::shared_ptr<EnemyBase>& enemy)
+		{
+			return !enemy->GetIsEnabled();
+		});
+
+
+	enemies_.erase(rmIt, enemies_.end());
+
+
+	if (CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) {
+		enemies_.push_back(std::make_shared<FlyingEye>());
+		enemies_.back()->Init(playerpos_);
+	}
+
+	tmpishitkey_ = CheckHitKey(KEY_INPUT_O);
 
 	playervector_ = {0, 0};
 
@@ -138,6 +167,10 @@ void GameplayingScene::Draw()
 {
 
 	map_->Draw();
+
+	for (auto& enem : enemies_) {
+		enem->Draw(true, playerpos_);
+	}
 
 	if (input_.IsPressed(InputType::up)) {
 		player_->MoveAnimation(charactervector_);
@@ -154,9 +187,6 @@ void GameplayingScene::Draw()
 	else {
 		player_->IdleAnimation(charactervector_);
 	}	
-
-	enemy_->Draw(true,playerpos_);
-
 }
 
 bool GameplayingScene::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2)

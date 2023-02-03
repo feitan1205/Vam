@@ -8,7 +8,7 @@ Attack1::Attack1():
 	flamecount_(),
 	cooldowntime_(0),
 	attackflag_(false),
-	attackpoint_(1),
+	attackpoint_(8),
 	attackvector_()
 {
 	attack1H_[0] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_01.png");

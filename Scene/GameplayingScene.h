@@ -1,4 +1,7 @@
 #pragma once
+#include <memory>
+#include <map>
+#include <list>
 #include "../Vector2.h"
 #include "Scene.h"
 
@@ -18,13 +21,16 @@ private:
 	const InputState& input_;
 	int animationcount_;
 	bool charactervector_;		//右：false、左：true
+	bool tmpishitkey_;
 
 	Vec2 playerpos_;
 	Vec2 playervector_;
 
 	Map* map_;
 
-	EnemyBase* enemy_;
+	std::list<std::shared_ptr<EnemyBase>> enemies_;
+
+	//EnemyBase* enemy_;
 	int flyingeyeH_[8];
 
 public:

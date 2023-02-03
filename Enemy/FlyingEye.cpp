@@ -5,19 +5,23 @@
 constexpr float kspeed = 0.5;
 constexpr int standardcooldowntime = 30;
 
-FlyingEye::FlyingEye():
+FlyingEye::FlyingEye() :
 	flamecount_(),
 	attackpoint_(2),
 	cooldowntime_(),
 	tmprand_(),
-	nowhp_(100),
+	nowhp_(20),
 	temphp_(),
 	damagepoint_(),
 	damageflag_(),
 	attack1hit_(false),
 	attack2hit_(false),
-	damagedrawframe_()
+	damagedrawframe_(),
+	isEnabled_(false),
+	expH_(),
+	isEnabledexp_(false)
 {
+	expH_ = my::MyLoadGraph(L"Data/exp/orb6.png");
 	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, handle_);
 }
 
@@ -30,7 +34,9 @@ FlyingEye::~FlyingEye()
 
 void FlyingEye::Init(Vec2 playerpos)
 {
-	nowhp_ = 100;
+	isEnabled_ = true;
+
+	nowhp_ = 20;
 		
 	int tempx = 0;
 	int tempy = 0;
@@ -94,6 +100,11 @@ void FlyingEye::End()
 
 void FlyingEye::Update(Vec2 playerpos)
 {
+
+	if (isEnabledexp_) {
+		return;
+	}
+
 	cooldowntime_--;
 
 	vector_ = playerpos - pos_;
@@ -102,9 +113,7 @@ void FlyingEye::Update(Vec2 playerpos)
 
 	pos_ += (vector_ * kspeed);
 
-	if (attack1hit_ || attack2hit_ && damagedrawframe_ == 30) {
-		damagepoint_ = temphp_ - nowhp_;
-	}
+	
 
 	if (attack1hit_ || attack2hit_) {
 		damagedrawframe_--;
@@ -126,6 +135,11 @@ void FlyingEye::Update(Vec2 playerpos)
 
 void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 {
+
+	if (isEnabledexp_) {
+		DrawRotaGraph(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 1, 0, expH_, true);
+		return;
+	}
 
 	DrawFormatString(0, 0, 0xffffff, L"%f", pos_.x, true);
 	DrawFormatString(0, 16, 0xffffff, L"%f", pos_.y, true);
@@ -177,7 +191,19 @@ void FlyingEye::Damage(int attackpoint)
 {
 
 	nowhp_ -= attackpoint;
-	
+
+	damagepoint_ = attackpoint;
+
+}
+
+void FlyingEye::Death()
+{
+
+	isEnabled_ = false;
+
+	if (GetRand(2) == 1) {
+		isEnabledexp_ = true;
+	}
 
 }
 

@@ -15,6 +15,8 @@ public:
 	virtual void PlayerMove(Vec2 playermove) = 0;
 
 	virtual void Damage(int attackpoint) = 0;
+	virtual void Death() = 0;
+	virtual bool GetIsEnabled() = 0;
 
 	virtual void SetHitBox(Vec2 playerpos) = 0;
 	virtual void SetCoolDownTime() = 0;
