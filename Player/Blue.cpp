@@ -37,6 +37,7 @@ Blue::~Blue()
 
 void Blue::Init()
 {
+	PlayerBase::Init(cooldownpercentage_);
 }
 
 void Blue::End()

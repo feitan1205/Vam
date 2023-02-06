@@ -172,6 +172,7 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 	}
 
 	DrawBox(minhitbox_.x + 640 - playerpos.x, minhitbox_.y + 370 - playerpos.y, maxhitbox_.x + 640 - playerpos.x, maxhitbox_.y + 370 - playerpos.y, 0x000000, false);
+	DrawCircle(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, hitcircle_, 0xff0000, false);
 
 	//DrawFormatString(0, 0, 0xffffff, L"%d", tmprand_, true);
 
@@ -214,6 +215,8 @@ void FlyingEye::SetHitBox(Vec2 playerpos)
 	minhitbox_.y = pos_.y - 10;
 	maxhitbox_.x = pos_.x + 20;
 	maxhitbox_.y = pos_.y + 20;
+
+	hitcircle_ = 15;
 
 }
 

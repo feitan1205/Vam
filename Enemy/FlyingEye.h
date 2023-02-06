@@ -25,7 +25,7 @@ public:
 
     Vec2 GetMinHitBox() { return minhitbox_; }
     Vec2 GetMaxHitBox() { return maxhitbox_; }
-    int GetNowHP() { return nowhp_; };
+    int GetNowHP() { return nowhp_; }
     int GetCoolDownTime() { return cooldowntime_; }
     int GetAttackPoint() { return attackpoint_; }
 
@@ -43,6 +43,7 @@ private:
     int flamecount_;
     Vec2 minhitbox_;
     Vec2 maxhitbox_;
+    float hitcircle_;
     int tmprand_;
     bool damageflag_;
     int damagedrawframe_;

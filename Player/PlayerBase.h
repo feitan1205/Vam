@@ -3,6 +3,7 @@
 
 class Attack1;
 class Attack2;
+class Attack3;
 
 class PlayerBase
 {
@@ -34,12 +35,17 @@ public:
 	bool GetIsAttack2();
 	Vec2 GetAttack2MinHitBox();
 	Vec2 GetAttack2MaxHitBox();
+	int GetAttack3Point();
+	bool GetIsAttack3();
+	Vec2 GetAttack3MinHitBox();
+	Vec2 GetAttack3MaxHitBox();
 
 protected:
 
 	Vec2 pos_;
 	Attack1* attack1_;
 	Attack2* attack2_;
+	Attack3* attack3_;
 
 };
 

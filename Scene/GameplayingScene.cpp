@@ -12,6 +12,7 @@
 #include "../Map/Map.h"
 #include "../Enemy/EnemyBase.h"
 #include "../Enemy/FlyingEye.h"
+#include <cmath>
 
 constexpr float kplayerspeed = 1.0;
 
@@ -34,6 +35,8 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	else if (selectcharacter == static_cast<int>(Character::red)) {
 		player_ = new Red(playerpos_);
 	}
+
+	player_->Init();
 	
 	enemies_.push_back(std::make_shared<FlyingEye>());
 
@@ -198,4 +201,17 @@ bool GameplayingScene::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox
 	if (maxhitbox1.x < minhitbox2.x)		return false;
 
 	return true;
+}
+
+bool CheckHitCircle(Vec2 playerpos,float circle,Vec2 enemypos,float enemycircle)
+{
+	Vec2 distance = playerpos - enemypos;
+
+	float vecdistance = std::hypotf(distance.x , distance.y);
+
+	if (vecdistance < circle + enemycircle) {
+		return true;
+	}
+	
+	return false;
 }
