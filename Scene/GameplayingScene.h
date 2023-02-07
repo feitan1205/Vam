@@ -15,6 +15,18 @@ class Map;
 /// </summary>
 class GameplayingScene : public Scene
 {
+public:
+	GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input);
+
+
+	~GameplayingScene();
+
+	void Update(const InputState& input);
+	void Draw();
+
+	bool CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2);
+	bool CheckHitCircle(Vec2 playerpos, float circle, Vec2 enemypos, float enemycircle);
+
 private:
 
 	PlayerBase* player_;
@@ -33,15 +45,5 @@ private:
 	//EnemyBase* enemy_;
 	int flyingeyeH_[8];
 
-public:
-	GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input);
-
-
-	~GameplayingScene();
-
-	void Update(const InputState& input);
-	void Draw();
-
-	bool CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2);
 };
 

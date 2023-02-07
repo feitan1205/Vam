@@ -1,5 +1,8 @@
 #pragma once
 #include "../Vector2.h"
+#include <vector>
+
+class AttackBase;
 
 class Attack1;
 class Attack2;
@@ -37,15 +40,12 @@ public:
 	Vec2 GetAttack2MaxHitBox();
 	int GetAttack3Point();
 	bool GetIsAttack3();
-	Vec2 GetAttack3MinHitBox();
-	Vec2 GetAttack3MaxHitBox();
+	float GetAttack3HitCircle();
 
 protected:
 
 	Vec2 pos_;
-	Attack1* attack1_;
-	Attack2* attack2_;
-	Attack3* attack3_;
+	std::vector<AttackBase> attack_;
 
 };
 

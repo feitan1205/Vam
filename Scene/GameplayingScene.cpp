@@ -145,6 +145,21 @@ void GameplayingScene::Update(const InputState& input)
 		}
 	}
 
+	for (auto& enem : enemies_) {
+		if (player_->GetIsAttack3()) {
+			if (CheckHitCircle(playerpos_, player_->GetAttack3HitCircle(), enem->GetPos(), enem->GetCircle()) && !enem->IsHitAttack3()) {
+				enem->Damage(player_->GetAttack2Point());
+				enem->Attack2Hit(true);
+				if (enem->GetNowHP() <= 0) {
+					enem->Death();
+				}
+			}
+		}
+		else {
+			enem->Attack3Hit(false);
+		}
+	}
+
 	auto rmIt = std::remove_if(enemies_.begin(), enemies_.end(),
 		[](const std::shared_ptr<EnemyBase>& enemy)
 		{
@@ -203,7 +218,7 @@ bool GameplayingScene::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox
 	return true;
 }
 
-bool CheckHitCircle(Vec2 playerpos,float circle,Vec2 enemypos,float enemycircle)
+bool GameplayingScene::CheckHitCircle(Vec2 playerpos,float circle,Vec2 enemypos,float enemycircle)
 {
 	Vec2 distance = playerpos - enemypos;
 

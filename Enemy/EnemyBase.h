@@ -26,11 +26,15 @@ public:
 	virtual int GetNowHP() = 0;
 	virtual int GetCoolDownTime() = 0;
 	virtual int GetAttackPoint() = 0;
+	virtual Vec2 GetPos() = 0;
+	virtual float GetCircle() = 0;
 
 	virtual void Attack1Hit(bool attack1hit) = 0;
 	virtual bool IsHitAttack1() = 0;
 	virtual void Attack2Hit(bool attack2hit) = 0;
 	virtual bool IsHitAttack2() = 0;
+	virtual void Attack3Hit(bool attack3hit) = 0;
+	virtual bool IsHitAttack3() = 0;
 private:
 
 

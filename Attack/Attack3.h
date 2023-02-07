@@ -2,7 +2,8 @@
 #include "../Vector2.h"
 #include <DxLib.h>
 
-class Attack3
+class Attack3:
+	public AttackBase
 {
 public:
 
@@ -16,8 +17,7 @@ public:
 	void SetHitBox();
 
 	bool GetIsAttack() { return attackflag_; }
-	Vec2 GetAttack3MinHitBox() { return minhitbox_; }
-	Vec2 GetAttack3MaxHitBox() { return maxhitbox_; }
+	float GetAttack3HitCircle() { return circle_; }
 	int GetAttack3Point() { return attackpoint_ + GetRand(5); }
 
 private:

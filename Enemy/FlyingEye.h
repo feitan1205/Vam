@@ -28,11 +28,15 @@ public:
     int GetNowHP() { return nowhp_; }
     int GetCoolDownTime() { return cooldowntime_; }
     int GetAttackPoint() { return attackpoint_; }
+    Vec2 GetPos() { return pos_; }
+    float GetCircle() { return hitcircle_; }
 
     void Attack1Hit(bool attack1hit) { attack1hit_ = attack1hit; }
     bool IsHitAttack1() { return attack1hit_; }
     void Attack2Hit(bool attack2hit) { attack2hit_ = attack2hit; }
     bool IsHitAttack2() { return attack2hit_; }
+    void Attack3Hit(bool attack3hit) { attack3hit_ = attack3hit; }
+    bool IsHitAttack3() { return attack3hit_; }
 
 private:
 
@@ -57,6 +61,7 @@ private:
     int cooldowntime_;
     bool attack1hit_;
     bool attack2hit_;
+    bool attack3hit_;
     bool isEnabled_;
     bool isEnabledexp_;
 

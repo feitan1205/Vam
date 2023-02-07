@@ -2,7 +2,8 @@
 #include "../Vector2.h"
 #include <DxLib.h>
 
-class Attack1
+class Attack1 :
+	public AttackBase
 {
 public:
 

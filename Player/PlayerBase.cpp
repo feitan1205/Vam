@@ -1,13 +1,12 @@
 #include "PlayerBase.h"
+#include "../Attack//AttackBase.h"
 #include "../Attack//Attack1.h"
 #include "../Attack//Attack2.h"
 #include "../Attack//Attack3.h"
 
 PlayerBase::PlayerBase()
 {	
-	attack1_ = new Attack1();
-	attack2_ = new Attack2();
-	attack3_ = new Attack3();
+	
 }
 
 PlayerBase::PlayerBase(Vec2 playerpos)
@@ -17,13 +16,18 @@ PlayerBase::PlayerBase(Vec2 playerpos)
 
 PlayerBase::~PlayerBase()
 {
-	delete attack1_;
-	delete attack2_;
-	delete attack3_;
+	attack_.clear();
 }
 
 void PlayerBase::Init(int cooldownpercentage)
 {
+
+	attack_.push_back(new Attack1())
+
+	for (auto& attack : attack_) {
+		attack.Init(cooldownpercentage);
+	}
+
 	attack1_->Init(cooldownpercentage);
 	attack2_->Init(cooldownpercentage);
 	attack3_->Init(cooldownpercentage);
@@ -103,12 +107,8 @@ bool PlayerBase::GetIsAttack3()
 	return attack3_->GetIsAttack();
 }
 
-Vec2 PlayerBase::GetAttack3MinHitBox()
+float PlayerBase::GetAttack3HitCircle()
 {
-	return attack3_->GetAttack3MinHitBox();
+	return attack3_->GetAttack3HitCircle();
 }
 
-Vec2 PlayerBase::GetAttack3MaxHitBox()
-{
-	return attack3_->GetAttack3MaxHitBox();
-}
