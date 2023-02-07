@@ -3,6 +3,8 @@
 
 class AttackBase
 {
+public:
+
 	AttackBase();
 	~AttackBase();
 
@@ -17,6 +19,9 @@ class AttackBase
 	virtual Vec2 GetAttackMaxHitBox() = 0;
 	virtual float GetAttackHitCircle() = 0;
 	virtual int GetAttackPoint() = 0;
+	virtual int GetMyNumber() = 0;
+
+private:
 
 };
 

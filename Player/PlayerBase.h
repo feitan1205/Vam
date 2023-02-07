@@ -30,22 +30,18 @@ public:
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
 
-	int GetAttack1Point();
-	bool GetIsAttack1();
-	Vec2 GetAttack1MinHitBox();
-	Vec2 GetAttack1MaxHitBox();
-	int GetAttack2Point();
-	bool GetIsAttack2();
-	Vec2 GetAttack2MinHitBox();
-	Vec2 GetAttack2MaxHitBox();
-	int GetAttack3Point();
-	bool GetIsAttack3();
-	float GetAttack3HitCircle();
+	int GetAttackPoint(int attacknum);
+	bool GetIsAttack(int attacknum);
+	Vec2 GetAttackMinHitBox(int attacknum);
+	Vec2 GetAttackMaxHitBox(int attacknum);
+	float GetAttackHitCircle(int attacknum);
 
+	int GetAttackKindNum() { return attack_.size(); }
+	int GetAttackingNumber(int attacknum);
 protected:
 
 	Vec2 pos_;
-	std::vector<AttackBase> attack_;
+	std::vector<AttackBase*> attack_;
 
 };
 

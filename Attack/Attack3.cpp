@@ -38,19 +38,7 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 
 	cooldowntime_--;
 
-	if (attackflag_) {
-		attackflag_ = false;
-	}
-
-	if (cooldowntime_ < 0) {
-		attackflag_ = true;
-		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
-	}
-
-	if (!attackflag_) {
-		attackvector_ = charactervector;
-	}
-
+	attackflag_ = true;
 }
 
 void Attack3::Draw()

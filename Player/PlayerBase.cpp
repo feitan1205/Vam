@@ -16,99 +16,72 @@ PlayerBase::PlayerBase(Vec2 playerpos)
 
 PlayerBase::~PlayerBase()
 {
+	for (auto& attack : attack_) {
+		delete attack;
+	}
 	attack_.clear();
 }
 
 void PlayerBase::Init(int cooldownpercentage)
 {
 
-	attack_.push_back(new Attack1())
+	//attack_.push_back(new Attack1());
+	//attack_.push_back(new Attack2());
+	attack_.push_back(new Attack3());
 
 	for (auto& attack : attack_) {
-		attack.Init(cooldownpercentage);
+		attack->Init(cooldownpercentage);
 	}
 
-	attack1_->Init(cooldownpercentage);
-	attack2_->Init(cooldownpercentage);
-	attack3_->Init(cooldownpercentage);
+	
 }
 
-void PlayerBase::Update(int cooldownpercentage, bool charactervector,Vec2 playerpos)
+void PlayerBase::Update(int cooldownpercentage, bool charactervector, Vec2 playerpos)
 {
-	attack1_->Update(cooldownpercentage,charactervector,playerpos);
-	attack1_->SetHitBox();
-	attack2_->Update(cooldownpercentage, charactervector, playerpos);
-	attack2_->SetHitBox();
-	attack3_->Update(cooldownpercentage, charactervector, playerpos);
-	attack3_->SetHitBox();
+
+	for (auto& attack : attack_) {
+		attack->Update(cooldownpercentage, charactervector, playerpos);
+		attack->SetHitBox();
+	}
+
 }
 
 void PlayerBase::Draw(bool charactervector)
 {
-	if (attack1_->GetIsAttack()) {
-		attack1_->Draw();
+	for (auto& attack : attack_) {
+		if (attack->GetIsAttack()) {
+			attack->Draw();
+		}
 	}
-
-	if (attack2_->GetIsAttack()){
-		attack2_->Draw();
-	}
-
-	attack3_->Draw();
-
+	
 }
 
-int PlayerBase::GetAttack1Point()
+int PlayerBase::GetAttackPoint(int attacknum)
 {
-	return attack1_->GetAttack1Point();
+	
+	return attack_[attacknum]->GetAttackPoint();
 }
 
-bool PlayerBase::GetIsAttack1()
+bool PlayerBase::GetIsAttack(int attacknum)
 {
-	return attack1_->GetIsAttack();
+	return attack_[attacknum]->GetIsAttack();
 }
 
-Vec2 PlayerBase::GetAttack1MinHitBox()
+Vec2 PlayerBase::GetAttackMinHitBox(int attacknum)
 {
-	return attack1_->GetAttack1MinHitBox();
+	return attack_[attacknum]->GetAttackMinHitBox();
 }
 
-Vec2 PlayerBase::GetAttack1MaxHitBox()
+Vec2 PlayerBase::GetAttackMaxHitBox(int attacknum)
 {
-	return attack1_->GetAttack1MaxHitBox();
+	return attack_[attacknum]->GetAttackMaxHitBox();
 }
 
-int PlayerBase::GetAttack2Point()
+float PlayerBase::GetAttackHitCircle(int attacknum)
 {
-	return attack2_->GetAttack2Point();
+	return attack_[attacknum]->GetAttackHitCircle();
 }
 
-bool PlayerBase::GetIsAttack2()
-{
-	return attack2_->GetIsAttack();
+int PlayerBase::GetAttackingNumber(int attacknum) {
+	return attack_[attacknum]->GetMyNumber();
 }
-
-Vec2 PlayerBase::GetAttack2MinHitBox()
-{
-	return attack2_->GetAttack2MinHitBox();
-}
-
-Vec2 PlayerBase::GetAttack2MaxHitBox()
-{
-	return attack2_->GetAttack2MaxHitBox();
-}
-
-int PlayerBase::GetAttack3Point()
-{
-	return attack3_->GetAttack3Point();
-}
-
-bool PlayerBase::GetIsAttack3()
-{
-	return attack3_->GetIsAttack();
-}
-
-float PlayerBase::GetAttack3HitCircle()
-{
-	return attack3_->GetAttack3HitCircle();
-}
-

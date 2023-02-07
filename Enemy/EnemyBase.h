@@ -35,6 +35,7 @@ public:
 	virtual bool IsHitAttack2() = 0;
 	virtual void Attack3Hit(bool attack3hit) = 0;
 	virtual bool IsHitAttack3() = 0;
+
 private:
 
 

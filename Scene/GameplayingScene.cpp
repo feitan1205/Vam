@@ -13,6 +13,7 @@
 #include "../Enemy/EnemyBase.h"
 #include "../Enemy/FlyingEye.h"
 #include <cmath>
+#include "../Attack/AttackBase.h"
 
 constexpr float kplayerspeed = 1.0;
 
@@ -116,49 +117,41 @@ void GameplayingScene::Update(const InputState& input)
 	}
 
 	for (auto& enem : enemies_) {
-		if (player_->GetIsAttack1()) {
-			if (CheckHit(player_->GetAttack1MinHitBox(), player_->GetAttack1MaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox()) && !enem->IsHitAttack1()) {
-				enem->Damage(player_->GetAttack1Point());
-				enem->Attack1Hit(true);
-				if (enem->GetNowHP() <= 0) {
-					enem->Death();
+		for (int i = 0; i < player_->GetAttackKindNum(); i++) {
+			if (player_->GetAttackingNumber(i) == 1 || player_->GetAttackingNumber(i) == 2) {
+				if (player_->GetIsAttack(i)) {
+					if (CheckHit(player_->GetAttackMinHitBox(i), player_->GetAttackMaxHitBox(i), enem->GetMinHitBox(), enem->GetMaxHitBox()) && !enem->IsHitAttack1()) {
+						enem->Damage(player_->GetAttackPoint(i));
+						enem->Attack1Hit(true);
+						if (enem->GetNowHP() <= 0) {
+							enem->Death();
+						}
+					}
+				}
+				else {
+					enem->Attack1Hit(false);
 				}
 			}
-		}
-		else {
-			enem->Attack1Hit(false);
+			else if (player_->GetAttackingNumber(i) == 3) {
+				if (player_->GetIsAttack(i)) {
+					if (CheckHitCircle(playerpos_, player_->GetAttackHitCircle(i), enem->GetMinHitBox(), enem->GetCircle()) && !enem->IsHitAttack1()) {
+						enem->Damage(player_->GetAttackPoint(i));
+						enem->Attack1Hit(true);
+						if (enem->GetNowHP() <= 0) {
+							enem->Death();
+						}
+					}
+				}
+				else {
+					enem->Attack1Hit(false);
+				}
+			}
 		}
 	}
 
-	for (auto& enem : enemies_) {
-		if (player_->GetIsAttack2()) {
-			if (CheckHit(player_->GetAttack2MinHitBox(), player_->GetAttack2MaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox()) && !enem->IsHitAttack2()) {
-				enem->Damage(player_->GetAttack2Point());
-				enem->Attack2Hit(true);
-				if (enem->GetNowHP() <= 0) {
-					enem->Death();
-				}
-			}
-		}
-		else {
-			enem->Attack2Hit(false);
-		}
-	}
+	
 
-	for (auto& enem : enemies_) {
-		if (player_->GetIsAttack3()) {
-			if (CheckHitCircle(playerpos_, player_->GetAttack3HitCircle(), enem->GetPos(), enem->GetCircle()) && !enem->IsHitAttack3()) {
-				enem->Damage(player_->GetAttack2Point());
-				enem->Attack2Hit(true);
-				if (enem->GetNowHP() <= 0) {
-					enem->Death();
-				}
-			}
-		}
-		else {
-			enem->Attack3Hit(false);
-		}
-	}
+	
 
 	auto rmIt = std::remove_if(enemies_.begin(), enemies_.end(),
 		[](const std::shared_ptr<EnemyBase>& enemy)

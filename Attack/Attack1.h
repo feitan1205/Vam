@@ -1,6 +1,7 @@
 #pragma once
 #include "../Vector2.h"
 #include <DxLib.h>
+#include "AttackBase.h"
 
 class Attack1 :
 	public AttackBase
@@ -17,9 +18,11 @@ public:
 	void SetHitBox();
 
 	bool GetIsAttack() { return attackflag_; }
-	Vec2 GetAttack1MinHitBox() { return minhitbox_; }
-	Vec2 GetAttack1MaxHitBox() { return maxhitbox_; }
-	int GetAttack1Point() { return attackpoint_ + GetRand(5); }
+	Vec2 GetAttackMinHitBox() { return minhitbox_; }
+	Vec2 GetAttackMaxHitBox() { return maxhitbox_; }
+	float GetAttackHitCircle() { return 0; }
+	int GetAttackPoint() { return attackpoint_ + GetRand(5); }
+	int GetMyNumber() { return 1; }
 
 private:
 
