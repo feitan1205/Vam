@@ -14,8 +14,6 @@ FlyingEye::FlyingEye() :
 	temphp_(),
 	damagepoint_(),
 	damageflag_(),
-	attack1hit_(false),
-	attack2hit_(false),
 	damagedrawframe_(),
 	isEnabled_(false),
 	expH_(),
@@ -115,11 +113,13 @@ void FlyingEye::Update(Vec2 playerpos)
 
 	
 
-	if (attack1hit_ || attack2hit_) {
-		damagedrawframe_--;
-	}
-	else {
-		damagedrawframe_ = 30;
+	for (int i = 0; i < 3; i++) {
+		if (attackhit_[i]) {
+			damagedrawframe_[i]--;
+		}
+		else {
+			damagedrawframe_[i] = 30;
+		}
 	}
 
 
@@ -176,8 +176,10 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 
 	//DrawFormatString(0, 0, 0xffffff, L"%d", tmprand_, true);
 
-	if (damagedrawframe_ >= 0 && damagedrawframe_ != 30) {
-		DrawFormatString(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 0xffffff, L"%d", damagepoint_, true);
+	for (int i = 0; i < 3; i++) {
+		if (damagedrawframe_[i] >= 0 && damagedrawframe_[i] != 30) {
+			DrawFormatString(pos_.x + 640 - playerpos.x, pos_.y + 370 - playerpos.y, 0xffffff, L"%d", damagepoint_[i], true);
+		}
 	}
 }
 
@@ -188,12 +190,12 @@ void FlyingEye::PlayerMove(Vec2 playermove)
 
 }
 
-void FlyingEye::Damage(int attackpoint)
+void FlyingEye::Damage(int attackpoint,int attacknumber)
 {
 
 	nowhp_ -= attackpoint;
 
-	damagepoint_ = attackpoint;
+	damagepoint_[attacknumber] = attackpoint;
 
 }
 

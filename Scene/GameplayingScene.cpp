@@ -120,30 +120,30 @@ void GameplayingScene::Update(const InputState& input)
 		for (int i = 0; i < player_->GetAttackKindNum(); i++) {
 			if (player_->GetAttackingNumber(i) == 1 || player_->GetAttackingNumber(i) == 2) {
 				if (player_->GetIsAttack(i)) {
-					if (CheckHit(player_->GetAttackMinHitBox(i), player_->GetAttackMaxHitBox(i), enem->GetMinHitBox(), enem->GetMaxHitBox()) && !enem->IsHitAttack1()) {
-						enem->Damage(player_->GetAttackPoint(i));
-						enem->Attack1Hit(true);
+					if (CheckHit(player_->GetAttackMinHitBox(i), player_->GetAttackMaxHitBox(i), enem->GetMinHitBox(), enem->GetMaxHitBox()) && !enem->IsHitAttack(player_->GetAttackingNumber(i))) {
+						enem->Damage(player_->GetAttackPoint(i), player_->GetAttackingNumber(i));
+						enem->AttackHit(true,player_->GetAttackingNumber(i));
 						if (enem->GetNowHP() <= 0) {
 							enem->Death();
 						}
 					}
 				}
 				else {
-					enem->Attack1Hit(false);
+					enem->AttackHit(false, player_->GetAttackingNumber(i));
 				}
 			}
 			else if (player_->GetAttackingNumber(i) == 3) {
 				if (player_->GetIsAttack(i)) {
-					if (CheckHitCircle(playerpos_, player_->GetAttackHitCircle(i), enem->GetMinHitBox(), enem->GetCircle()) && !enem->IsHitAttack1()) {
-						enem->Damage(player_->GetAttackPoint(i));
-						enem->Attack1Hit(true);
+					if (CheckHitCircle(playerpos_, player_->GetAttackHitCircle(i), enem->GetMinHitBox(), enem->GetCircle()) && !enem->IsHitAttack(player_->GetAttackingNumber(i))) {
+						enem->Damage(player_->GetAttackPoint(i), player_->GetAttackingNumber(i));
+						enem->AttackHit(true, player_->GetAttackingNumber(i));
 						if (enem->GetNowHP() <= 0) {
 							enem->Death();
 						}
 					}
 				}
 				else {
-					enem->Attack1Hit(false);
+					enem->AttackHit(false, player_->GetAttackingNumber(i));
 				}
 			}
 		}

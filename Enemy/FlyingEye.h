@@ -16,7 +16,7 @@ public:
     void Update(Vec2 playerpos);
     void Draw(bool charactervector,Vec2 playerpos);
     void PlayerMove(Vec2 playermove);
-    void Damage(int attackpoint);
+    void Damage(int attackpoint,int attacknumber);
     void Death();
     bool GetIsEnabled() { if (isEnabled_ && isEnabledexp_) { return false; } else { return true; } }
 
@@ -31,13 +31,9 @@ public:
     Vec2 GetPos() { return pos_; }
     float GetCircle() { return hitcircle_; }
 
-    void Attack1Hit(bool attack1hit) { attack1hit_ = attack1hit; }
-    bool IsHitAttack1() { return attack1hit_; }
-    void Attack2Hit(bool attack2hit) { attack2hit_ = attack2hit; }
-    bool IsHitAttack2() { return attack2hit_; }
-    void Attack3Hit(bool attack3hit) { attack3hit_ = attack3hit; }
-    bool IsHitAttack3() { return attack3hit_; }
-
+    void AttackHit(bool attackhit,int attacknumber) { attackhit_[attacknumber] = attackhit; }
+    bool IsHitAttack(int attacknumber) { return attackhit_[attacknumber]; }
+   
 private:
 
     Vec2 pos_;
@@ -50,18 +46,16 @@ private:
     float hitcircle_;
     int tmprand_;
     bool damageflag_;
-    int damagedrawframe_;
+    int damagedrawframe_[3];
 
 private:
 
     int nowhp_;
     int temphp_;
-    int damagepoint_;
+    int damagepoint_[3];
     int attackpoint_;
     int cooldowntime_;
-    bool attack1hit_;
-    bool attack2hit_;
-    bool attack3hit_;
+    bool attackhit_[3];
     bool isEnabled_;
     bool isEnabledexp_;
 

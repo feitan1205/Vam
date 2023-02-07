@@ -14,7 +14,7 @@ public:
 	virtual void Draw(bool charactervector,Vec2 playerpos) = 0;
 	virtual void PlayerMove(Vec2 playermove) = 0;
 
-	virtual void Damage(int attackpoint) = 0;
+	virtual void Damage(int attackpoint,int attacknumber) = 0;
 	virtual void Death() = 0;
 	virtual bool GetIsEnabled() = 0;
 
@@ -29,12 +29,8 @@ public:
 	virtual Vec2 GetPos() = 0;
 	virtual float GetCircle() = 0;
 
-	virtual void Attack1Hit(bool attack1hit) = 0;
-	virtual bool IsHitAttack1() = 0;
-	virtual void Attack2Hit(bool attack2hit) = 0;
-	virtual bool IsHitAttack2() = 0;
-	virtual void Attack3Hit(bool attack3hit) = 0;
-	virtual bool IsHitAttack3() = 0;
+	virtual void AttackHit(bool attack3hit,int attacknumber) = 0;
+	virtual bool IsHitAttack(int attacknumber) = 0;
 
 private:
 
