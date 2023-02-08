@@ -147,11 +147,7 @@ void GameplayingScene::Update(const InputState& input)
 				}
 			}
 		}
-	}
-
-	
-
-	
+	}	
 
 	auto rmIt = std::remove_if(enemies_.begin(), enemies_.end(),
 		[](const std::shared_ptr<EnemyBase>& enemy)
@@ -197,7 +193,8 @@ void GameplayingScene::Draw()
 	}
 	else {
 		player_->IdleAnimation(charactervector_);
-	}	
+	}
+
 }
 
 bool GameplayingScene::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2)
