@@ -37,6 +37,7 @@ private:
 	int enemflamecount_;
 	Vec2 playerpos_;
 	Vec2 playervector_;
+	int tmpLv_;
 
 	Map* map_;
 

@@ -11,10 +11,9 @@ FlyingEye::FlyingEye() :
 	attackpoint_(2),
 	cooldowntime_(),
 	tmprand_(),
-	nowhp_(1000),
+	nowhp_(5),
 	temphp_(),
 	damagepoint_(),
-	damageflag_(),
 	damagedrawframe_(),
 	isEnabled_(true),
 	expH_(),
@@ -22,6 +21,10 @@ FlyingEye::FlyingEye() :
 {
 	expH_ = my::MyLoadGraph(L"Data/exp/orb6.png");
 	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, handle_);
+	for (int i = 0; i < 3; i++) {
+		attackhit_[i] = false;
+		damagedrawframe_ [i] = -1;
+	}
 }
 
 FlyingEye::~FlyingEye()
@@ -35,7 +38,7 @@ void FlyingEye::Init(Vec2 playerpos)
 {
 	isEnabled_ = true;
 
-	nowhp_ = 1000;
+	nowhp_ = 5;
 		
 	int tempx = 0;
 	int tempy = 0;
@@ -115,12 +118,7 @@ void FlyingEye::Update(Vec2 playerpos)
 	
 
 	for (int i = 0; i < 3; i++) {
-		if (attackhit_[i]) {
-			damagedrawframe_[i]--;
-		}
-		else {
-			damagedrawframe_[i] = 30;
-		}
+		damagedrawframe_[i]--;
 	}
 
 
@@ -142,9 +140,7 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 		return;
 	}
 
-	DrawFormatString(0, 0, 0xffffff, L"%f", pos_.x, true);
-	DrawFormatString(0, 16, 0xffffff, L"%f", pos_.y, true);
-
+	
 	
 
 	if (flamecount_ >= 0 && flamecount_ < 10) {
@@ -175,6 +171,12 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 	DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, 0x000000, false);
 	DrawCircle(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, hitcircle_, 0xff0000, false);
 
+	for (int i = 0; i < 3; i++) {
+		if (damagedrawframe_[i] >= 0) {
+			DrawFormatString(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 0xffffff, L"%d", damagepoint_[i], true);
+		}
+	}
+
 }
 
 void FlyingEye::PlayerMove(Vec2 playermove)
@@ -188,7 +190,6 @@ void FlyingEye::Damage(int attackpoint,int attacknumber)
 {
 
 	nowhp_ -= attackpoint;
-
 	damagepoint_[attacknumber] = attackpoint;
 
 }

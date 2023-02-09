@@ -32,7 +32,10 @@ public:
     float GetCircle() { return hitcircle_; }
     bool GetIsExp() { return isEnabledexp_; }
     int GetExpPoint() { return exppoint_; }
-    void AttackHit(bool attackhit,int attacknumber) { attackhit_[attacknumber] = attackhit; }
+    void AttackHit(bool attackhit, int attacknumber) {
+        attackhit_[attacknumber] = attackhit;
+        if (attackhit) { damagedrawframe_[attacknumber] = 30; };
+    }
     bool IsHitAttack(int attacknumber) { return attackhit_[attacknumber]; }
     void DeleteEnable() { isEnabled_ = false; }
 
@@ -47,7 +50,7 @@ private:
     Vec2 maxhitbox_;
     float hitcircle_;
     int tmprand_;
-    bool damageflag_;
+    bool damageflag_[3];
     int damagedrawframe_[3];
 
 private:

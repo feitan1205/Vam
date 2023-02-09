@@ -31,6 +31,7 @@ public:
 	virtual Vec2 GetMaxHitBox() = 0;
 
 	virtual void GetExp(int exppoint) = 0;
+	virtual int GetNowLv() = 0;
 
 	int GetAttackPoint(int attacknum);
 	bool GetIsAttack(int attacknum);
@@ -40,6 +41,7 @@ public:
 
 	int GetAttackKindNum() { return attack_.size(); }
 	int GetAttackingNumber(int attacknum);
+
 
 protected:
 

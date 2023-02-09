@@ -43,8 +43,7 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 		attackflag_ = true;
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 	}
-
-	if (!attackflag_){
+	else{
 		attackvector_ = charactervector;
 	}
 

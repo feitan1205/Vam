@@ -14,6 +14,7 @@
 #include "../Enemy/FlyingEye.h"
 #include <cmath>
 #include "../Attack/AttackBase.h"
+#include "ItemSelectScene.h"
 
 constexpr float kplayerspeed = 1.0;
 
@@ -29,7 +30,8 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	map_(nullptr),
 	playerpos_(0,0),
 	flyingeyeH_(),
-	enemflamecount_(10)
+	enemflamecount_(10),
+	tmpLv_(1)
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		player_ = new Blue(playerpos_);
@@ -126,7 +128,7 @@ void GameplayingScene::Update(const InputState& input)
 	for (auto& enem : enemies_) {
 		if (enem->GetIsExp())continue;
 		for (int i = 0; i < player_->GetAttackKindNum(); i++) {
-			if (player_->GetAttackingNumber(i) == 1 || player_->GetAttackingNumber(i) == 2) {
+			if (player_->GetAttackingNumber(i) == 0 || player_->GetAttackingNumber(i) == 1) {
 				if (player_->GetIsAttack(i)) {
 					if (CheckHit(player_->GetAttackMinHitBox(i), player_->GetAttackMaxHitBox(i), enem->GetMinHitBox(), enem->GetMaxHitBox()) && !enem->IsHitAttack(player_->GetAttackingNumber(i))) {
 						enem->Damage(player_->GetAttackPoint(i), player_->GetAttackingNumber(i));
@@ -140,10 +142,9 @@ void GameplayingScene::Update(const InputState& input)
 					enem->AttackHit(false, player_->GetAttackingNumber(i));
 				}
 			}
-			else if (player_->GetAttackingNumber(i) == 3) {
+			else if (player_->GetAttackingNumber(i) == 2) {
 				if (player_->GetIsAttack(i)) {
 					if (CheckHitCircle(playerpos_, player_->GetAttackHitCircle(i), enem->GetPos(), enem->GetCircle()) && !enem->IsHitAttack(player_->GetAttackingNumber(i))) {
-						printfDx(L"EEE\n");
 						enem->Damage(player_->GetAttackPoint(i), player_->GetAttackingNumber(i));
 						enem->AttackHit(true, player_->GetAttackingNumber(i));
 						if (enem->GetNowHP() <= 0) {
@@ -169,7 +170,6 @@ void GameplayingScene::Update(const InputState& input)
 
 	printfDx(L"%d\n", enemies_.size());
 
-	//
 
 	if ((CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) || enemflamecount_ < 0) {
 		enemies_.push_back(std::make_shared<FlyingEye>());
@@ -180,6 +180,14 @@ void GameplayingScene::Update(const InputState& input)
 	tmpishitkey_ = CheckHitKey(KEY_INPUT_O);
 
 	playervector_ = {0, 0};
+
+	
+
+	if (player_->GetNowLv() != tmpLv_) {
+		manager_.PushScene(new ItemSelectScene(manager_));
+	}
+
+	tmpLv_ = player_->GetNowLv();
 
 }
 

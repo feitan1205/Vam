@@ -26,6 +26,7 @@ public:
     Vec2 GetMaxHitBox() { return maxhitbox_; }
 
     void GetExp(int exppoint);
+    int GetNowLv() { return nowLv_; }
 
 private:
 

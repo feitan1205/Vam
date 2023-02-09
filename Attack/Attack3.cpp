@@ -3,7 +3,7 @@
 #include "../DrawFunctions.h"
 #include "../game.h"
 
-constexpr int cooldowntime = 100;
+constexpr int cooldowntime = 200;
 
 Attack3::Attack3() :
 	circle_(),
@@ -23,7 +23,7 @@ Attack3::~Attack3()
 void Attack3::Init(int cooldownpercentage)
 {
 
-	circle_ = 40;
+	circle_ = 80;
 	cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 
 }
@@ -42,7 +42,7 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 	attackflag_ = true;
 
 	if (cooldowntime_ < 0) {
-		cooldowntime_ = 40;
+		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 		attackflag_ = false;
 	}
 

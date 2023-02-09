@@ -22,7 +22,7 @@ public:
 	Vec2 GetAttackMaxHitBox() { return maxhitbox_; }
 	float GetAttackHitCircle() { return 0; }
 	int GetAttackPoint() { return attackpoint_ + GetRand(5); }
-	int GetMyNumber() { return 2; }
+	int GetMyNumber() { return 1; }
 
 private:
 
