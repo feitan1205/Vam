@@ -85,5 +85,6 @@
     <ClInclude Include="Attack\Attack2.h" />
     <ClInclude Include="Attack\Attack3.h" />
     <ClInclude Include="Attack\AttackBase.h" />
+    <ClInclude Include="game.h" />
   </ItemGroup>
 </Project>

@@ -1,14 +1,15 @@
 #include "DxLib.h"
 #include "Attack2.h"
 #include "../DrawFunctions.h"
+#include "../game.h"
 
-constexpr int cooldowntime = 100;
+constexpr int cooldowntime = 0;
 
 Attack2::Attack2() :
 	flamecount_(),
 	cooldowntime_(0),
 	attackflag_(false),
-	attackpoint_(1),
+	attackpoint_(5),
 	attackvector_(),
 	attackscale_(),
 	attackingtime_(100),
@@ -81,18 +82,18 @@ void Attack2::Draw()
 	
 	if (animationcount_ >= 0 && animationcount_ < 5)
 	{
-		DrawRotaGraph(640, 370 - 30, attackscale_, 0, attack2H_[0], true, attackvector_);
+		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2 - 30, attackscale_, 0, attack2H_[0], true, attackvector_);
 	}
 	else if (animationcount_ >= 5 && animationcount_ < 10)
 	{
-		DrawRotaGraph(640, 370 - 30, attackscale_, 0, attack2H_[1], true, attackvector_);
+		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2 - 30, attackscale_, 0, attack2H_[1], true, attackvector_);
 	}
 	else if (animationcount_ >= 10 && animationcount_ < 15)
 	{
-		DrawRotaGraph(640, 370 - 30, attackscale_, 0, attack2H_[2], true, attackvector_);
+		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2 - 30, attackscale_, 0, attack2H_[2], true, attackvector_);
 	}
 
-	DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
+	DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
 
 	DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
 	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true); 

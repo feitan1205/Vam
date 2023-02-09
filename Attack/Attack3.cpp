@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "Attack3.h"
 #include "../DrawFunctions.h"
+#include "../game.h"
 
 constexpr int cooldowntime = 100;
 
@@ -44,7 +45,7 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 void Attack3::Draw()
 {
 	
-	DrawCircle(640, 370, circle_, 0xff0000, false);
+	DrawCircle(Game::kScreenWidth / 2, Game::kScreenHeight / 2, circle_, 0xff0000, false);
 	
 	/*DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
 	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true);*/

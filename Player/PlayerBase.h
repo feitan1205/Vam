@@ -30,6 +30,8 @@ public:
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
 
+	virtual void GetExp(int exppoint) = 0;
+
 	int GetAttackPoint(int attacknum);
 	bool GetIsAttack(int attacknum);
 	Vec2 GetAttackMinHitBox(int attacknum);
@@ -38,6 +40,7 @@ public:
 
 	int GetAttackKindNum() { return attack_.size(); }
 	int GetAttackingNumber(int attacknum);
+
 protected:
 
 	Vec2 pos_;

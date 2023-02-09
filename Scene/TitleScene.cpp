@@ -3,8 +3,10 @@
 #include "SceneManager.h"
 #include "CharacterSelectScene.h"
 #include "OptionScene.h"
+#include "GameplayingScene.h"
 #include <DxLib.h>
 #include "../DrawFunctions.h"
+#include "../game.h"
 
 void TitleScene::FadeInUpdate(const InputState& input)
 {
@@ -36,6 +38,12 @@ void TitleScene::NormalUpdate(const InputState& input)
 		manager_.ChangeScene(new OptionScene(manager_));
 		return;
 	}
+
+	if (CheckHitKey(KEY_INPUT_P)) {
+		manager_.ChangeScene(new GameplayingScene(manager_,0,input));
+		return;
+	}
+
 }
 
 void TitleScene::FadeOutUpdate(const InputState& input)
@@ -80,12 +88,12 @@ void TitleScene::Update(const InputState& input)
 void TitleScene::Draw()
 {
 	//普通の描画
-	DrawExtendGraph(0, 0, 1280, 720, m_background, true);
+	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_background, true);
 
-	DrawString(1280 / 2 - (16 * 11) / 2, 200, L"ヴァンパイアサバイバー", 0xffffff, true);
+	DrawString(Game::kScreenWidth / 2 - (16 * 11) / 2, 200, L"ヴァンパイアサバイバー", 0xffffff, true);
 
-	m_startbutton.x = 1280 / 2 - m_startbuttonsizeX / 2;
-	m_startbutton.y = 450;
+	m_startbutton.x = Game::kScreenWidth / 2 - m_startbuttonsizeX / 2;
+	m_startbutton.y = Game::kScreenHeight / 2;
 
 	DrawGraph(m_startbutton.x, m_startbutton.y, m_startbuttonH, false);
 
@@ -93,7 +101,7 @@ void TitleScene::Draw()
 	//ブレンドの仕方を指定している。
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue_);
 	//画面全体を真っ黒に塗りつぶす
-	DrawBox(0, 0, 1280, 720, 0x000000, true);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 

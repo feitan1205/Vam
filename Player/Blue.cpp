@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "Blue.h"
 #include "../DrawFunctions.h"
+#include "../game.h"
 
 Blue::Blue(Vec2 playerpos) :
 	sizeX(),
@@ -11,7 +12,10 @@ Blue::Blue(Vec2 playerpos) :
 	playerpos_(playerpos),
 	maxhp_(100),
 	nowhp_(100),
-	hppercentage_()
+	hppercentage_(),
+	maxexp_(),
+	nowexp_(),
+	nowLv_(1)
 {
 	m_blueH_ = my::MyLoadGraph(L"Data/blue/Blue.png");
 	LoadDivGraph(L"Data/blue/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
@@ -38,6 +42,8 @@ Blue::~Blue()
 void Blue::Init()
 {
 	PlayerBase::Init(cooldownpercentage_);
+	nowexp_ = 0;
+	maxexp_ = 4;
 }
 
 void Blue::End()
@@ -49,7 +55,7 @@ void Blue::Update(Vec2 playerpos, bool charactervector)
 	PlayerBase::Update(cooldownpercentage_, charactervector,playerpos);
 
 	hppercentage_ = static_cast <float>(nowhp_) / static_cast <float>(maxhp_);
-
+	exppercentage_ = static_cast <float>(nowexp_) / static_cast <float>(maxexp_);
 	playerpos_ = playerpos;
 
 }
@@ -68,22 +74,28 @@ void Blue::IdleAnimation(bool charactervector)
 	}
 
 	if (flamecount >= 0 && flamecount < 10) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[0], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[0], true, charactervector);
 	}
 	else if (flamecount >= 10 && flamecount < 20) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[1], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[1], true, charactervector);
 	}
 	else if (flamecount >= 20 && flamecount < 30) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[2], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[2], true, charactervector);
 	}
 	else if (flamecount >= 30 && flamecount < 40) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_idleH_[3], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[3], true, charactervector);
 	}
 
-	DrawBox((1280 / 2) - 20 - 1, (740 / 2) + 27 - 1, (1280 / 2) - 20 + (40 * 1) + 1, (740 / 2) + 35 + 1, 0x000000, true);
-	DrawBox((1280 / 2) - 20 , (740 / 2) + 27 , (1280 / 2) - 20 + (40 * hppercentage_), (740 / 2) + 35,0xff0000, true);
+	DrawBox((Game::kScreenWidth / 2) - 20 - 1, (Game::kScreenHeight / 2) + 27 - 1, (Game::kScreenWidth / 2) - 20 + (40 * 1) + 1, (Game::kScreenHeight / 2) + 35 + 1, 0x000000, true);
+	DrawBox((Game::kScreenWidth / 2) - 20 , (Game::kScreenHeight / 2) + 27 , (Game::kScreenWidth / 2) - 20 + (40 * hppercentage_), (Game::kScreenHeight / 2) + 35,0xff0000, true);
 
-	DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
+	DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
+
+	DrawBox(0, 1, Game::kScreenWidth, 20, 0x000000, true);
+	DrawBox(1, 1, Game::kScreenWidth * exppercentage_, 20, 0x00ffff, true);
+	DrawBox(0, 1, Game::kScreenWidth, 20, 0xffffff, false);
+
+	DrawFormatString(Game::kScreenWidth - 60, 3, 0xffffff, L"LvF%d", nowLv_, true);
 
 	PlayerBase::Draw(charactervector);
 	
@@ -100,31 +112,36 @@ void Blue::MoveAnimation(bool charactervector)
 	}
 
 	if (flamecount >= 0 && flamecount < 10) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[0], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_moveH_[0], true, charactervector);
 	}
 	else if (flamecount >= 10 && flamecount < 20) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[1], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_moveH_[1], true, charactervector);
 	}
 	else if (flamecount >= 20 && flamecount < 30) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[2], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_moveH_[2], true, charactervector);
 	}
 	else if (flamecount >= 30 && flamecount < 40) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[3], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_moveH_[3], true, charactervector);
 	}
 	else if (flamecount >= 40 && flamecount < 50) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[4], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_moveH_[4], true, charactervector);
 	}
 	else if (flamecount >= 50 && flamecount < 60) {
-		DrawRotaGraph((1280 / 2), (740 / 2), 2, 0, m_moveH_[5], true, charactervector);
+		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_moveH_[5], true, charactervector);
 	}
 
-	DrawBox((1280 / 2) - 20 - 1, (740 / 2) + 27 - 1, (1280 / 2) - 20 + (40 * 1) + 1, (740 / 2) + 35 + 1, 0x000000, true);
-	DrawBox((1280 / 2) - 20, (740 / 2) + 27, (1280 / 2) - 20 + (40 * hppercentage_), (740 / 2) + 35, 0xff0000, true);
+	DrawBox((Game::kScreenWidth / 2) - 20 - 1, (Game::kScreenHeight / 2) + 27 - 1, (Game::kScreenWidth / 2) - 20 + (40 * 1) + 1, (Game::kScreenHeight / 2) + 35 + 1, 0x000000, true);
+	DrawBox((Game::kScreenWidth / 2) - 20, (Game::kScreenHeight / 2) + 27, (Game::kScreenWidth / 2) - 20 + (40 * hppercentage_), (Game::kScreenHeight / 2) + 35, 0xff0000, true);
 
-	DrawBox(minhitbox_.x + (1280 / 2) - playerpos_.x, minhitbox_.y + (740 / 2) - playerpos_.y, maxhitbox_.x + (1280 / 2) - playerpos_.x, maxhitbox_.y + (740 / 2) - playerpos_.y, 0xff0000, false);
+	DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
+
+	DrawBox(0, 1, Game::kScreenWidth, 20, 0x000000, true);
+	DrawBox(1, 1, Game::kScreenWidth * exppercentage_, 20, 0x00ffff, true);
+	DrawBox(0, 1, Game::kScreenWidth, 20, 0xffffff, false);
+
+	DrawFormatString(Game::kScreenWidth - 60, 3, 0xffffff, L"LvF%d", nowLv_, true);
 
 	PlayerBase::Draw(charactervector);
-
 }
 
 void Blue::SetHitBox(Vec2 playerpos)
@@ -141,6 +158,19 @@ void Blue::Damage(int enemyattackpoint)
 {
 
 	nowhp_ -= enemyattackpoint;
+
+}
+
+void Blue::GetExp(int exppoint)
+{
+
+	nowexp_ += exppoint;
+
+	if (nowexp_ == maxexp_) {
+		nowLv_++;
+		nowexp_ = 0;
+		maxexp_ *= 2;
+	}
 
 }
 

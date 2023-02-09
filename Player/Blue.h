@@ -25,6 +25,8 @@ public:
     Vec2 GetMinHitBox() { return minhitbox_; }
     Vec2 GetMaxHitBox() { return maxhitbox_; }
 
+    void GetExp(int exppoint);
+
 private:
 
     int m_blueH_;
@@ -38,11 +40,15 @@ private:
     Vec2 minhitbox_;
     Vec2 maxhitbox_;
     float hppercentage_;
-    
+    float exppercentage_;
+
 private:
 
     int maxhp_;
     int nowhp_;
+    int maxexp_;
+    int nowexp_;
+    int nowLv_;
 
 };
 

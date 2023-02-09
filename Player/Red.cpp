@@ -141,3 +141,7 @@ void Red::Damage(int enemyattackpoint)
 	nowhp_ -= enemyattackpoint;
 
 }
+
+void Red::GetExp(int exppoint)
+{
+}

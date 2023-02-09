@@ -28,7 +28,8 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	charactervector_(false),
 	map_(nullptr),
 	playerpos_(0,0),
-	flyingeyeH_()
+	flyingeyeH_(),
+	enemflamecount_(10)
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		player_ = new Blue(playerpos_);
@@ -59,6 +60,8 @@ GameplayingScene::~GameplayingScene()
 
 void GameplayingScene::Update(const InputState& input)
 {
+
+	enemflamecount_--;
 
 	if (input.IsTriggered(InputType::prev))
 	{
@@ -114,9 +117,14 @@ void GameplayingScene::Update(const InputState& input)
 				enem->SetCoolDownTime();
 			}
 		}
+		if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox()) && enem->GetIsExp()) {
+			player_->GetExp(enem->GetExpPoint());
+			enem->DeleteEnable();
+		}
 	}
 
 	for (auto& enem : enemies_) {
+		if (enem->GetIsExp())continue;
 		for (int i = 0; i < player_->GetAttackKindNum(); i++) {
 			if (player_->GetAttackingNumber(i) == 1 || player_->GetAttackingNumber(i) == 2) {
 				if (player_->GetIsAttack(i)) {
@@ -159,9 +167,10 @@ void GameplayingScene::Update(const InputState& input)
 	enemies_.erase(rmIt, enemies_.end());
 
 
-	if (CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) {
+	if ((CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) || enemflamecount_ < 0) {
 		enemies_.push_back(std::make_shared<FlyingEye>());
 		enemies_.back()->Init(playerpos_);
+		enemflamecount_ = 10;
 	}
 
 	tmpishitkey_ = CheckHitKey(KEY_INPUT_O);

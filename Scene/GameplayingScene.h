@@ -34,7 +34,7 @@ private:
 	int animationcount_;
 	bool charactervector_;		//右：false、左：true
 	bool tmpishitkey_;
-
+	int enemflamecount_;
 	Vec2 playerpos_;
 	Vec2 playervector_;
 

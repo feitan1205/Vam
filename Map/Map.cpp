@@ -2,8 +2,6 @@
 #include "Map.h"
 #include "../DrawFunctions.h"
 
-
-
 Map::Map():
 	map_(),
 	mappos_()

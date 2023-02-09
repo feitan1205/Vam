@@ -4,10 +4,11 @@
 #include "Scene/TitleScene.h"
 #include "InputState.h"
 #include "DrawFunctions.h"
+#include "game.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	SetGraphMode(1280, 720, 16);
+	SetGraphMode(Game::kScreenWidth, Game::kScreenHeight, 16);
 	ChangeWindowMode(true);
 	if (DxLib_Init() == -1) 
 	{

@@ -6,7 +6,7 @@
 #include <DxLib.h>
 #include "../Player/Blue.h"
 #include "../Player/Red.h"
-
+#include "../game.h"
 
 void CharacterSelectScene::NormalUpdate(const InputState& input)
 {
@@ -58,14 +58,14 @@ CharacterSelectScene::CharacterSelectScene(SceneManager& manager) :
 	characterbordH_ = my::MyLoadGraph(L"Data/img/Characterbord.png");
 	startbuttonH_ = my::MyLoadGraph(L"Data/img/startbutton.png");
 
-	characterbord_.x = ((1280 / 2) - ((1280 / 2) / 4) * 2);
+	characterbord_.x = ((Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2);
 	characterbord_.y = 45;
 
 	selectcharacterbord_.x = characterbord_.x + 15;
-	selectcharacterbord_.y = 610 + 5;
+	selectcharacterbord_.y = Game::kScreenHeight + 5;
 
-	startbutton_.x = ((1280 / 2) + ((1280 / 2) / 8) * 2);
-	startbutton_.y = 630;
+	startbutton_.x = ((Game::kScreenWidth / 2) + ((Game::kScreenWidth / 2) / 8) * 2);
+	startbutton_.y = Game::kScreenHeight;
 
 	GetGraphSize(characterbordH_, &characterbordsizeX_, &characterbordsizeY_);
 	GetGraphSize(startbuttonH_, &startbuttonsizeX_, &startbuttonsizeY_);
@@ -86,14 +86,14 @@ void CharacterSelectScene::Update(const InputState& input)
 
 void CharacterSelectScene::Draw()
 {
-	DrawExtendGraph(0, 0, 1280, 720, m_background, true);
+	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_background, true);
 
 	//キャラクター選択ボードの描画
-	DrawBox((1280 / 2) - ((1280 / 2) / 4) * 2, 40, (1280 / 2) + ((1280 / 2) / 4) * 2, 700, 0x734e30, true);
-	DrawBox((1280 / 2) - ((1280 / 2) / 4) * 2, 40, (1280 / 2) + ((1280 / 2) / 4) * 2, 700, 0x000000, false);
+	DrawBox((Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2, 40, (Game::kScreenWidth / 2) + ((Game::kScreenWidth / 2) / 4) * 2, Game::kScreenHeight, 0x734e30, true);
+	DrawBox((Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2, 40, (Game::kScreenWidth / 2) + ((Game::kScreenWidth / 2) / 4) * 2, Game::kScreenHeight, 0x000000, false);
 
-	DrawBox(((1280 / 2) - ((1280 / 2) / 4) * 2) - 10, 35, ((1280 / 2) + ((1280 / 2) / 4) * 2) + 10, 43, 0x734e30, true);
-	DrawBox(((1280 / 2) - ((1280 / 2) / 4) * 2) - 10, 35, ((1280 / 2) + ((1280 / 2) / 4) * 2) + 10, 43, 0x000000, false);
+	DrawBox(((Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2) - 10, 35, ((Game::kScreenWidth / 2) + ((Game::kScreenWidth / 2) / 4) * 2) + 10, 43, 0x734e30, true);
+	DrawBox(((Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2) - 10, 35, ((Game::kScreenWidth / 2) + ((Game::kScreenWidth / 2) / 4) * 2) + 10, 43, 0x000000, false);
 
 	//キャラクターボックスの描画
 	for (int i = 0; i < static_cast<int>(Character::charactermax); i++) {
@@ -109,9 +109,9 @@ void CharacterSelectScene::Draw()
 	}
 
 	//選択したキャラクター表示の描画
-	DrawBox((1280 / 2) - ((1280 / 2) / 4) * 2 + 10, 610, (1280 / 2) + ((1280 / 2) / 4) * 2 - 10, 610 + 80, 0x845f41, true);
-	DrawBox((1280 / 2) - ((1280 / 2) / 4) * 2 + 10, 610, (1280 / 2) - ((1280 / 2) / 4) * 2 + 80 + 10, 610 + 80, 0x000000, false);
-	DrawBox((1280 / 2) - ((1280 / 2) / 4) * 2 + 10, 610, (1280 / 2) + ((1280 / 2) / 4) * 2 - 10, 610 + 80, 0x000000, false);
+	DrawBox((Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2 + 10, 610, (Game::kScreenWidth / 2) + ((Game::kScreenWidth / 2) / 4) * 2 - 10, 610 + 80, 0x845f41, true);
+	DrawBox((Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2 + 10, 610, (Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2 + 80 + 10, 610 + 80, 0x000000, false);
+	DrawBox((Game::kScreenWidth / 2) - ((Game::kScreenWidth / 2) / 4) * 2 + 10, 610, (Game::kScreenWidth / 2) + ((Game::kScreenWidth / 2) / 4) * 2 - 10, 610 + 80, 0x000000, false);
 
 	DrawExtendGraph(selectcharacterbord_.x, selectcharacterbord_.y, selectcharacterbord_.x + 70, selectcharacterbord_.y + 70, characterbordH_, true);
 
@@ -134,7 +134,7 @@ void CharacterSelectScene::Draw()
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue_);
 	//画面全体を真っ黒に塗りつぶす
-	DrawBox(0, 0, 1280, 740, 0x000000, true);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 
 	/*SetDrawBlendMode(DX_BLENDMODE_MULA, fadeValue_);
 	//画面全体をテクスチャで塗りつぶす
