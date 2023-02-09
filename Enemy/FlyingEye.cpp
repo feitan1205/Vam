@@ -11,7 +11,7 @@ FlyingEye::FlyingEye() :
 	attackpoint_(2),
 	cooldowntime_(),
 	tmprand_(),
-	nowhp_(5),
+	nowhp_(1000),
 	temphp_(),
 	damagepoint_(),
 	damageflag_(),
@@ -35,7 +35,7 @@ void FlyingEye::Init(Vec2 playerpos)
 {
 	isEnabled_ = true;
 
-	nowhp_ = 5;
+	nowhp_ = 1000;
 		
 	int tempx = 0;
 	int tempy = 0;
@@ -175,13 +175,6 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 	DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, 0x000000, false);
 	DrawCircle(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, hitcircle_, 0xff0000, false);
 
-	//DrawFormatString(0, 0, 0xffffff, L"%d", tmprand_, true);
-
-	for (int i = 0; i < 3; i++) {
-		if (damagedrawframe_[i] >= 0 && damagedrawframe_[i] != 30) {
-			DrawFormatString(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 0xffffff, L"%d", damagepoint_[i], true);
-		}
-	}
 }
 
 void FlyingEye::PlayerMove(Vec2 playermove)

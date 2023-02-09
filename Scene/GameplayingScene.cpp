@@ -142,7 +142,8 @@ void GameplayingScene::Update(const InputState& input)
 			}
 			else if (player_->GetAttackingNumber(i) == 3) {
 				if (player_->GetIsAttack(i)) {
-					if (CheckHitCircle(playerpos_, player_->GetAttackHitCircle(i), enem->GetMinHitBox(), enem->GetCircle()) && !enem->IsHitAttack(player_->GetAttackingNumber(i))) {
+					if (CheckHitCircle(playerpos_, player_->GetAttackHitCircle(i), enem->GetPos(), enem->GetCircle()) && !enem->IsHitAttack(player_->GetAttackingNumber(i))) {
+						printfDx(L"EEE\n");
 						enem->Damage(player_->GetAttackPoint(i), player_->GetAttackingNumber(i));
 						enem->AttackHit(true, player_->GetAttackingNumber(i));
 						if (enem->GetNowHP() <= 0) {
@@ -166,6 +167,9 @@ void GameplayingScene::Update(const InputState& input)
 
 	enemies_.erase(rmIt, enemies_.end());
 
+	printfDx(L"%d\n", enemies_.size());
+
+	//
 
 	if ((CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) || enemflamecount_ < 0) {
 		enemies_.push_back(std::make_shared<FlyingEye>());
@@ -204,6 +208,16 @@ void GameplayingScene::Draw()
 		player_->IdleAnimation(charactervector_);
 	}
 
+
+	DrawFormatString(300, 300, 0xffffff, L"%f", playerpos_.x, true);
+	DrawFormatString(300, 316, 0xffffff, L"%f", playerpos_.y, true);
+
+	for (auto& enem : enemies_) {
+		DrawFormatString(400, 300, 0xffffff, L"%f", enem->GetPos().x, true);
+		DrawFormatString(400, 316, 0xffffff, L"%f", enem->GetPos().y, true);
+		break;
+	}
+
 }
 
 bool GameplayingScene::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2)
@@ -219,11 +233,13 @@ bool GameplayingScene::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox
 
 bool GameplayingScene::CheckHitCircle(Vec2 playerpos,float circle,Vec2 enemypos,float enemycircle)
 {
+	
+
 	Vec2 distance = playerpos - enemypos;
 
 	float vecdistance = std::hypotf(distance.x , distance.y);
-
-	if (vecdistance < circle + enemycircle) {
+	float num = circle + enemycircle;
+	if (vecdistance <= num) {
 		return true;
 	}
 	
