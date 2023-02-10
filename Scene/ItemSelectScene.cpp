@@ -40,7 +40,7 @@ void ItemSelectScene::Update(const InputState& input)
 	}
 
 	if (!lvup_or_creat) {
-		levelupweaponnumber_ = GetRand(player_->GetAttackKindNum());
+		levelupweaponnumber_ = GetRand(player_->GetAttackKindNum() - 1);
 		player_->SetLv(levelupweaponnumber_);
 	}
 
