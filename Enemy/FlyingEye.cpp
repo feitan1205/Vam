@@ -6,6 +6,7 @@
 constexpr float kspeed = 0.5;
 constexpr int standardcooldowntime = 30;
 
+
 FlyingEye::FlyingEye() :
 	flamecount_(),
 	attackpoint_(2),
@@ -39,60 +40,19 @@ void FlyingEye::Init(Vec2 playerpos)
 	isEnabled_ = true;
 
 	nowhp_ = 5;
-		
-	int tempx = 0;
-	int tempy = 0;
-	bool issetpos = true;
+	
+	bool iscreate = true;
 
-	while (issetpos) {
-
-		tempx = (GetRand(700));
-		tempy = (GetRand(450));
-
-		if (tempx > 680){
-
-			if (GetRand(1) == 0) {
-				tempx *= 1;
-			}
-			else {
-				tempx *= -1;
-			}
-
-			issetpos = false;
-
-		}
-
-		if (tempy > 400) {
-
-			if (GetRand(1) == 0) {
-				tempy *= 1;
-			}
-			else {
-				tempy *= -1;
-			}
-
-			issetpos = false;
-
-		}
-		
+	while (iscreate) {
+		pos_.x = GetRand(Game::kScreenWidth);
+		pos_.y = GetRand(Game::kScreenHeight);
+		iscreate = CheckHit(pos_, pos_, Vec2{ 50,50 }, Vec2{ Game::kScreenWidth - 50,Game::kScreenHeight - 50 });
 	}
 
-	/*tmprand_ = GetRand(3);
+	pos_ += playerpos;
 
-	if (tmprand_ == 1) {
-		tempx *= -1;
-	}
-	else if (tmprand_ == 2) {
-		tempy *= -1;
-	}
-	else if (tmprand_ == 3) {
-		tempx *= -1;
-		tempy *= -1;
-	}*/
-
-	pos_.x = playerpos.x + tempx;
-	pos_.y = playerpos.y + tempy;
-
+	pos_.x -= Game::kScreenWidth / 2;
+	pos_.y -= Game::kScreenHeight / 2;
 
 }
 
@@ -201,6 +161,9 @@ void FlyingEye::Death()
 	{
 		isEnabledexp_ = true;
 		isEnabled_ = true;
+		for (int i = 0; i < 8; i++) {
+			DeleteGraph(handle_[i]);
+		}
 	}
 	/*else {
 		isEnabled_ = false;
@@ -228,4 +191,15 @@ void FlyingEye::SetCoolDownTime()
 
 	cooldowntime_ = standardcooldowntime;
 
+}
+
+bool FlyingEye::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2)
+{
+
+	if (minhitbox1.y > maxhitbox2.y)		return false;
+	if (maxhitbox1.y < minhitbox2.y)		return false;
+	if (minhitbox1.x > maxhitbox2.x)		return false;
+	if (maxhitbox1.x < minhitbox2.x)		return false;
+
+	return true;
 }

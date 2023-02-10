@@ -29,7 +29,6 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	charactervector_(false),
 	map_(nullptr),
 	playerpos_(0,0),
-	flyingeyeH_(),
 	enemflamecount_(10),
 	tmpLv_(1)
 {
@@ -62,9 +61,16 @@ GameplayingScene::~GameplayingScene()
 
 void GameplayingScene::Update(const InputState& input)
 {
+	//レベルアップ時の選択画面へ移動
+	if (player_->GetNowLv() != tmpLv_) {
+		manager_.PushScene(new ItemSelectScene(manager_));
+	}
+	tmpLv_ = player_->GetNowLv();
 
+	//エネミー生成へのカウントダウン
 	enemflamecount_--;
 
+	//シーンの変更
 	if (input.IsTriggered(InputType::prev))
 	{
 		manager_.ChangeScene(new TitleScene(manager_));
@@ -75,6 +81,7 @@ void GameplayingScene::Update(const InputState& input)
 		manager_.PushScene(new PauseScene(manager_));
 	}
 
+	//プレイヤーの移動入力/////////////////////
 	if (input_.IsPressed(InputType::up)) {
 		playervector_.y = -1;
 		
@@ -91,26 +98,32 @@ void GameplayingScene::Update(const InputState& input)
 		playervector_.x = -1;
 		charactervector_ = true;
 	}
+	////////////////////////////////////////////
+	
+	//プレイヤーの斜め移動処理
+	playervector_ = playervector_.normalize();
+	playerpos_ = playerpos_ + playervector_;
 
+	//プレイヤーのヒットボックスをセット
 	player_->SetHitBox(playerpos_);
-	//enemy_->SetHitBox(playerpos_);
 
+	//エネミーのヒットボックスのセット
 	for (auto& enem : enemies_) {
 		enem->SetHitBox(playerpos_);
 	}
-
-	playervector_ = playervector_.normalize();
-	playerpos_ = playerpos_ + playervector_;
 
 	//enemy_->Update(playerpos_);
 	for (auto& enem : enemies_) {
 		enem->Update(playerpos_);
 	}
 
+	//プレイヤーのアップデート
 	player_->Update(playerpos_,charactervector_);
 
+	//マップのアップデート
 	map_->Update(playerpos_);
 
+	//エネミーの攻撃処理（プレイヤーとあたっていた場合）
 	for (auto& enem : enemies_) {
 		if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox())) {
 			//printfDx(L"・・・・");
@@ -125,6 +138,8 @@ void GameplayingScene::Update(const InputState& input)
 		}
 	}
 
+
+	//プレイヤーの攻撃処理（プレイヤーの攻撃種別）
 	for (auto& enem : enemies_) {
 		if (enem->GetIsExp())continue;
 		for (int i = 0; i < player_->GetAttackKindNum(); i++) {
@@ -159,36 +174,29 @@ void GameplayingScene::Update(const InputState& input)
 		}
 	}	
 
+	//死亡かつ経験値でもないエネミーをempty
 	auto rmIt = std::remove_if(enemies_.begin(), enemies_.end(),
 		[](const std::shared_ptr<EnemyBase>& enemy)
 		{
 			return !enemy->GetIsEnabled();
 		});
-
-
+	//emptyエネミーのメモリ削除
 	enemies_.erase(rmIt, enemies_.end());
 
-	printfDx(L"%d\n", enemies_.size());
+	//printfDx(L"%d\n", enemies_.size());
 
-
+	//oキーを押したときとエネミーカウントが0になったときエネミー生成
 	if ((CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) || enemflamecount_ < 0) {
 		enemies_.push_back(std::make_shared<FlyingEye>());
 		enemies_.back()->Init(playerpos_);
 		enemflamecount_ = 10;
 	}
-
 	tmpishitkey_ = CheckHitKey(KEY_INPUT_O);
 
+	//プレイヤーのベクトルを初期化
+
 	playervector_ = {0, 0};
-
 	
-
-	if (player_->GetNowLv() != tmpLv_) {
-		manager_.PushScene(new ItemSelectScene(manager_));
-	}
-
-	tmpLv_ = player_->GetNowLv();
-
 }
 
 void GameplayingScene::Draw()
@@ -217,8 +225,8 @@ void GameplayingScene::Draw()
 	}
 
 
-	DrawFormatString(300, 300, 0xffffff, L"%f", playerpos_.x, true);
-	DrawFormatString(300, 316, 0xffffff, L"%f", playerpos_.y, true);
+	/*DrawFormatString(300, 300, 0xffffff, L"%f", playerpos_.x, true);
+	DrawFormatString(300, 316, 0xffffff, L"%f", playerpos_.y, true);*/
 
 	for (auto& enem : enemies_) {
 		DrawFormatString(400, 300, 0xffffff, L"%f", enem->GetPos().x, true);

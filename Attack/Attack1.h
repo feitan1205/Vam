@@ -26,6 +26,8 @@ public:
 
 private:
 
+	int nowlv_;
+	int maxlv_;
 	int attack1H_[4];
 	int flamecount_;
 	float cooldowntime_;

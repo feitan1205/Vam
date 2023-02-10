@@ -38,6 +38,7 @@ public:
     }
     bool IsHitAttack(int attacknumber) { return attackhit_[attacknumber]; }
     void DeleteEnable() { isEnabled_ = false; }
+    bool CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2);
 
 private:
 
