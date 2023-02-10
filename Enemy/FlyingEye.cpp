@@ -63,6 +63,10 @@ void FlyingEye::End()
 void FlyingEye::Update(Vec2 playerpos)
 {
 
+	for (int i = 0; i < 3; i++) {
+		damagedrawframe_[i]--;
+	}
+
 	if (isEnabledexp_) {
 		return;
 	}
@@ -77,9 +81,6 @@ void FlyingEye::Update(Vec2 playerpos)
 
 	
 
-	for (int i = 0; i < 3; i++) {
-		damagedrawframe_[i]--;
-	}
 
 
 	flamecount_++;
@@ -95,12 +96,18 @@ void FlyingEye::Update(Vec2 playerpos)
 void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 {
 
+	
+
 	if (isEnabledexp_) {
 		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, expH_, true);
+		for (int i = 0; i < 3; i++) {
+			if (damagedrawframe_[i] >= 0) {
+				DrawFormatString(pos_.x + (Game::kScreenWidth / 2) - playerpos.x - 5, pos_.y + (Game::kScreenHeight / 2) - playerpos.y - 5, 0xffffff, L"%d", damagepoint_[i], true);
+			}
+		}
 		return;
 	}
 
-	
 	
 
 	if (flamecount_ >= 0 && flamecount_ < 10) {

@@ -25,9 +25,9 @@ PlayerBase::~PlayerBase()
 void PlayerBase::Init(int cooldownpercentage)
 {
 
-	//attack_.push_back(new Attack1());
+	attack_.push_back(new Attack1());
 	//attack_.push_back(new Attack2());
-	attack_.push_back(new Attack3());
+	//attack_.push_back(new Attack3());
 
 	for (auto& attack : attack_) {
 		attack->Init(cooldownpercentage);
@@ -84,4 +84,14 @@ float PlayerBase::GetAttackHitCircle(int attacknum)
 
 int PlayerBase::GetAttackingNumber(int attacknum) {
 	return attack_[attacknum]->GetMyNumber();
+}
+
+int PlayerBase::GetWeaponLv(int weaponnum)
+{
+	return attack_[weaponnum]->GetNowLv();
+}
+
+void PlayerBase::SetLv(int i)
+{
+	attack_[i]->SetNextLv();
 }

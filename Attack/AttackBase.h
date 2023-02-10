@@ -20,6 +20,8 @@ public:
 	virtual float GetAttackHitCircle() = 0;
 	virtual int GetAttackPoint() = 0;
 	virtual int GetMyNumber() = 0;
+	virtual int GetNowLv() = 0;
+	virtual void SetNextLv() = 0;
 
 private:
 

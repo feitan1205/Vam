@@ -23,6 +23,8 @@ public:
 	float GetAttackHitCircle() { return 0; }
 	int GetAttackPoint() { return attackpoint_ + GetRand(5); }
 	int GetMyNumber() { return 0; }
+	int GetNowLv() { return nowlv_; }
+	void SetNextLv() { nowlv_++; }
 
 private:
 

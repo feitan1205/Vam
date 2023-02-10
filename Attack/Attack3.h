@@ -23,9 +23,13 @@ public:
 	float GetAttackHitCircle() { return circle_; }
 	int GetAttackPoint() { return attackpoint_ + GetRand(5); }
 	int GetMyNumber() { return 2; }
+	int GetNowLv() { return nowlv_; }
+	void SetNextLv() { nowlv_++; }
 
 private:
 
+	int nowlv_;
+	int maxlv_;
 	float circle_;
 	int flamecount_;
 	float cooldowntime_;

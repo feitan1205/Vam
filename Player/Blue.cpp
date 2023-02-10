@@ -171,6 +171,5 @@ void Blue::GetExp(int exppoint)
 		nowexp_ = 0;
 		maxexp_ *= 2;
 	}
-
 }
 

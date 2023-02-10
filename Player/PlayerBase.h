@@ -42,11 +42,15 @@ public:
 	int GetAttackKindNum() { return attack_.size(); }
 	int GetAttackingNumber(int attacknum);
 
+	int GetWeaponLv(int weaponnum);
+	void SetLv(int i);
 
 protected:
 
 	Vec2 pos_;
 	std::vector<AttackBase*> attack_;
+
+
 
 };
 

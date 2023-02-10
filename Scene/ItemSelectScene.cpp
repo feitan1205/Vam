@@ -2,9 +2,12 @@
 #include "DxLib.h"
 #include "../InputState.h"
 #include "SceneManager.h"
+#include "../Player/PlayerBase.h"
+#include "../game.h"
 
 ItemSelectScene::ItemSelectScene(SceneManager& manager):
-	Scene(manager)
+	Scene(manager),
+	finishlvup_or_creat(false)
 {
 }
 
@@ -19,14 +22,38 @@ void ItemSelectScene::Update(const InputState& input)
 		manager_.PopScene();
 		return;
 	}
+
+	if (finishlvup_or_creat) {
+		return;
+	}
+
+	/*if (GetRand(9) / 5 == 1) {
+		lvup_or_creat = true;
+	}
+	else */
+	{
+		lvup_or_creat = false;
+	}
+
+	if (player_->GetAttackKindNum() == 3) {
+		lvup_or_creat = false;
+	}
+
+	if (!lvup_or_creat) {
+		levelupweaponnumber_ = GetRand(player_->GetAttackKindNum());
+		player_->SetLv(levelupweaponnumber_);
+	}
+
+	finishlvup_or_creat = true;
+
 }
 
 void ItemSelectScene::Draw()
 {
-	constexpr int pw_width = 400;	//ポーズ枠の幅
-	constexpr int pw_height = 300;	//ポーズ枠の高さ
-	constexpr int pw_start_x = (640 - pw_width) / 2;	//ポーズ枠の左
-	constexpr int pw_start_y = (480 - pw_height) / 2;	//ポーズ枠上
+	constexpr int pw_width = Game::kScreenWidth / 2;	//ポーズ枠の幅
+	constexpr int pw_height = Game::kScreenHeight - 100;	//ポーズ枠の高さ
+	constexpr int pw_start_x = (Game::kScreenWidth - pw_width) / 2;	//ポーズ枠の左
+	constexpr int pw_start_y = (Game::kScreenHeight - pw_height) / 2;	//ポーズ枠上
 
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 196);
 
@@ -40,4 +67,14 @@ void ItemSelectScene::Draw()
 
 	//ポーズウィンドウ枠線
 	DrawBox(pw_start_x, pw_start_y, pw_start_x + pw_width, pw_start_y + pw_height, 0xffffff, false);
+
+	/*for (int i = 0; i < player_->GetAttackKindNum(); i++) {
+
+		DrawFormatString(pw_start_x + 50, pw_start_y + 50 * (i + 1), 0xffffff, L"%d", player_->GetAttackingNumber(i), true);
+
+		DrawFormatString(pw_start_x + 120, pw_start_y + 50 * (i + 1), 0xffffff, L"%d", player_->GetWeaponLv(i), true);
+	}*/
+
+	DrawFormatString(pw_start_x + 50, pw_start_y + 50, 0xffffff, L"%dが%dレベルに上がりました。", levelupweaponnumber_,player_->GetWeaponLv(levelupweaponnumber_), true);
+
 }

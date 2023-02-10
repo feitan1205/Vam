@@ -63,7 +63,10 @@ void GameplayingScene::Update(const InputState& input)
 {
 	//レベルアップ時の選択画面へ移動
 	if (player_->GetNowLv() != tmpLv_) {
-		manager_.PushScene(new ItemSelectScene(manager_));
+		ItemSelectScene* pnextscene;
+		pnextscene = new ItemSelectScene(manager_);
+		pnextscene->SetPlayer(player_);
+		manager_.PushScene(pnextscene);
 	}
 	tmpLv_ = player_->GetNowLv();
 
