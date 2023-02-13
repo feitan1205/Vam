@@ -79,6 +79,8 @@ void ItemSelectScene::Draw()
 		DrawFormatString(pw_start_x + 120, pw_start_y + 50 * (i + 1), 0xffffff, L"%d", player_->GetWeaponLv(i), true);
 	}*/
 
-	DrawFormatString(pw_start_x + 50, pw_start_y + 50, 0xffffff, L"%dが%dレベルに上がりました。", player_->GetAttackingNumber(levelupweaponnumber_),player_->GetWeaponLv(levelupweaponnumber_), true);
+	DrawFormatString(pw_start_x + 100, pw_start_y + 100, 0xffffff, L"%dが%dレベルに上がりました。", player_->GetAttackingNumber(levelupweaponnumber_),player_->GetWeaponLv(levelupweaponnumber_), true);
+
+	DrawFormatString(pw_start_x + 100, pw_start_y + 700, 0xffffff,L"Pボタンで再開", true);
 
 }

@@ -15,6 +15,7 @@
 #include <cmath>
 #include "../Attack/AttackBase.h"
 #include "ItemSelectScene.h"
+#include "../game.h"
 
 constexpr float kplayerspeed = 1.0;
 
@@ -240,13 +241,17 @@ void GameplayingScene::Draw()
 	/*DrawFormatString(300, 300, 0xffffff, L"%f", playerpos_.x, true);
 	DrawFormatString(300, 316, 0xffffff, L"%f", playerpos_.y, true);*/
 
-	for (auto& enem : enemies_) {
+	/*for (auto& enem : enemies_) {
 		DrawFormatString(400, 300, 0xffffff, L"%f", enem->GetPos().x, true);
 		DrawFormatString(400, 316, 0xffffff, L"%f", enem->GetPos().y, true);
 		break;
-	}
+	}*/
 
-	DrawFormatString(900, 100, 0xffffff, L"%02dÅF%02d", timer / 60 ,timer % 60, true);
+	SetFontSize(32);
+
+	DrawFormatString((Game::kScreenWidth / 2) - 48, 10, 0xffffff, L"%02dÅF%02d", timer / 60 ,timer % 60, true);
+
+	SetFontSize(16);
 
 }
 
