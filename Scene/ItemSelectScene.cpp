@@ -39,6 +39,10 @@ void ItemSelectScene::Update(const InputState& input)
 		lvup_or_creat = false;
 	}
 
+	/*if (lvup_or_creat) {
+
+	}*/
+
 	if (!lvup_or_creat) {
 		levelupweaponnumber_ = GetRand(player_->GetAttackKindNum() - 1);
 		player_->SetLv(levelupweaponnumber_);
@@ -75,6 +79,6 @@ void ItemSelectScene::Draw()
 		DrawFormatString(pw_start_x + 120, pw_start_y + 50 * (i + 1), 0xffffff, L"%d", player_->GetWeaponLv(i), true);
 	}*/
 
-	DrawFormatString(pw_start_x + 50, pw_start_y + 50, 0xffffff, L"%dが%dレベルに上がりました。", levelupweaponnumber_,player_->GetWeaponLv(levelupweaponnumber_), true);
+	DrawFormatString(pw_start_x + 50, pw_start_y + 50, 0xffffff, L"%dが%dレベルに上がりました。", player_->GetAttackingNumber(levelupweaponnumber_),player_->GetWeaponLv(levelupweaponnumber_), true);
 
 }

@@ -95,3 +95,16 @@ void PlayerBase::SetLv(int i)
 {
 	attack_[i]->SetNextLv();
 }
+
+void PlayerBase::CreatAttack(int creatweapon) {
+
+	if (creatweapon == 0) {
+		attack_.push_back(new Attack1());
+	}
+	else if(creatweapon == 1) {
+		attack_.push_back(new Attack2());
+	}
+	else if (creatweapon == 2) {
+		attack_.push_back(new Attack3());
+	}
+}

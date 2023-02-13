@@ -11,7 +11,8 @@ Attack3::Attack3() :
 	cooldowntime_(0),
 	attackflag_(false),
 	attackpoint_(8),
-	attackvector_()
+	attackvector_(),
+	nowlv_(1)
 {
 	
 }
@@ -59,5 +60,10 @@ void Attack3::Draw()
 }
 
 void Attack3::SetHitBox()
-{	
+{
+}
+
+void Attack3::SetNextLv()
+{
+	nowlv_++;
 }

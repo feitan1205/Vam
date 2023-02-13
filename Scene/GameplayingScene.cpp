@@ -30,7 +30,8 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	map_(nullptr),
 	playerpos_(0,0),
 	enemflamecount_(10),
-	tmpLv_(1)
+	tmpLv_(1),
+	timer()
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		player_ = new Blue(playerpos_);
@@ -61,6 +62,14 @@ GameplayingScene::~GameplayingScene()
 
 void GameplayingScene::Update(const InputState& input)
 {
+
+	frametimer++;
+
+	if (frametimer == 60) {
+		timer++;
+		frametimer = 0;
+	}
+
 	//レベルアップ時の選択画面へ移動
 	if (player_->GetNowLv() != tmpLv_) {
 		ItemSelectScene* pnextscene;
@@ -86,25 +95,25 @@ void GameplayingScene::Update(const InputState& input)
 
 	//プレイヤーの移動入力/////////////////////
 	if (input_.IsPressed(InputType::up)) {
-		playervector_.y = -1;
+		playervector_.y = -2;
 		
 	}
 	if (input_.IsPressed(InputType::down)) {
-		playervector_.y = 1;
+		playervector_.y = 2;
 		
 	}
 	if (input_.IsPressed(InputType::right)) {
-		playervector_.x = 1;
+		playervector_.x = 2;
 		charactervector_ = false;
 	}
 	if (input_.IsPressed(InputType::left)) {
-		playervector_.x = -1;
+		playervector_.x = -2;
 		charactervector_ = true;
 	}
 	////////////////////////////////////////////
 	
 	//プレイヤーの斜め移動処理
-	playervector_ = playervector_.normalize();
+	playervector_ = (playervector_.normalize()) * 2;
 	playerpos_ = playerpos_ + playervector_;
 
 	//プレイヤーのヒットボックスをセット
@@ -236,6 +245,8 @@ void GameplayingScene::Draw()
 		DrawFormatString(400, 316, 0xffffff, L"%f", enem->GetPos().y, true);
 		break;
 	}
+
+	DrawFormatString(900, 100, 0xffffff, L"%02d：%02d", timer / 60 ,timer % 60, true);
 
 }
 

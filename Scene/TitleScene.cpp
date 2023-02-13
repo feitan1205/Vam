@@ -29,7 +29,7 @@ void TitleScene::NormalUpdate(const InputState& input)
 		if (input.IsTriggered(InputType::next))
 		{
 			//updateFunc_ = &TitleScene::FadeOutUpdate;
-			manager_.ChangeScene(new CharacterSelectScene(manager_));
+			manager_.ChangeScene(new GameplayingScene(manager_,0,input));
 			return;
 		}
 	}

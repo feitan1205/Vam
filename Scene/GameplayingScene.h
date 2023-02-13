@@ -39,5 +39,7 @@ private:
 	int enemflamecount_;		//エネミー生成のカウント
 	int tmpLv_;					//過去レベルの保管
 	bool tmpishitkey_;			//過去キーの保管
+	int frametimer;
+	int timer;
 };
 

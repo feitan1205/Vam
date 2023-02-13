@@ -44,6 +44,7 @@ public:
 
 	int GetWeaponLv(int weaponnum);
 	void SetLv(int i);
+	void CreatAttack(int creatweapon);
 
 protected:
 

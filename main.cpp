@@ -24,6 +24,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	while (ProcessMessage() != -1) 
 	{
+		LONGLONG time = GetNowHiPerformanceCount();
+
 		ClearDrawScreen();
 
 		input.Update();
@@ -32,6 +34,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sceneManager.Draw();
 
 		ScreenFlip();
+
+		while (GetNowHiPerformanceCount() - time < 16667)
+		{
+		}
 	}
 
 	DxLib_End();
