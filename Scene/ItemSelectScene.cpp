@@ -67,7 +67,7 @@ void ItemSelectScene::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//通常描画に戻す
 
 	//ポーズ中メッセージ
-	DrawString(pw_start_x + 10, pw_start_y + 10, L"select...", 0xffff88);
+	DrawString((Game::kScreenWidth / 2) + 30, pw_start_y + 10, L"LvUP!!!", 0xffff88);
 
 	//ポーズウィンドウ枠線
 	DrawBox(pw_start_x, pw_start_y, pw_start_x + pw_width, pw_start_y + pw_height, 0xffffff, false);
