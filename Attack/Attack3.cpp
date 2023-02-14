@@ -10,7 +10,7 @@ Attack3::Attack3() :
 	flamecount_(),
 	cooldowntime_(0),
 	attackflag_(false),
-	attackpoint_(8),
+	attackpoint_(4),
 	attackvector_(),
 	nowlv_(1)
 {
@@ -24,7 +24,7 @@ Attack3::~Attack3()
 void Attack3::Init(int cooldownpercentage)
 {
 
-	circle_ = 80;
+	circle_ = 20;
 	cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 
 }
@@ -66,4 +66,7 @@ void Attack3::SetHitBox()
 void Attack3::SetNextLv()
 {
 	nowlv_++;
+	if (nowlv_ == 2) {
+		circle_ *= 2;
+	}
 }

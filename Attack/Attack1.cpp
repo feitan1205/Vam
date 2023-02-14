@@ -4,14 +4,15 @@
 #include "../game.h"
 namespace {
 	constexpr int kMaxlv = 5;
-	constexpr int cooldowntime = 100;
+	constexpr int cooldowntime = 200;
 }
 
 Attack1::Attack1():
 	flamecount_(),
 	cooldowntime_(0),
 	attackflag_(false),
-	attackpoint_(8),
+	attackpoint_(2),
+	randattackpoint_(3),
 	attackvector_(),
 	nowlv_(1),
 	maxlv_()
@@ -48,6 +49,18 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 	if (cooldowntime_ < 0) {
 		attackflag_ = true;
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
+		attackpoint_ = 2;
+		randattackpoint_ = 3;
+		if (nowlv_ >= 2) {
+			cooldowntime_ -= 40;
+		}
+		if (nowlv_ >= 3) {
+			attackpoint_ += 3;
+			randattackpoint_ += 2;
+		}
+		if (nowlv_ >= 4) {
+			cooldowntime_ -= 40;
+		}
 	}
 	else{
 		attackvector_ = charactervector;

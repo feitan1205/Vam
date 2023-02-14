@@ -33,6 +33,7 @@ public:
 	virtual void AttackHit(bool attack3hit,int attacknumber) = 0;
 	virtual bool IsHitAttack(int attacknumber) = 0;
 	virtual void DeleteEnable() = 0;
+	virtual void EnemyLvUp(int level) = 0;
 
 private:
 

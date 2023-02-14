@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "../Vector2.h"
 
 class InputState;
 class SceneManager;
@@ -14,11 +15,19 @@ public:
 	void Draw();
 
 	void SetPlayer(PlayerBase* player) { player_ = player; }
+	bool CheckHit(int posX, int posY, int sizeX, int sizeY);
 
 private:
 
 	PlayerBase* player_;
-	bool lvup_or_creat;
 	int levelupweaponnumber_;
-	bool finishlvup_or_creat;
+	bool finishlvup;
+
+	Vec2 mousepos_;
+
+	int pw_width;
+	int	pw_height;
+	int	pw_start_x;
+	int	pw_start_y;
+	Vec2 itemboxsize_;
 };

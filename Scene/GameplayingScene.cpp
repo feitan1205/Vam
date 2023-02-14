@@ -19,8 +19,6 @@
 
 constexpr float kplayerspeed = 1.0;
 
-
-
 GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, const InputState& input) :
 	Scene(manager),
 	player_(nullptr),
@@ -32,7 +30,9 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	playerpos_(0,0),
 	enemflamecount_(10),
 	tmpLv_(1),
-	timer()
+	timer(),
+	maxenemynum_(10),
+	enemylv_(1)
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		player_ = new Blue(playerpos_);
@@ -69,7 +69,15 @@ void GameplayingScene::Update(const InputState& input)
 	if (frametimer == 60) {
 		timer++;
 		frametimer = 0;
+		if (timer % 30 == 1) {
+			maxenemynum_+=5;
+			enemylv_++;
+		}
 	}
+
+	
+
+	printfDx(L"%d\n", maxenemynum_);
 
 	//レベルアップ時の選択画面へ移動
 	if (player_->GetNowLv() != tmpLv_) {
@@ -114,7 +122,7 @@ void GameplayingScene::Update(const InputState& input)
 	////////////////////////////////////////////
 	
 	//プレイヤーの斜め移動処理
-	playervector_ = (playervector_.normalize()) * 2;
+	playervector_ = (playervector_.normalize()) * 4;
 	playerpos_ = playerpos_ + playervector_;
 
 	//プレイヤーのヒットボックスをセット
@@ -198,11 +206,14 @@ void GameplayingScene::Update(const InputState& input)
 
 	//printfDx(L"%d\n", enemies_.size());
 
-	//oキーを押したときとエネミーカウントが0になったときエネミー生成
-	if ((CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) || enemflamecount_ < 0) {
-		enemies_.push_back(std::make_shared<FlyingEye>());
-		enemies_.back()->Init(playerpos_);
-		enemflamecount_ = 10;
+	if (enemies_.size() <= maxenemynum_) {
+		//oキーを押したときとエネミーカウントが0になったときエネミー生成
+		if ((CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) || enemflamecount_ < 0) {
+			enemies_.push_back(std::make_shared<FlyingEye>());
+			enemies_.back()->Init(playerpos_);
+			enemies_.back()->EnemyLvUp(enemylv_);
+			enemflamecount_ = 10;
+		}
 	}
 	tmpishitkey_ = CheckHitKey(KEY_INPUT_O);
 

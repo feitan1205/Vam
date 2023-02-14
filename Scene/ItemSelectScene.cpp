@@ -7,8 +7,16 @@
 
 ItemSelectScene::ItemSelectScene(SceneManager& manager):
 	Scene(manager),
-	finishlvup_or_creat(false)
+	finishlvup(false)
 {
+	pw_width = Game::kScreenWidth / 2;	//ウィンドウ枠の幅
+	pw_height = Game::kScreenHeight - 100;	//ウィンドウ枠の高さ
+	pw_start_x = (Game::kScreenWidth - pw_width) / 2;	//ウィンドウ枠の左
+	pw_start_y = (Game::kScreenHeight - pw_height) / 2;	//ウィンドウ枠上
+
+	itemboxsize_.x = Game::kScreenWidth / 2 - 80;
+	itemboxsize_.y = 100;
+
 }
 
 ItemSelectScene::~ItemSelectScene()
@@ -23,41 +31,30 @@ void ItemSelectScene::Update(const InputState& input)
 		return;
 	}
 
-	if (finishlvup_or_creat) {
+	if (finishlvup) {
+		manager_.PopScene();
 		return;
 	}
 
-	/*if (GetRand(9) / 5 == 1) {
-		lvup_or_creat = true;
+
+	if (input.IsTriggered(InputType::next)) {
+		for (int i = 0; i < player_->GetAttackKindNum(); i++) {
+			if (CheckHit(pw_start_x + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i), pw_start_x + itemboxsize_.x, (pw_start_y + 30 * i) + (itemboxsize_.y * (i + 1)))) {
+				levelupweaponnumber_ = i;
+				player_->SetLv(levelupweaponnumber_);
+				finishlvup = true;
+				break;
+			}
+		}
 	}
-	else */
-	{
-		lvup_or_creat = false;
-	}
-
-	if (player_->GetAttackKindNum() == 3) {
-		lvup_or_creat = false;
-	}
-
-	/*if (lvup_or_creat) {
-
-	}*/
-
-	if (!lvup_or_creat) {
-		levelupweaponnumber_ = GetRand(player_->GetAttackKindNum() - 1);
-		player_->SetLv(levelupweaponnumber_);
-	}
-
-	finishlvup_or_creat = true;
-
 }
 
 void ItemSelectScene::Draw()
 {
-	constexpr int pw_width = Game::kScreenWidth / 2;	//ポーズ枠の幅
-	constexpr int pw_height = Game::kScreenHeight - 100;	//ポーズ枠の高さ
-	constexpr int pw_start_x = (Game::kScreenWidth - pw_width) / 2;	//ポーズ枠の左
-	constexpr int pw_start_y = (Game::kScreenHeight - pw_height) / 2;	//ポーズ枠上
+	
+	if (finishlvup) {
+		return;
+	}
 
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 196);
 
@@ -67,20 +64,30 @@ void ItemSelectScene::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//通常描画に戻す
 
 	//ポーズ中メッセージ
-	DrawString((Game::kScreenWidth / 2) + 30, pw_start_y + 10, L"LvUP!!!", 0xffff88);
+	DrawString((Game::kScreenWidth / 2) - 30, pw_start_y + 10, L"LvUP!!!", 0xffff88);
 
 	//ポーズウィンドウ枠線
 	DrawBox(pw_start_x, pw_start_y, pw_start_x + pw_width, pw_start_y + pw_height, 0xffffff, false);
+	
+	for (int i = 0; i < player_->GetAttackKindNum(); i++) {
+		DrawBox(pw_start_x + 50, (pw_start_y + 30 * (i + 1))+ (itemboxsize_.y * i), pw_start_x + itemboxsize_.x, (pw_start_y + 30 * i) + (itemboxsize_.y * (i + 1)), 0xffffff, true);
+		DrawFormatString(pw_start_x + 50 + 500, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"Lv：%d", player_->GetWeaponLv(i) + 1,true);
+	}
 
-	/*for (int i = 0; i < player_->GetAttackKindNum(); i++) {
+}
 
-		DrawFormatString(pw_start_x + 50, pw_start_y + 50 * (i + 1), 0xffffff, L"%d", player_->GetAttackingNumber(i), true);
+bool ItemSelectScene::CheckHit(int posX, int posY, int sizeX, int sizeY)
+{
 
-		DrawFormatString(pw_start_x + 120, pw_start_y + 50 * (i + 1), 0xffffff, L"%d", player_->GetWeaponLv(i), true);
-	}*/
+	int mouseX = 0;
+	int mouseY = 0;
 
-	DrawFormatString(pw_start_x + 100, pw_start_y + 100, 0xffffff, L"%dが%dレベルに上がりました。", player_->GetAttackingNumber(levelupweaponnumber_),player_->GetWeaponLv(levelupweaponnumber_), true);
+	GetMousePoint(&mouseX, &mouseY);
 
-	DrawFormatString(pw_start_x + 100, pw_start_y + 700, 0xffffff,L"Pボタンで再開", true);
+	if (mouseX < posX) return false;
+	if (mouseX > posX + sizeX) return false;
+	if (mouseY < posY) return false;
+	if (mouseY > posY + sizeY) return false;
 
+	return true;
 }

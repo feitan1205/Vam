@@ -13,7 +13,8 @@ Attack2::Attack2() :
 	attackvector_(),
 	attackscale_(),
 	attackingtime_(100),
-	animationcount_()
+	animationcount_(),
+	nowlv_(1)
 {
 	attack2H_[0] = my::MyLoadGraph(L"Data/Effect/attack2/BFX003_01.png");
 	attack2H_[1] = my::MyLoadGraph(L"Data/Effect/attack2/BFX003_02.png");
@@ -93,10 +94,10 @@ void Attack2::Draw()
 		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2 - 30, attackscale_, 0, attack2H_[2], true, attackvector_);
 	}
 
-	DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
+	//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
 
-	DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
-	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true); 
+	/*DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
+	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true)*/; 
 
 }
 

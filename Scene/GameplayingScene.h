@@ -41,5 +41,7 @@ private:
 	bool tmpishitkey_;			//‰ß‹ƒL[‚Ì•ÛŠÇ
 	int frametimer;
 	int timer;
+	int maxenemynum_;
+	int enemylv_;
 };
 

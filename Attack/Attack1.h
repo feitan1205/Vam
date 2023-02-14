@@ -21,7 +21,7 @@ public:
 	Vec2 GetAttackMinHitBox() { return minhitbox_; }
 	Vec2 GetAttackMaxHitBox() { return maxhitbox_; }
 	float GetAttackHitCircle() { return 0; }
-	int GetAttackPoint() { return attackpoint_ + GetRand(5); }
+	int GetAttackPoint() { return attackpoint_ + GetRand(randattackpoint_); }
 	int GetMyNumber() { return 0; }
 	int GetNowLv() { return nowlv_; }
 	void SetNextLv() { nowlv_++; }
@@ -35,6 +35,7 @@ private:
 	float cooldowntime_;
 	bool attackflag_;
 	int attackpoint_;
+	int randattackpoint_;
 	bool attackvector_;
 	Vec2 playerpos_;
 	Vec2 minhitbox_;
