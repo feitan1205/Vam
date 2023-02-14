@@ -85,9 +85,9 @@ bool ItemSelectScene::CheckHit(int posX, int posY, int sizeX, int sizeY)
 	GetMousePoint(&mouseX, &mouseY);
 
 	if (mouseX < posX) return false;
-	if (mouseX > posX + sizeX) return false;
+	if (mouseX > sizeX) return false;
 	if (mouseY < posY) return false;
-	if (mouseY > posY + sizeY) return false;
+	if (mouseY > sizeY) return false;
 
 	return true;
 }
