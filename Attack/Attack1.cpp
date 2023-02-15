@@ -11,10 +11,10 @@ Attack1::Attack1():
 	flamecount_(),
 	cooldowntime_(0),
 	attackflag_(false),
-	attackpoint_(2),
+	attackpoint_(6),
 	randattackpoint_(3),
 	attackvector_(),
-	nowlv_(1),
+	nowlv_(0),
 	maxlv_()
 {
 	attack1H_[0] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_01.png");
@@ -42,6 +42,10 @@ void Attack1::End()
 void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 {
 
+	if (nowlv_ == 0) {
+		return;
+	}
+
 	playerpos_ = playerpos;
 
 	cooldowntime_--;
@@ -49,7 +53,7 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 	if (cooldowntime_ < 0) {
 		attackflag_ = true;
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
-		attackpoint_ = 2;
+		attackpoint_ = 6;
 		randattackpoint_ = 3;
 		if (nowlv_ >= 2) {
 			cooldowntime_ -= 40;
@@ -61,6 +65,16 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 		if (nowlv_ >= 4) {
 			cooldowntime_ -= 40;
 		}
+		if (nowlv_ >= 5) {
+			cooldowntime_ -= 40;
+		}
+		if (nowlv_ >= 6) {
+			attackpoint_ += 10;
+			randattackpoint_ += 8;
+		}
+		if (nowlv_ >= 7) {
+			cooldowntime_ -= 40;
+		}
 	}
 	else{
 		attackvector_ = charactervector;
@@ -70,6 +84,11 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 
 void Attack1::Draw()
 {
+
+	if (nowlv_ == 0) {
+		return;
+	}
+
 	flamecount_++;
 
 	if (flamecount_ >= 20) 

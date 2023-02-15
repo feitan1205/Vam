@@ -14,6 +14,7 @@ public:
     void End();
     void Update(Vec2 playerpos, bool charactervector);
     void Draw();
+    //•`‰æ
     void IdleAnimation(bool charactervector);
     void MoveAnimation(bool charactervector);
 
@@ -27,6 +28,7 @@ public:
 
     void GetExp(int exppoint);
     int GetNowLv() { return nowLv_; }
+    int GetPlayerSpeed() { return speed_; }
 
 private:
 
@@ -36,7 +38,6 @@ private:
     int sizeX;
     int sizeY;
     int flamecount;
-    int cooldownpercentage_;
     Vec2 playerpos_;
     Vec2 minhitbox_;
     Vec2 maxhitbox_;
@@ -50,6 +51,8 @@ private:
     int maxexp_;
     int nowexp_;
     int nowLv_;
+    int speed_;
+    int cooldownpercentage_;
 
 };
 

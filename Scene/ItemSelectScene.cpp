@@ -38,7 +38,7 @@ void ItemSelectScene::Update(const InputState& input)
 
 
 	if (input.IsTriggered(InputType::next)) {
-		for (int i = 0; i < player_->GetAttackKindNum(); i++) {
+		for (int i = 0; i < Item::itemmax; i++) {
 			if (CheckHit(pw_start_x + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i), pw_start_x + itemboxsize_.x, (pw_start_y + 30 * i) + (itemboxsize_.y * (i + 1)))) {
 				levelupweaponnumber_ = i;
 				player_->SetLv(levelupweaponnumber_);
@@ -47,6 +47,7 @@ void ItemSelectScene::Update(const InputState& input)
 			}
 		}
 	}
+
 }
 
 void ItemSelectScene::Draw()
@@ -69,9 +70,23 @@ void ItemSelectScene::Draw()
 	//ポーズウィンドウ枠線
 	DrawBox(pw_start_x, pw_start_y, pw_start_x + pw_width, pw_start_y + pw_height, 0xffffff, false);
 	
-	for (int i = 0; i < player_->GetAttackKindNum(); i++) {
+	for (int i = 0; i < Item::itemmax; i++) {
 		DrawBox(pw_start_x + 50, (pw_start_y + 30 * (i + 1))+ (itemboxsize_.y * i), pw_start_x + itemboxsize_.x, (pw_start_y + 30 * i) + (itemboxsize_.y * (i + 1)), 0xffffff, true);
 		DrawFormatString(pw_start_x + 50 + 500, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"Lv：%d", player_->GetWeaponLv(i) + 1,true);
+		switch (player_->GetAttackingNumber(i))
+		{
+		case Item::ao:
+			DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"青", true);
+			break;
+		case Item::murasaki:
+			DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"紫", true);
+			break;
+		case Item::aka:
+			DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"赤", true);
+			break;
+		default:
+			break;
+		}
 	}
 
 }

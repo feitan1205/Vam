@@ -6,6 +6,13 @@ class InputState;
 class SceneManager;
 class PlayerBase;
 
+enum Item {
+	ao,
+	murasaki,
+	aka,
+	itemmax
+};
+
 class ItemSelectScene : public Scene
 {
 public:

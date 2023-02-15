@@ -44,6 +44,7 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	player_->Init();
 	
 	enemies_.push_back(std::make_shared<FlyingEye>());
+	enemies_.back()->Death();
 
 	for (auto& enem : enemies_) {
 		enem->Init(playerpos_);
@@ -122,7 +123,7 @@ void GameplayingScene::Update(const InputState& input)
 	////////////////////////////////////////////
 	
 	//プレイヤーの斜め移動処理
-	playervector_ = (playervector_.normalize()) * 4;
+	playervector_ = (playervector_.normalize()) * player_->GetPlayerSpeed();
 	playerpos_ = playerpos_ + playervector_;
 
 	//プレイヤーのヒットボックスをセット

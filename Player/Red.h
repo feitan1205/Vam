@@ -27,6 +27,7 @@ public:
 
     void GetExp(int exppoint);
     int GetNowLv() { return 1; }
+    int GetPlayerSpeed() { return speed_; }
 
 private:
 
@@ -46,6 +47,7 @@ private:
 
     int maxhp_;
     int nowhp_;
+    int speed_;
 
 };
 

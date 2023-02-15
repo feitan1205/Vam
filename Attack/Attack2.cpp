@@ -14,7 +14,7 @@ Attack2::Attack2() :
 	attackscale_(),
 	attackingtime_(100),
 	animationcount_(),
-	nowlv_(1)
+	nowlv_(0)
 {
 	attack2H_[0] = my::MyLoadGraph(L"Data/Effect/attack2/BFX003_01.png");
 	attack2H_[1] = my::MyLoadGraph(L"Data/Effect/attack2/BFX003_02.png");
@@ -39,6 +39,9 @@ void Attack2::End()
 
 void Attack2::Update(int cooldownpercentage, bool charactervector, Vec2 playerpos)
 {
+	if (nowlv_ == 0) {
+		return;
+	}
 
 	playerpos_ = playerpos;
 
@@ -81,6 +84,10 @@ void Attack2::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 void Attack2::Draw()
 {
 	
+	if (nowlv_ == 0) {
+		return;
+	}
+
 	if (animationcount_ >= 0 && animationcount_ < 5)
 	{
 		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2 - 30, attackscale_, 0, attack2H_[0], true, attackvector_);

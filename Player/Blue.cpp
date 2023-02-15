@@ -15,7 +15,8 @@ Blue::Blue(Vec2 playerpos) :
 	hppercentage_(),
 	maxexp_(),
 	nowexp_(),
-	nowLv_(1)
+	nowLv_(1),
+	speed_(4)
 {
 	m_blueH_ = my::MyLoadGraph(L"Data/blue/Blue.png");
 	LoadDivGraph(L"Data/blue/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
@@ -43,7 +44,7 @@ void Blue::Init()
 {
 	PlayerBase::Init(cooldownpercentage_);
 	nowexp_ = 0;
-	maxexp_ = 4;
+	maxexp_ = 1;
 }
 
 void Blue::End()

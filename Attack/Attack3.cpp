@@ -12,7 +12,7 @@ Attack3::Attack3() :
 	attackflag_(false),
 	attackpoint_(4),
 	attackvector_(),
-	nowlv_(1)
+	nowlv_(0)
 {
 	
 }
@@ -36,6 +36,10 @@ void Attack3::End()
 void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpos)
 {
 
+	if (nowlv_ == 0) {
+		return;
+	}
+
 	playerpos_ = playerpos;
 
 	cooldowntime_--;
@@ -51,6 +55,10 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 
 void Attack3::Draw()
 {
+
+	if (nowlv_ == 0) {
+		return;
+	}
 	
 	DrawCircle(Game::kScreenWidth / 2, Game::kScreenHeight / 2, circle_, 0xff0000, false);
 	

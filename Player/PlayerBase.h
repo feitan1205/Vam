@@ -8,6 +8,8 @@ class Attack1;
 class Attack2;
 class Attack3;
 
+
+
 class PlayerBase
 {
 public:
@@ -32,6 +34,7 @@ public:
 
 	virtual void GetExp(int exppoint) = 0;
 	virtual int GetNowLv() = 0;
+	virtual int GetPlayerSpeed() = 0;
 
 	int GetAttackPoint(int attacknum);
 	bool GetIsAttack(int attacknum);
@@ -45,6 +48,7 @@ public:
 	int GetWeaponLv(int weaponnum);
 	void SetLv(int i);
 	void CreatAttack(int creatweapon);
+
 
 protected:
 
