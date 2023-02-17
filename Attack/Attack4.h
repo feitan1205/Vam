@@ -1,15 +1,14 @@
 #pragma once
-#include "../Vector2.h"
-#include <DxLib.h>
+#include "DxLib.h"
 #include "AttackBase.h"
 
-class Attack3:
-	public AttackBase
+class Attack4 :
+    public AttackBase
 {
 public:
 
-	Attack3();
-	~Attack3();
+	Attack4();
+	~Attack4();
 
 	void Init(int cooldownpercentage);
 	void End();
@@ -18,19 +17,19 @@ public:
 	void SetHitBox();
 
 	bool GetIsAttack() { return attackflag_; }
-	Vec2 GetAttackMinHitBox() { return { 0,0 }; }
-	Vec2 GetAttackMaxHitBox() { return { 0,0 }; }
-	float GetAttackHitCircle() { return circle_; }
+	Vec2 GetAttackMinHitBox() { return minhitbox_; }
+	Vec2 GetAttackMaxHitBox() { return maxhitbox_; }
+	float GetAttackHitCircle() { return 0; }
 	int GetAttackPoint() { return attackpoint_ + GetRand(randattackpoint_); }
-	int GetMyNumber() { return 2; }
+	int GetMyNumber() { return 0; }
 	int GetNowLv() { return nowlv_; }
-	void SetNextLv();
+	void SetNextLv() { nowlv_++; }
 
 private:
 
 	int nowlv_;
 	int maxlv_;
-	float circle_;
+	int attack1H_[4];
 	int flamecount_;
 	float cooldowntime_;
 	bool attackflag_;
@@ -42,3 +41,4 @@ private:
 	Vec2 maxhitbox_;
 
 };
+

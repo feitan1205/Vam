@@ -46,7 +46,8 @@ private:
     Vec2 pos_;
     Vec2 vector_;
     int handle_[8];
-    int expH_;
+    int expH1_;
+    int expH2_;
     int flamecount_;
     Vec2 minhitbox_;
     Vec2 maxhitbox_;
@@ -58,6 +59,7 @@ private:
 
 private:
 
+    int level_;
     int nowhp_;
     int temphp_;
     int damagepoint_[3];
@@ -66,7 +68,9 @@ private:
     bool attackhit_[3];
     bool isEnabled_;
     bool isEnabledexp_;
+    int explv_;
     int exppoint_;
+    float speed_;
 
 };
 

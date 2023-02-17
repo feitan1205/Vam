@@ -37,6 +37,7 @@ void ItemSelectScene::Update(const InputState& input)
 	}
 
 
+
 	if (input.IsTriggered(InputType::next)) {
 		for (int i = 0; i < Item::itemmax; i++) {
 			if (CheckHit(pw_start_x + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i), pw_start_x + itemboxsize_.x, (pw_start_y + 30 * i) + (itemboxsize_.y * (i + 1)))) {

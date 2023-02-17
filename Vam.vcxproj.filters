@@ -46,6 +46,7 @@
     <ClCompile Include="Attack\Attack3.cpp" />
     <ClCompile Include="Attack\AttackBase.cpp" />
     <ClCompile Include="Scene\ItemSelectScene.cpp" />
+    <ClCompile Include="Attack\Attack4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\GameoverScene.h">
@@ -88,5 +89,6 @@
     <ClInclude Include="Attack\AttackBase.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="Scene\ItemSelectScene.h" />
+    <ClInclude Include="Attack\Attack4.h" />
   </ItemGroup>
 </Project>

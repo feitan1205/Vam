@@ -32,7 +32,7 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	tmpLv_(1),
 	timer(),
 	maxenemynum_(10),
-	enemylv_(1)
+	enemylv_(0)
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		player_ = new Blue(playerpos_);
@@ -71,14 +71,14 @@ void GameplayingScene::Update(const InputState& input)
 		timer++;
 		frametimer = 0;
 		if (timer % 30 == 1) {
-			maxenemynum_+=5;
+			maxenemynum_+=10;
 			enemylv_++;
 		}
 	}
 
 	
 
-	printfDx(L"%d\n", maxenemynum_);
+	printfDx(L"%d\n", enemylv_);
 
 	//レベルアップ時の選択画面へ移動
 	if (player_->GetNowLv() != tmpLv_) {

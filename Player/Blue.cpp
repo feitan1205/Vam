@@ -16,7 +16,8 @@ Blue::Blue(Vec2 playerpos) :
 	maxexp_(),
 	nowexp_(),
 	nowLv_(1),
-	speed_(4)
+	speed_(1),
+	maxexpscale_(2)
 {
 	m_blueH_ = my::MyLoadGraph(L"Data/blue/Blue.png");
 	LoadDivGraph(L"Data/blue/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
@@ -170,7 +171,16 @@ void Blue::GetExp(int exppoint)
 	if (nowexp_ == maxexp_) {
 		nowLv_++;
 		nowexp_ = 0;
-		maxexp_ *= 2;
+		if (nowLv_ == 4)
+		{
+			maxexpscale_ = 1.5f;
+		}
+		if (nowLv_ == 7) {
+			maxexpscale_ = 1.3f;
+		}
+
+		maxexp_ *= maxexpscale_;
+
 	}
 }
 

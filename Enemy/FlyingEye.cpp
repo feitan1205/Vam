@@ -3,7 +3,6 @@
 #include "../DrawFunctions.h"
 #include "../game.h"
 
-constexpr float kspeed = 0.5;
 constexpr int standardcooldowntime = 30;
 
 
@@ -12,15 +11,21 @@ FlyingEye::FlyingEye() :
 	attackpoint_(2),
 	cooldowntime_(),
 	tmprand_(),
+	level_(),
 	nowhp_(3),
 	temphp_(),
 	damagepoint_(),
 	damagedrawframe_(),
 	isEnabled_(true),
-	expH_(),
-	isEnabledexp_(false)
+	expH1_(),
+	expH2_(),
+	isEnabledexp_(false),
+	explv_(),
+	exppoint_(),
+	speed_(0.5)
 {
-	expH_ = my::MyLoadGraph(L"Data/exp/orb6.png");
+	expH1_ = my::MyLoadGraph(L"Data/exp/orb6.png");
+	expH2_ = my::MyLoadGraph(L"Data/exp/orb4.png");
 	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, handle_);
 	for (int i = 0; i < 3; i++) {
 		attackhit_[i] = false;
@@ -77,7 +82,7 @@ void FlyingEye::Update(Vec2 playerpos)
 
 	vector_ = vector_.normalize();
 
-	pos_ += (vector_ * kspeed);
+	pos_ += (vector_ * speed_);
 
 	
 	if (vector_.x < 0) {
@@ -104,7 +109,16 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 	
 
 	if (isEnabledexp_) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, expH_, true);
+		switch (explv_) {
+		case 1:
+			DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, expH1_, true);
+			break;
+		case 2:
+			DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, expH2_, true);
+			break;
+		default:
+			break;
+		}
 		for (int i = 0; i < 3; i++) {
 			if (damagedrawframe_[i] >= 0) {
 				DrawFormatString(pos_.x + (Game::kScreenWidth / 2) - playerpos.x - 5, pos_.y + (Game::kScreenHeight / 2) - playerpos.y - 5, 0xffffff, L"%d", damagepoint_[i], true);
@@ -169,17 +183,23 @@ void FlyingEye::Damage(int attackpoint,int attacknumber)
 void FlyingEye::Death()
 {
 
-	//if (GetRand(100) / 50 == 1) 
+	//if (GetRand(100) / 10 <= 1) 
 	{
 		isEnabledexp_ = true;
 		isEnabled_ = true;
 		for (int i = 0; i < 8; i++) {
 			DeleteGraph(handle_[i]);
 		}
+		explv_ = 1;
 	}
 	/*else {
 		isEnabled_ = false;
 	}*/
+
+	if (isEnabledexp_ && level_ > 5 && GetRand(100) / 50 <= 1) {
+		explv_ = 2;
+		exppoint_ = 2;
+	}
 
 	cooldowntime_ = 1;
 	exppoint_ = 1;
@@ -218,5 +238,9 @@ bool FlyingEye::CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2
 
 void FlyingEye::EnemyLvUp(int level)
 {
+	level_ = level;
 	nowhp_ *= level;
+	if (level_ >= 4) {
+		speed_ += 0.3;
+	}
 }

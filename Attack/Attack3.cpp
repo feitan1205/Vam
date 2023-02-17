@@ -11,6 +11,7 @@ Attack3::Attack3() :
 	cooldowntime_(0),
 	attackflag_(false),
 	attackpoint_(4),
+	randattackpoint_(3),
 	attackvector_(),
 	nowlv_(0)
 {
@@ -48,7 +49,7 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 
 	if (cooldowntime_ < 0) {
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
-		attackflag_ = false;
+		attackflag_ = false;		
 	}
 
 }
@@ -74,7 +75,20 @@ void Attack3::SetHitBox()
 void Attack3::SetNextLv()
 {
 	nowlv_++;
+	cooldowntime_ = 0;
 	if (nowlv_ == 2) {
 		circle_ *= 2;
+	}
+	if (nowlv_ == 3) {
+		attackpoint_ += 5;
+		randattackpoint_ += 3;
+	}
+	if (nowlv_ == 4) {
+		cooldowntime_ -= 30;
+		circle_ += 20;
+	}
+	if (nowlv_ == 5) {
+		attackpoint_ += 7;
+		randattackpoint_ += 3;
 	}
 }

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Attack\Attack4.cpp" />
     <ClCompile Include="Attack\AttackBase.cpp" />
     <ClCompile Include="Attack\Attack3.cpp" />
     <ClCompile Include="Attack\Attack2.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attack\Attack4.h" />
     <ClInclude Include="Attack\AttackBase.h" />
     <ClInclude Include="Attack\Attack3.h" />
     <ClInclude Include="Attack\Attack2.h" />

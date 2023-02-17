@@ -50,6 +50,7 @@ private:
     int nowhp_;
     int maxexp_;
     int nowexp_;
+    float maxexpscale_;
     int nowLv_;
     int speed_;
     int cooldownpercentage_;
