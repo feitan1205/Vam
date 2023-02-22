@@ -1,18 +1,20 @@
-#include "ItemSelectScene.h"
+ï»¿#include "ItemSelectScene.h"
 #include "DxLib.h"
 #include "../InputState.h"
 #include "SceneManager.h"
 #include "../Player/PlayerBase.h"
 #include "../game.h"
 
-ItemSelectScene::ItemSelectScene(SceneManager& manager):
+ItemSelectScene::ItemSelectScene(SceneManager& manager) :
 	Scene(manager),
-	finishlvup(false)
+	finishlvup(false),
+	selectidx_(0),
+	selectnum_(4)
 {
-	pw_width = Game::kScreenWidth / 2;	//ƒEƒBƒ“ƒhƒE˜g‚Ì•
-	pw_height = Game::kScreenHeight - 100;	//ƒEƒBƒ“ƒhƒE˜g‚Ì‚‚³
-	pw_start_x = (Game::kScreenWidth - pw_width) / 2;	//ƒEƒBƒ“ƒhƒE˜g‚Ì¶
-	pw_start_y = (Game::kScreenHeight - pw_height) / 2;	//ƒEƒBƒ“ƒhƒE˜gã
+	pw_width = Game::kScreenWidth / 2;	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ ã®å¹…
+	pw_height = Game::kScreenHeight - 100;	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ ã®é«˜ã•
+	pw_start_x = (Game::kScreenWidth - pw_width) / 2;	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ ã®å·¦
+	pw_start_y = (Game::kScreenHeight - pw_height) / 2;	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ ä¸Š
 
 	itemboxsize_.x = Game::kScreenWidth / 2 - 80;
 	itemboxsize_.y = 100;
@@ -36,10 +38,31 @@ void ItemSelectScene::Update(const InputState& input)
 		return;
 	}
 
+	if (input.IsTriggered(InputType::down))
+	{
+		selectidx_++;
 
+		if (selectidx_ >= selectnum_) {
+			selectidx_ = selectnum_ - 1;
+		}
+	}
+	if (input.IsTriggered(InputType::up))
+	{
+		selectidx_--;
+
+		if (selectidx_< 0) {
+			selectidx_ = 0;
+		}
+	}
+
+	if (input.IsTriggered(InputType::prev)) {
+		player_->SetLv(selectidx_);
+		finishlvup = true;
+		return;
+	}
 
 	if (input.IsTriggered(InputType::next)) {
-		for (int i = 0; i < Item::itemmax; i++) {
+		for (int i = 0; i < PlayerStatus::kindmax; i++) {
 			if (CheckHit(pw_start_x + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i), pw_start_x + itemboxsize_.x, (pw_start_y + 30 * i) + (itemboxsize_.y * (i + 1)))) {
 				levelupweaponnumber_ = i;
 				player_->SetLv(levelupweaponnumber_);
@@ -60,35 +83,43 @@ void ItemSelectScene::Draw()
 
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 196);
 
-	//ƒ|[ƒYƒEƒBƒ“ƒhƒEƒZƒƒtƒ@ƒ“(•‚¢)
+	//ãƒãƒ¼ã‚ºã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚»ãƒ­ãƒ•ã‚¡ãƒ³(é»’ã„)
 	DrawBox(pw_start_x, pw_start_y, pw_start_x + pw_width, pw_start_y + pw_height, 0x000000, true);
 
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//’Êí•`‰æ‚É–ß‚·
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//é€šå¸¸æç”»ã«æˆ»ã™
 
-	//ƒ|[ƒY’†ƒƒbƒZ[ƒW
+	//ãƒãƒ¼ã‚ºä¸­ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 	DrawString((Game::kScreenWidth / 2) - 30, pw_start_y + 10, L"LvUP!!!", 0xffff88);
 
-	//ƒ|[ƒYƒEƒBƒ“ƒhƒE˜gü
+	//ãƒãƒ¼ã‚ºã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ ç·š
 	DrawBox(pw_start_x, pw_start_y, pw_start_x + pw_width, pw_start_y + pw_height, 0xffffff, false);
 	
-	for (int i = 0; i < Item::itemmax; i++) {
+	for (int i = 0; i < PlayerStatus::kindmax; i++) {
 		DrawBox(pw_start_x + 50, (pw_start_y + 30 * (i + 1))+ (itemboxsize_.y * i), pw_start_x + itemboxsize_.x, (pw_start_y + 30 * i) + (itemboxsize_.y * (i + 1)), 0xffffff, true);
-		DrawFormatString(pw_start_x + 50 + 500, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"LvF%d", player_->GetWeaponLv(i) + 1,true);
-		switch (player_->GetAttackingNumber(i))
-		{
-		case Item::ao:
-			DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"Â", true);
-			break;
-		case Item::murasaki:
-			DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"‡", true);
-			break;
-		case Item::aka:
-			DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"Ô", true);
-			break;
-		default:
-			break;
+		if (i < 3) {
+			DrawFormatString(pw_start_x + 50 + 500, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"Lvï¼š%d", player_->GetWeaponLv(i) + 1,true);
+			switch (player_->GetAttackingNumber(i))
+			{
+			case PlayerStatus::ao:
+				DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"é’", true);
+				break;
+			case PlayerStatus::murasaki:
+				DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"ç´«", true);
+				break;
+			case PlayerStatus::aka:
+				DrawFormatString(pw_start_x + 50 + 50, (pw_start_y + 30 * (i + 1)) + (itemboxsize_.y * i) + 5, 0x000000, L"èµ¤", true);
+				break;
+			default:
+				break;
+			}
 		}
 	}
+
+	SetFontSize(32);
+
+	DrawFormatString(pw_start_x + 40, (pw_start_y + 30 * (selectidx_ + 1)) + (itemboxsize_.y * selectidx_) + 17, 0xff0000, L"â–¶", true);
+
+	SetFontSize(16);
 
 }
 

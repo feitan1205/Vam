@@ -37,9 +37,10 @@ public:
         if (attackhit) { damagedrawframe_[attacknumber] = 30; };
     }
     bool IsHitAttack(int attacknumber) { return attackhit_[attacknumber]; }
-    void DeleteEnable() { isEnabled_ = false; }
+    void DeleteEnable() { isEnabledexp_ = false; }
     bool CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2);
     void EnemyLvUp(int level);
+    void ChangeExp(Vec2 pos);
 
 private:
 

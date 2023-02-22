@@ -168,7 +168,7 @@ void Blue::GetExp(int exppoint)
 
 	nowexp_ += exppoint;
 
-	if (nowexp_ == maxexp_) {
+	if (nowexp_ >= maxexp_) {
 		nowLv_++;
 		nowexp_ = 0;
 		if (nowLv_ == 4)

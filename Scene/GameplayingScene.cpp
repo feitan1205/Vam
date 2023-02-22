@@ -32,7 +32,8 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	tmpLv_(1),
 	timer(),
 	maxenemynum_(10),
-	enemylv_(0)
+	enemylv_(0),
+	enemynum_ ()
 {
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		player_ = new Blue(playerpos_);
@@ -44,11 +45,13 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	player_->Init();
 	
 	enemies_.push_back(std::make_shared<FlyingEye>());
-	enemies_.back()->Death();
 
 	for (auto& enem : enemies_) {
 		enem->Init(playerpos_);
 	}
+
+	enemies_.back()->ChangeExp(playerpos_);
+
 	map_ = new Map();
 	map_->Init();
 
@@ -197,17 +200,25 @@ void GameplayingScene::Update(const InputState& input)
 	}	
 
 	//死亡かつ経験値でもないエネミーをempty
+
 	auto rmIt = std::remove_if(enemies_.begin(), enemies_.end(),
 		[](const std::shared_ptr<EnemyBase>& enemy)
 		{
-			return !enemy->GetIsEnabled();
+			return !(enemy->GetIsEnabled() || enemy->GetIsExp());
 		});
+
 	//emptyエネミーのメモリ削除
 	enemies_.erase(rmIt, enemies_.end());
 
 	//printfDx(L"%d\n", enemies_.size());
 
-	if (enemies_.size() <= maxenemynum_) {
+	for (auto& enem : enemies_) {
+		if (enem->GetIsEnabled()) {
+			enemynum_++;
+		}
+	}
+
+	if (enemynum_ <= maxenemynum_) {
 		//oキーを押したときとエネミーカウントが0になったときエネミー生成
 		if ((CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) || enemflamecount_ < 0) {
 			enemies_.push_back(std::make_shared<FlyingEye>());
@@ -222,6 +233,8 @@ void GameplayingScene::Update(const InputState& input)
 
 	playervector_ = {0, 0};
 	
+	enemynum_ = 0;
+
 }
 
 void GameplayingScene::Draw()

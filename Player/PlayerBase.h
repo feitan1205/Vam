@@ -8,6 +8,23 @@ class Attack1;
 class Attack2;
 class Attack3;
 
+enum PlayerStatus {
+	ao,
+	murasaki,
+	aka,
+	boots,
+	book,
+	candle,
+	spinach,
+	crown,
+	kindmax
+};
+
+struct Item{
+
+	int level;
+
+};
 
 
 class PlayerBase
@@ -55,7 +72,7 @@ protected:
 	Vec2 pos_;
 	std::vector<AttackBase*> attack_;
 
-
+	Item item[PlayerStatus::kindmax];
 
 };
 

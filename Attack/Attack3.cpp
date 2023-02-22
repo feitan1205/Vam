@@ -72,7 +72,7 @@ void Attack3::SetHitBox()
 {
 }
 
-void Attack3::SetNextLv()
+void Attack3::SetLv(int i)
 {
 	nowlv_++;
 	cooldowntime_ = 0;

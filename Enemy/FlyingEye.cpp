@@ -186,7 +186,7 @@ void FlyingEye::Death()
 	//if (GetRand(100) / 10 <= 1) 
 	{
 		isEnabledexp_ = true;
-		isEnabled_ = true;
+		isEnabled_ = false;
 		for (int i = 0; i < 8; i++) {
 			DeleteGraph(handle_[i]);
 		}
@@ -196,12 +196,14 @@ void FlyingEye::Death()
 		isEnabled_ = false;
 	}*/
 
+	cooldowntime_ = 1;
+
 	if (isEnabledexp_ && level_ > 5 && GetRand(100) / 50 <= 1) {
 		explv_ = 2;
 		exppoint_ = 2;
+		return;
 	}
 
-	cooldowntime_ = 1;
 	exppoint_ = 1;
 
 }
@@ -243,4 +245,20 @@ void FlyingEye::EnemyLvUp(int level)
 	if (level_ >= 4) {
 		speed_ += 0.3;
 	}
+}
+
+void FlyingEye::ChangeExp(Vec2 pos)
+{
+
+	pos_ = pos;
+
+	isEnabledexp_ = true;
+	isEnabled_ = false ;
+	for (int i = 0; i < 8; i++) {
+		DeleteGraph(handle_[i]);
+	}
+	explv_ = 1;
+	exppoint_ = 1;
+	cooldowntime_ = 1;
+
 }

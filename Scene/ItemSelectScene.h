@@ -6,12 +6,6 @@ class InputState;
 class SceneManager;
 class PlayerBase;
 
-enum Item {
-	ao,
-	murasaki,
-	aka,
-	itemmax
-};
 
 class ItemSelectScene : public Scene
 {
@@ -37,4 +31,6 @@ private:
 	int	pw_start_x;
 	int	pw_start_y;
 	Vec2 itemboxsize_;
+	int selectidx_;
+	int selectnum_;
 };

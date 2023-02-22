@@ -34,6 +34,7 @@ public:
 	virtual bool IsHitAttack(int attacknumber) = 0;
 	virtual void DeleteEnable() = 0;
 	virtual void EnemyLvUp(int level) = 0;
+	virtual void ChangeExp(Vec2 pos) = 0;
 
 private:
 

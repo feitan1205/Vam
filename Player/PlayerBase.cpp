@@ -6,7 +6,9 @@
 
 PlayerBase::PlayerBase()
 {	
-	
+	for (int i = 0; i < PlayerStatus::kindmax; i++) {
+		item[i].level = 0;
+	}
 }
 
 PlayerBase::PlayerBase(Vec2 playerpos)
@@ -93,7 +95,21 @@ int PlayerBase::GetWeaponLv(int weaponnum)
 
 void PlayerBase::SetLv(int i)
 {
-	attack_[i]->SetNextLv();
+	switch (i)
+	{
+	case ao:item[ao].level++; attack_[i]->SetLv(item[i].level); break;
+	case murasaki:item[murasaki].level++; attack_[i]->SetLv(item[i].level); break;
+	case aka:item[aka].level++; attack_[i]->SetLv(item[i].level); break;
+	case boots:item[boots].level++; break;
+	case book:item[book].level++; break;
+	case candle:item[candle].level++; break;
+	case spinach:item[spinach].level++; break;
+	case crown:item[crown].level++; break;
+	default:
+		break;
+	}
+
+	//attack_[i]->SetLv(item[i].level);
 }
 
 void PlayerBase::CreatAttack(int creatweapon) {

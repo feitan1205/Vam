@@ -24,7 +24,7 @@ public:
 	int GetAttackPoint() { return attackpoint_ + GetRand(randattackpoint_); }
 	int GetMyNumber() { return 2; }
 	int GetNowLv() { return nowlv_; }
-	void SetNextLv();
+	void SetLv(int i);
 
 private:
 

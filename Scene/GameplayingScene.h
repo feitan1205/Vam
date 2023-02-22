@@ -43,5 +43,6 @@ private:
 	int timer;
 	int maxenemynum_;
 	int enemylv_;
+	int enemynum_;
 };
 

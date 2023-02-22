@@ -14,7 +14,7 @@ public:
 	void End();
 	void Update(int cooldownpercentage, bool charactervector, Vec2 playerpos);
 	void Draw();
-	void SetHitBox();
+	//void SetHitBox();
 
 	bool GetIsAttack() { return attackflag_; }
 	Vec2 GetAttackMinHitBox() { return minhitbox_; }
