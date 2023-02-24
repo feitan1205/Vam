@@ -15,14 +15,16 @@ Blue::Blue(Vec2 playerpos) :
 	hppercentage_(),
 	maxexp_(),
 	nowexp_(),
-	nowLv_(1),
+	nowLv_(0),
 	speed_(1),
-	maxexpscale_(2)
+	maxexpscale_(2),
+	damageflame_(0)
 {
 	m_blueH_ = my::MyLoadGraph(L"Data/blue/Blue.png");
+	LoadDivGraph(L"Data/blue/Idledamage.png", 4, 4, 1, 24, 24, idledamageH_);
 	LoadDivGraph(L"Data/blue/Idle.png", 4, 4, 1, 24, 24, m_idleH_);
+	LoadDivGraph(L"Data/blue/Movedamage.png", 6, 6, 1, 24, 24, movedamageH_);
 	LoadDivGraph(L"Data/blue/Move.png", 6, 6, 1, 24, 24, m_moveH_);
-	//LoadGraph(L"Data/blue/Blue.png", m_blueH_);
 	GetGraphSize(m_blueH_, &sizeX, &sizeY);
 }
 
@@ -33,10 +35,12 @@ Blue::~Blue()
 
 	for (int i = 0; i < 4; i++) {
 		DeleteGraph(m_idleH_[i]);
+		DeleteGraph(idledamageH_[i]);
 	}
 
 	for (int i = 0; i < 6; i++) {
 		DeleteGraph(m_moveH_[i]);
+		DeleteGraph(movedamageH_[i]);
 	}
 
 }
@@ -75,17 +79,37 @@ void Blue::IdleAnimation(bool charactervector)
 		flamecount = 0;
 	}
 
-	if (flamecount >= 0 && flamecount < 10) {
-		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[0], true, charactervector);
+	if (damageflame_ == 0) {
+		if (flamecount >= 0 && flamecount < 10) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[0], true, charactervector);
+		}
+		else if (flamecount >= 10 && flamecount < 20) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[1], true, charactervector);
+		}
+		else if (flamecount >= 20 && flamecount < 30) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[2], true, charactervector);
+		}
+		else if (flamecount >= 30 && flamecount < 40) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[3], true, charactervector);
+		}
 	}
-	else if (flamecount >= 10 && flamecount < 20) {
-		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[1], true, charactervector);
-	}
-	else if (flamecount >= 20 && flamecount < 30) {
-		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[2], true, charactervector);
-	}
-	else if (flamecount >= 30 && flamecount < 40) {
-		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_idleH_[3], true, charactervector);
+
+	if (damageflame_ > 0) {
+
+		if (flamecount >= 0 && flamecount < 10) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, idledamageH_[0], true, charactervector);
+		}
+		else if (flamecount >= 10 && flamecount < 20) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, idledamageH_[1], true, charactervector);
+		}
+		else if (flamecount >= 20 && flamecount < 30) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, idledamageH_[2], true, charactervector);
+		}
+		else if (flamecount >= 30 && flamecount < 40) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, idledamageH_[3], true, charactervector);
+		}
+
+		damageflame_--;
 	}
 
 	DrawBox((Game::kScreenWidth / 2) - 20 - 1, (Game::kScreenHeight / 2) + 27 - 1, (Game::kScreenWidth / 2) - 20 + (40 * 1) + 1, (Game::kScreenHeight / 2) + 35 + 1, 0x000000, true);
@@ -132,6 +156,30 @@ void Blue::MoveAnimation(bool charactervector)
 		DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, m_moveH_[5], true, charactervector);
 	}
 
+	if (damageflame_ > 0) {
+
+		if (flamecount >= 0 && flamecount < 10) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, movedamageH_[0], true, charactervector);
+		}
+		else if (flamecount >= 10 && flamecount < 20) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, movedamageH_[1], true, charactervector);
+		}
+		else if (flamecount >= 20 && flamecount < 30) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, movedamageH_[2], true, charactervector);
+		}
+		else if (flamecount >= 30 && flamecount < 40) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, movedamageH_[3], true, charactervector);
+		}
+		else if (flamecount >= 40 && flamecount < 50) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, movedamageH_[4], true, charactervector);
+		}
+		else if (flamecount >= 50 && flamecount < 60) {
+			DrawRotaGraph((Game::kScreenWidth / 2), (Game::kScreenHeight / 2), 2, 0, movedamageH_[5], true, charactervector);
+		}
+
+		damageflame_--;
+	}
+
 	DrawBox((Game::kScreenWidth / 2) - 20 - 1, (Game::kScreenHeight / 2) + 27 - 1, (Game::kScreenWidth / 2) - 20 + (40 * 1) + 1, (Game::kScreenHeight / 2) + 35 + 1, 0x000000, true);
 	DrawBox((Game::kScreenWidth / 2) - 20, (Game::kScreenHeight / 2) + 27, (Game::kScreenWidth / 2) - 20 + (40 * hppercentage_), (Game::kScreenHeight / 2) + 35, 0xff0000, true);
 
@@ -139,7 +187,7 @@ void Blue::MoveAnimation(bool charactervector)
 
 	DrawBox(0, 1, Game::kScreenWidth, 20, 0x000000, true);
 	DrawBox(1, 1, Game::kScreenWidth * exppercentage_, 20, 0x00ffff, true);
-	DrawBox(0, 1, Game::kScreenWidth, 20, 0xffffff, false);
+	DrawBox(0, 1, Game::kScreenWidth, 20, 0xffffff, false); 
 
 	DrawFormatString(Game::kScreenWidth - 60, 3, 0xffffff, L"LvF%d", nowLv_, true);
 
@@ -161,10 +209,14 @@ void Blue::Damage(int enemyattackpoint)
 
 	nowhp_ -= enemyattackpoint;
 
+	damageflame_ = 10;
+
 }
 
-void Blue::GetExp(int exppoint)
+void Blue::GetExp(float exppoint)
 {
+
+	exppoint = exppoint + (exppoint / 100) * exppointpercentage_;
 
 	nowexp_ += exppoint;
 

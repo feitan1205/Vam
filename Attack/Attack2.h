@@ -24,7 +24,9 @@ public:
 	int GetAttackPoint() { return attackpoint_ + GetRand(5); }
 	int GetMyNumber() { return 1; }
 	int GetNowLv() { return nowlv_; }
+	int GetMaxLv() { return maxlv_; }
 	void SetLv(int i) { nowlv_ = i; }
+	void SetEnemyPos(Vec2 enempos) {};
 
 private:
 

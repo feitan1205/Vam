@@ -3,7 +3,7 @@
 #include "../DrawFunctions.h"
 #include "../game.h"
 namespace {
-	constexpr int kMaxlv = 5;
+	constexpr int kMaxlv = 9;
 	constexpr int cooldowntime = 200;
 }
 
@@ -15,7 +15,7 @@ Attack1::Attack1():
 	randattackpoint_(3),
 	attackvector_(),
 	nowlv_(0),
-	maxlv_()
+	maxlv_(9)
 {
 	attack1H_[0] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_01.png");
 	attack1H_[1] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_02.png");
@@ -104,22 +104,22 @@ void Attack1::Draw()
 
 	if (flamecount_ >= 0 && flamecount_ < 5)
 	{
-		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4, 0, attack1H_[0], true, attackvector_);
+		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4 + ((static_cast<float>(4) / 100) * static_cast<float>(attackscalepercentage_)), 0, attack1H_[0], true, attackvector_);
 		//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
 	}
 	else if (flamecount_ >= 5 && flamecount_ < 10) 
 	{
-		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4, 0, attack1H_[1], true, attackvector_);
+		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4 + ((static_cast<float>(4) / 100) * static_cast<float>(attackscalepercentage_)), 0, attack1H_[1], true, attackvector_);		
 		//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
 	}
 	else if (flamecount_ >= 10 && flamecount_ < 15) 
 	{
-		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4, 0, attack1H_[2], true, attackvector_);
+		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4 + ((static_cast<float>(4) / 100) * static_cast<float>(attackscalepercentage_)), 0, attack1H_[2], true, attackvector_);		
 		//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
 	}
 	else if (flamecount_ >= 15 && flamecount_ < 20)
 	{
-		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4, 0, attack1H_[3], true, attackvector_);
+		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4 + ((static_cast<float>(4) / 100) * static_cast<float>(attackscalepercentage_)), 0, attack1H_[3], true, attackvector_);		
 		//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
 	}
 
@@ -196,5 +196,10 @@ void Attack1::SetHitBox()
 			maxhitbox_.y = playerpos_.y + 50;
 		}
 	}
+
+	maxhitbox_.x = (maxhitbox_.x + (maxhitbox_.x / 100 * attackscalepercentage_)) - (playerpos_.x / 100 * attackscalepercentage_);
+	maxhitbox_.y = (maxhitbox_.y + (maxhitbox_.y / 100 * attackscalepercentage_)) - (playerpos_.y / 100 * attackscalepercentage_);
+	minhitbox_.x = (minhitbox_.x + (minhitbox_.x / 100 * attackscalepercentage_)) - (playerpos_.x / 100 * attackscalepercentage_);
+	minhitbox_.y = (minhitbox_.y + (minhitbox_.y / 100 * attackscalepercentage_)) - (playerpos_.y / 100 * attackscalepercentage_);
 
 }

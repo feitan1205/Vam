@@ -21,9 +21,17 @@ public:
 	virtual int GetAttackPoint() = 0;
 	virtual int GetMyNumber() = 0;
 	virtual int GetNowLv() = 0;
+	virtual int GetMaxLv() = 0;
 	virtual void SetLv(int i) = 0;
+	virtual void SetEnemyPos(Vec2 enempos) = 0;
+
+	void SetScale(int attackscalepercentage) { attackscalepercentage_ = attackscalepercentage; }
 
 private:
+
+protected:
+
+	int attackscalepercentage_;
 
 };
 

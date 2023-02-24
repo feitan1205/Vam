@@ -29,7 +29,7 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	map_(nullptr),
 	playerpos_(0,0),
 	enemflamecount_(10),
-	tmpLv_(1),
+	tmpLv_(0),
 	timer(),
 	maxenemynum_(10),
 	enemylv_(0),
@@ -73,7 +73,7 @@ void GameplayingScene::Update(const InputState& input)
 	if (frametimer == 60) {
 		timer++;
 		frametimer = 0;
-		if (timer % 30 == 1) {
+		if (timer % 50 == 1) {
 			maxenemynum_+=10;
 			enemylv_++;
 		}
@@ -157,10 +157,6 @@ void GameplayingScene::Update(const InputState& input)
 				enem->SetCoolDownTime();
 			}
 		}
-		if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox()) && enem->GetIsExp()) {
-			player_->GetExp(enem->GetExpPoint());
-			enem->DeleteEnable();
-		}
 	}
 
 
@@ -198,6 +194,13 @@ void GameplayingScene::Update(const InputState& input)
 			}
 		}
 	}	
+
+	for (auto& enem : enemies_) {
+		if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox()) && enem->GetIsExp()) {
+			player_->GetExp(enem->GetExpPoint());
+			enem->DeleteEnable();
+		}
+	}
 
 	//死亡かつ経験値でもないエネミーをempty
 

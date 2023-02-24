@@ -13,7 +13,8 @@ Attack3::Attack3() :
 	attackpoint_(4),
 	randattackpoint_(3),
 	attackvector_(),
-	nowlv_(0)
+	nowlv_(0),
+	maxlv_(9)
 {
 	
 }
@@ -25,7 +26,7 @@ Attack3::~Attack3()
 void Attack3::Init(int cooldownpercentage)
 {
 
-	circle_ = 20;
+	circle_ = 35;
 	cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 
 }

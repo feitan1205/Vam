@@ -29,7 +29,7 @@ public:
 	virtual Vec2 GetPos() = 0;
 	virtual float GetCircle() = 0;
 	virtual bool GetIsExp() = 0;
-	virtual int GetExpPoint() = 0;
+	virtual float GetExpPoint() = 0;
 	virtual void AttackHit(bool attack3hit,int attacknumber) = 0;
 	virtual bool IsHitAttack(int attacknumber) = 0;
 	virtual void DeleteEnable() = 0;

@@ -31,7 +31,7 @@ public:
     Vec2 GetPos() { return pos_; }
     float GetCircle() { return hitcircle_; }
     bool GetIsExp() { return isEnabledexp_; }
-    int GetExpPoint() { return exppoint_; }
+    float GetExpPoint() { return exppoint_; }
     void AttackHit(bool attackhit, int attacknumber) {
         attackhit_[attacknumber] = attackhit;
         if (attackhit) { damagedrawframe_[attacknumber] = 30; };
@@ -70,7 +70,7 @@ private:
     bool isEnabled_;
     bool isEnabledexp_;
     int explv_;
-    int exppoint_;
+    float exppoint_;
     float speed_;
 
 };

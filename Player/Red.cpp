@@ -142,6 +142,6 @@ void Red::Damage(int enemyattackpoint)
 
 }
 
-void Red::GetExp(int exppoint)
+void Red::GetExp(float exppoint)
 {
 }

@@ -8,7 +8,7 @@ class Blue :
 public:
 
     Blue(Vec2 playerpos);
-    ~Blue();
+    virtual ~Blue();
 
     void Init();
     void End();
@@ -26,15 +26,18 @@ public:
     Vec2 GetMinHitBox() { return minhitbox_; }
     Vec2 GetMaxHitBox() { return maxhitbox_; }
 
-    void GetExp(int exppoint);
+    void GetExp(float exppoint);
     int GetNowLv() { return nowLv_; }
-    int GetPlayerSpeed() { return speed_; }
+    float GetPlayerSpeed() { return (speed_ + (speed_ / 100 * movespeedpercentage_)); }
 
 private:
 
     int m_blueH_;
     int m_idleH_[4];
+    int idledamageH_[4];
     int m_moveH_[6];
+    int movedamageH_[6];
+    int damageflame_;
     int sizeX;
     int sizeY;
     int flamecount;
@@ -48,11 +51,11 @@ private:
 
     int maxhp_;
     int nowhp_;
-    int maxexp_;
-    int nowexp_;
+    float maxexp_;
+    float nowexp_;
     float maxexpscale_;
     int nowLv_;
-    int speed_;
+    float speed_;
     int cooldownpercentage_;
 
 };

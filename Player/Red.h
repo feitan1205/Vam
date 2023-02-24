@@ -25,9 +25,9 @@ public:
     Vec2 GetMinHitBox() { return minhitbox_; }
     Vec2 GetMaxHitBox() { return maxhitbox_; }
 
-    void GetExp(int exppoint);
+    void GetExp(float exppoint);
     int GetNowLv() { return 1; }
-    int GetPlayerSpeed() { return speed_; }
+    float GetPlayerSpeed() { return speed_; }
 
 private:
 

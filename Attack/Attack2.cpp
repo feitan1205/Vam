@@ -3,7 +3,7 @@
 #include "../DrawFunctions.h"
 #include "../game.h"
 
-constexpr int cooldowntime = 0;
+constexpr int cooldowntime = 200;
 
 Attack2::Attack2() :
 	flamecount_(),
@@ -14,7 +14,8 @@ Attack2::Attack2() :
 	attackscale_(),
 	attackingtime_(100),
 	animationcount_(),
-	nowlv_(0)
+	nowlv_(0),
+	maxlv_(9)
 {
 	attack2H_[0] = my::MyLoadGraph(L"Data/Effect/attack2/BFX003_01.png");
 	attack2H_[1] = my::MyLoadGraph(L"Data/Effect/attack2/BFX003_02.png");

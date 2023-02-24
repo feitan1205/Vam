@@ -15,7 +15,8 @@ public:
 	virtual void Update(const InputState& input)override;
 	void Draw();
 
-	void SetPlayer(PlayerBase* player) { player_ = player; }
+	void SetPlayer(PlayerBase* player);
+	
 	bool CheckHit(int posX, int posY, int sizeX, int sizeY);
 
 private:
@@ -33,4 +34,6 @@ private:
 	Vec2 itemboxsize_;
 	int selectidx_;
 	int selectnum_;
+	bool selectok_;
+	int selectkind_[4];
 };

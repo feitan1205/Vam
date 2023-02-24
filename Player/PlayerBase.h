@@ -7,11 +7,13 @@ class AttackBase;
 class Attack1;
 class Attack2;
 class Attack3;
+class Attack4;
 
 enum PlayerStatus {
 	ao,
 	murasaki,
 	aka,
+	bullet,
 	boots,
 	book,
 	candle,
@@ -23,6 +25,7 @@ enum PlayerStatus {
 struct Item{
 
 	int level;
+	int maxlevel;
 
 };
 
@@ -49,9 +52,9 @@ public:
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
 
-	virtual void GetExp(int exppoint) = 0;
+	virtual void GetExp(float exppoint) = 0;
 	virtual int GetNowLv() = 0;
-	virtual int GetPlayerSpeed() = 0;
+	virtual float GetPlayerSpeed() = 0;
 
 	int GetAttackPoint(int attacknum);
 	bool GetIsAttack(int attacknum);
@@ -63,6 +66,7 @@ public:
 	int GetAttackingNumber(int attacknum);
 
 	int GetWeaponLv(int weaponnum);
+	int GetWeaponMaxLv(int weaponnum);
 	void SetLv(int i);
 	void CreatAttack(int creatweapon);
 
@@ -74,5 +78,10 @@ protected:
 
 	Item item[PlayerStatus::kindmax];
 
+	int attackpointpercentage_ = 0;
+	float movespeedpercentage_ = 0;
+	int exppointpercentage_ = 0;
+	int attackscalepercentage_ = 0;
+	int cooltimepercentage_ = 0;
 };
 

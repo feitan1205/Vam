@@ -3,8 +3,8 @@
 #include "../DrawFunctions.h"
 #include "../game.h"
 namespace {
-	constexpr int kMaxlv = 5;
-	constexpr int cooldowntime = 200;
+	constexpr int kMaxlv = 9;
+	constexpr int cooldowntime = 100;
 }
 
 Attack4::Attack4() :
@@ -15,12 +15,12 @@ Attack4::Attack4() :
 	randattackpoint_(3),
 	attackvector_(),
 	nowlv_(0),
-	maxlv_()
+	maxlv_(),
+	shotcount_(),
+	shotmaxcount_(),
+	circle_(16)
 {
-	attack1H_[0] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_01.png");
-	attack1H_[1] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_02.png");
-	attack1H_[2] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_03.png");
-	attack1H_[3] = my::MyLoadGraph(L"Data/Effect/attack1/FE1002_04.png");
+	attack4H_ = my::MyLoadGraph(L"Data/Effect/attack4/bullet.png");	
 }
 
 Attack4::~Attack4()
@@ -32,7 +32,8 @@ void Attack4::Init(int cooldownpercentage)
 
 	cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 	maxlv_ = kMaxlv;
-
+	shotspacecount_ = 6;
+	shotmaxcount_ = 3;
 }
 
 void Attack4::End()
@@ -48,7 +49,18 @@ void Attack4::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 
 	playerpos_ = playerpos;
 
-	cooldowntime_--;
+	for (auto& shot : shots_) {
+		shot->Update();
+	}
+
+	if (shotcount_ >= shotmaxcount_) {
+		attackflag_ = false;
+		shotcount_ = 0;
+	}
+
+	if (!attackflag_) {
+		cooldowntime_--;
+	}
 
 	if (cooldowntime_ < 0) {
 		attackflag_ = true;
@@ -84,46 +96,48 @@ void Attack4::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 		attackvector_ = charactervector;
 	}
 
+	if (attackflag_) {
+		shotspacecount_--;
+	}
+	if (attackflag_ && shotspacecount_ < 0) {
+
+		shots_.push_back(std::make_shared<Shot>(playerpos_));
+		shots_.back()->SetPos(enempos_);
+
+		shotspacecount_ = 6;
+
+		shotcount_++;
+	}
+
 }
 
 void Attack4::Draw()
 {
 
-	if (nowlv_ == 0) {
-		return;
+	for (auto& shot : shots_) {
+		DrawRotaGraph((Game::kScreenWidth / 2) + shot->GetPos().x, (Game::kScreenHeight / 2) + shot->GetPos().y, 1 + ((static_cast<float>(1) / 100) * static_cast<float>(attackscalepercentage_)), 0, attack4H_, true);
 	}
+}
 
-	flamecount_++;
+void Attack4::SetLv(int i)
+{
+}
 
-	if (flamecount_ >= 20)
-	{
-		flamecount_ = 0;
-		attackflag_ = false;
-		return;
-	}
+Attack4::Shot::~Shot()
+{
+}
 
-	if (flamecount_ >= 0 && flamecount_ < 5)
-	{
-		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4, 0, attack1H_[0], true, attackvector_);
-		//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
-	}
-	else if (flamecount_ >= 5 && flamecount_ < 10)
-	{
-		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4, 0, attack1H_[1], true, attackvector_);
-		//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
-	}
-	else if (flamecount_ >= 10 && flamecount_ < 15)
-	{
-		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4, 0, attack1H_[2], true, attackvector_);
-		//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
-	}
-	else if (flamecount_ >= 15 && flamecount_ < 20)
-	{
-		DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, 4, 0, attack1H_[3], true, attackvector_);
-		//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
-	}
+void Attack4::Shot::Update() {
 
-	/*DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
-	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true);*/
+	pos_ += vector_ * speed_;
+
+}
+
+void Attack4::Shot::SetPos(Vec2 enempos) {
+
+	pos_ = playerpos_;
+	vector_ = playerpos_ - enempos;
+
+	vector_ = vector_.normalize();
 
 }
