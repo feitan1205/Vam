@@ -78,7 +78,7 @@ void Attack3::SetLv(int i)
 	nowlv_++;
 	cooldowntime_ = 0;
 	if (nowlv_ == 2) {
-		circle_ *= 2;
+		circle_ *= 3;
 	}
 	if (nowlv_ == 3) {
 		attackpoint_ += 5;
@@ -86,10 +86,13 @@ void Attack3::SetLv(int i)
 	}
 	if (nowlv_ == 4) {
 		cooldowntime_ -= 30;
-		circle_ += 20;
+		circle_ *= 2;
 	}
 	if (nowlv_ == 5) {
 		attackpoint_ += 7;
 		randattackpoint_ += 3;
+	}
+	if (nowlv_ == 6) {
+		cooldowntime_ -= 50;
 	}
 }

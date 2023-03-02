@@ -33,13 +33,13 @@ void TitleScene::NormalUpdate(const InputState& input)
 			return;
 		}
 	}
-	if (input.IsTriggered(InputType::prev))
+	/*if ()
 	{
 		manager_.ChangeScene(new OptionScene(manager_));
 		return;
-	}
+	}*/
 
-	if (CheckHitKey(KEY_INPUT_P)) {
+	if (CheckHitKey(KEY_INPUT_P) || input.IsTriggered(InputType::prev)) {
 		manager_.ChangeScene(new GameplayingScene(manager_,0,input));
 		return;
 	}

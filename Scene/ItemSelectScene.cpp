@@ -34,11 +34,11 @@ ItemSelectScene::~ItemSelectScene()
 
 void ItemSelectScene::Update(const InputState& input)
 {
-	if (input.IsTriggered(InputType::pause))
+	/*if (input.IsTriggered(InputType::pause))
 	{
 		manager_.PopScene();
 		return;
-	}
+	}*/
 
 	if (finishlvup) {
 		manager_.PopScene();

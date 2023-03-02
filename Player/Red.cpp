@@ -42,9 +42,9 @@ void Red::End()
 {
 }
 
-void Red::Update(Vec2 playerpos, bool charactervector)
+void Red::Update(Vec2 playerpos, bool charactervector, Vec2 enemypos)
 {
-	PlayerBase::Update(cooldownpercentage_, charactervector, playerpos);
+	PlayerBase::Update(cooldownpercentage_, charactervector, playerpos, enemypos);
 
 	hppercentage_ = static_cast <float>(nowhp_) / static_cast <float>(maxhp_);
 

@@ -12,7 +12,7 @@ public:
 
     void Init();
     void End();
-    void Update(Vec2 playerpos, bool charactervector);
+    void Update(Vec2 playerpos, bool charactervector, Vec2 enemypos);
     void Draw();
     //•`‰æ
     void IdleAnimation(bool charactervector);

@@ -16,8 +16,10 @@ public:
 	void Update(int cooldownpercentage, bool charactervector, Vec2 playerpos);
 	void Draw();
 	void SetHitBox();
+	int GetSize() { return 0; }
 
 	bool GetIsAttack() { return attackflag_; }
+	Vec2 GetPos(int i) { return Vec2(0, 0); }
 	Vec2 GetAttackMinHitBox() { return { 0,0 }; }
 	Vec2 GetAttackMaxHitBox() { return { 0,0 }; }
 	float GetAttackHitCircle() { return circle_; }

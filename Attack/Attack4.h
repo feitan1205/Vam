@@ -17,13 +17,15 @@ public:
 	void Update(int cooldownpercentage, bool charactervector, Vec2 playerpos);
 	void Draw();
 	void SetHitBox() {};
+	int GetSize() { return shots_.size(); };
 
 	bool GetIsAttack() { return attackflag_; }
+	Vec2 GetPos(int i);
 	Vec2 GetAttackMinHitBox() { return { 0,0 }; }
 	Vec2 GetAttackMaxHitBox() { return { 0,0 }; }
 	float GetAttackHitCircle() { return circle_; }
 	int GetAttackPoint() { return attackpoint_ + GetRand(randattackpoint_); }
-	int GetMyNumber() { return 0; }
+	int GetMyNumber() { return 3; }
 	int GetNowLv() { return nowlv_; }
 	int GetMaxLv() { return maxlv_; }
 	void SetLv(int i);
@@ -32,19 +34,23 @@ public:
 	class Shot {
 	public:
 
-		Shot(Vec2 playerpos):playerpos_(playerpos) {};
+		Shot(Vec2 playerpos) :playerpos_(playerpos),speed_(2) ,isenable_(true) {};
 		virtual ~Shot();
 
 		void Update();
 
 		void SetPos(Vec2 enempos);
 		Vec2 GetPos() { return pos_; }
+		void Delete() { isenable_ = false; }
+
+		bool GetIsEnabled() { return isenable_; }
 
 	private:
 
 		Vec2 playerpos_;
 		Vec2 pos_;
 		Vec2 vector_;
+		bool isenable_;
 		int speed_;
 
 	};

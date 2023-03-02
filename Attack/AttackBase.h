@@ -13,8 +13,10 @@ public:
 	virtual void Update(int cooldownpercentage, bool charactervector, Vec2 playerpos) = 0;
 	virtual void Draw() = 0;
 	virtual void SetHitBox() = 0;
+	virtual int GetSize() = 0;
 
 	virtual bool GetIsAttack() = 0;
+	virtual Vec2 GetPos(int i) = 0;
 	virtual Vec2 GetAttackMinHitBox() = 0;
 	virtual Vec2 GetAttackMaxHitBox() = 0;
 	virtual float GetAttackHitCircle() = 0;

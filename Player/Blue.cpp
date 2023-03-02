@@ -56,9 +56,9 @@ void Blue::End()
 {
 }
 
-void Blue::Update(Vec2 playerpos, bool charactervector)
+void Blue::Update(Vec2 playerpos, bool charactervector, Vec2 enemypos)
 {
-	PlayerBase::Update(cooldownpercentage_, charactervector,playerpos);
+	PlayerBase::Update(cooldownpercentage_, charactervector,playerpos, enemypos);
 
 	hppercentage_ = static_cast <float>(nowhp_) / static_cast <float>(maxhp_);
 	exppercentage_ = static_cast <float>(nowexp_) / static_cast <float>(maxexp_);

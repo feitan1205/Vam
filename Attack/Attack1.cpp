@@ -89,7 +89,7 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 void Attack1::Draw()
 {
 
-	if (nowlv_ == 0) {
+	if (nowlv_ == 0 || !attackflag_) {
 		return;
 	}
 

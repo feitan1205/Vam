@@ -44,5 +44,6 @@ private:
 	int maxenemynum_;
 	int enemylv_;
 	int enemynum_;
+	Vec2 enemypos_;
 };
 

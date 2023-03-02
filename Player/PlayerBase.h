@@ -41,8 +41,8 @@ public:
 	virtual void Init() = 0;
 	virtual void Init(int cooldownpercentage);
 	virtual void End() = 0;
-	virtual void Update(Vec2 playerpos, bool charactervector) = 0;
-	virtual void Update(int cooldownpercentage, bool charactervector,Vec2 playerpos);
+	virtual void Update(Vec2 playerpos, bool charactervector,Vec2 enemypos) = 0;
+	virtual void Update(int cooldownpercentage, bool charactervector,Vec2 playerpos,Vec2 enemypos);
 	virtual void Draw(bool charactervector);
 	virtual void IdleAnimation(bool charactervector) = 0;
 	virtual void MoveAnimation(bool charactervector) = 0;
@@ -56,6 +56,8 @@ public:
 	virtual int GetNowLv() = 0;
 	virtual float GetPlayerSpeed() = 0;
 
+	int GetSize(int attacknum);
+	Vec2 GetBulletPos(int attacknum,int j);
 	int GetAttackPoint(int attacknum);
 	bool GetIsAttack(int attacknum);
 	Vec2 GetAttackMinHitBox(int attacknum);

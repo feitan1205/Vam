@@ -137,13 +137,35 @@ void GameplayingScene::Update(const InputState& input)
 		enem->SetHitBox(playerpos_);
 	}
 
+	Vec2 distance = { 0,0 };
+	float vecdistance = 0.0f;
+	float tmpvecdistance = 0.0f;
+	int sortcount = 0;
+
 	//enemy_->Update(playerpos_);
 	for (auto& enem : enemies_) {
 		enem->Update(playerpos_);
-	}
 
+
+		distance = playerpos_ - enem->GetPos();
+		vecdistance = std::hypotf(distance.x,distance.y);
+
+		if (sortcount == 0) {
+			enemypos_ = enem->GetPos();
+			tmpvecdistance = vecdistance;
+			sortcount++;
+			continue;
+		}
+
+		if (vecdistance < tmpvecdistance) {
+			enemypos_ = enem->GetPos();
+			tmpvecdistance = vecdistance;
+			sortcount++;
+		}
+
+	}
 	//プレイヤーのアップデート
-	player_->Update(playerpos_,charactervector_);
+	player_->Update(playerpos_,charactervector_,enemypos_);
 
 	//マップのアップデート
 	map_->Update(playerpos_);
@@ -192,6 +214,22 @@ void GameplayingScene::Update(const InputState& input)
 					enem->AttackHit(false, player_->GetAttackingNumber(i));
 				}
 			}
+			//else if (player_->GetAttackingNumber(i) == 3) {
+			//	/*if (player_->GetIsAttack(i)) {
+			//		for (int j = 0; j < player_->GetSize(i); j++) {
+			//			if (CheckHitCircle(player_->GetBulletPos(i,j), player_->GetAttackHitCircle(i), enem->GetPos(), enem->GetCircle()) && !enem->IsHitAttack(player_->GetAttackingNumber(i))) {
+			//				enem->Damage(player_->GetAttackPoint(i), player_->GetAttackingNumber(i));
+			//				enem->AttackHit(true, player_->GetAttackingNumber(i));
+			//				if (enem->GetNowHP() <= 0) {
+			//					enem->Death();
+			//				}
+			//			}
+			//		}
+			//	}
+			//	else {
+			//		enem->AttackHit(false, player_->GetAttackingNumber(i));
+			//	}*/
+			//}
 		}
 	}	
 
@@ -264,16 +302,6 @@ void GameplayingScene::Draw()
 	else {
 		player_->IdleAnimation(charactervector_);
 	}
-
-
-	/*DrawFormatString(300, 300, 0xffffff, L"%f", playerpos_.x, true);
-	DrawFormatString(300, 316, 0xffffff, L"%f", playerpos_.y, true);*/
-
-	/*for (auto& enem : enemies_) {
-		DrawFormatString(400, 300, 0xffffff, L"%f", enem->GetPos().x, true);
-		DrawFormatString(400, 316, 0xffffff, L"%f", enem->GetPos().y, true);
-		break;
-	}*/
 
 	SetFontSize(32);
 

@@ -51,10 +51,11 @@ void PlayerBase::Init(int cooldownpercentage)
 	
 }
 
-void PlayerBase::Update(int cooldownpercentage, bool charactervector, Vec2 playerpos)
+void PlayerBase::Update(int cooldownpercentage, bool charactervector, Vec2 playerpos,Vec2 enemypos)
 {
 
 	for (auto& attack : attack_) {
+		attack->SetEnemyPos(enemypos);
 		attack->Update(cooldownpercentage, charactervector, playerpos);
 		attack->SetHitBox();
 		attack->SetScale(attackscalepercentage_);
@@ -65,11 +66,22 @@ void PlayerBase::Update(int cooldownpercentage, bool charactervector, Vec2 playe
 void PlayerBase::Draw(bool charactervector)
 {
 	for (auto& attack : attack_) {
-		if (attack->GetIsAttack()) {
+		//if (attack->GetIsAttack()) 
+		{
 			attack->Draw();
 		}
 	}
 	
+}
+
+int PlayerBase::GetSize(int attacknum)
+{
+	return attack_[attacknum]->GetSize();
+}
+
+Vec2 PlayerBase::GetBulletPos(int attacknum,int j)
+{
+	return attack_[attacknum]->GetPos(j);
 }
 
 int PlayerBase::GetAttackPoint(int attacknum)

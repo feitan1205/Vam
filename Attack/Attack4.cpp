@@ -32,7 +32,7 @@ void Attack4::Init(int cooldownpercentage)
 
 	cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 	maxlv_ = kMaxlv;
-	shotspacecount_ = 6;
+	shotspacecount_ = 32;
 	shotmaxcount_ = 3;
 }
 
@@ -64,6 +64,9 @@ void Attack4::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 
 	if (cooldowntime_ < 0) {
 		attackflag_ = true;
+		shots_.push_back(std::make_shared<Shot>(playerpos_));
+		shots_.back()->SetPos(enempos_);
+		shotcount_++;
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 		attackpoint_ = 6;
 		randattackpoint_ = 3;
@@ -104,10 +107,33 @@ void Attack4::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 		shots_.push_back(std::make_shared<Shot>(playerpos_));
 		shots_.back()->SetPos(enempos_);
 
-		shotspacecount_ = 6;
+		shotspacecount_ = 32;
 
 		shotcount_++;
 	}
+
+	for (auto& shot : shots_) {
+		if ((Game::kScreenWidth / 2) + shot->GetPos().x - playerpos_.x < 0) {
+			shot->Delete();
+		}
+		if ((Game::kScreenWidth / 2) + shot->GetPos().x - playerpos_.x > Game::kScreenWidth) {
+			shot->Delete();
+		}
+		if ((Game::kScreenHeight / 2) + shot->GetPos().y - playerpos_.y < 0) {
+			shot->Delete();
+		}
+		if ((Game::kScreenHeight / 2) + shot->GetPos().y - playerpos_.y > Game::kScreenHeight) {
+			shot->Delete();
+		}
+	}
+
+	auto rmIt = std::remove_if(shots_.begin(), shots_.end(),
+		[](const std::shared_ptr<Shot>& shot)
+		{
+			return !shot->GetIsEnabled();
+		});
+
+	shots_.erase(rmIt, shots_.end());
 
 }
 
@@ -115,12 +141,27 @@ void Attack4::Draw()
 {
 
 	for (auto& shot : shots_) {
-		DrawRotaGraph((Game::kScreenWidth / 2) + shot->GetPos().x, (Game::kScreenHeight / 2) + shot->GetPos().y, 1 + ((static_cast<float>(1) / 100) * static_cast<float>(attackscalepercentage_)), 0, attack4H_, true);
+		DrawRotaGraph((Game::kScreenWidth / 2) + shot->GetPos().x - playerpos_.x, (Game::kScreenHeight / 2) + shot->GetPos().y - playerpos_.y, 1 + ((static_cast<float>(1) / 100) * static_cast<float>(attackscalepercentage_)), 0, attack4H_, true);
+		DrawCircle((Game::kScreenWidth / 2) + shot->GetPos().x - playerpos_.x, (Game::kScreenHeight / 2) + shot->GetPos().y - playerpos_.y, 4, 0xff0000,true);
+	}
+
+}
+
+Vec2 Attack4::GetPos(int i)
+{
+	int count = 0;
+
+	for(auto& shot:shots_){
+		if (count == i) {
+			return shot->GetPos();
+		}
+		count++;
 	}
 }
 
 void Attack4::SetLv(int i)
 {
+	nowlv_ = i;
 }
 
 Attack4::Shot::~Shot()
@@ -139,5 +180,7 @@ void Attack4::Shot::SetPos(Vec2 enempos) {
 	vector_ = playerpos_ - enempos;
 
 	vector_ = vector_.normalize();
+
+	vector_ *= -1;
 
 }
