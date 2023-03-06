@@ -13,7 +13,7 @@ enum PlayerStatus {
 	ao,
 	murasaki,
 	aka,
-	bullet,
+	//bullet,
 	boots,
 	book,
 	candle,
@@ -55,6 +55,7 @@ public:
 	virtual void GetExp(float exppoint) = 0;
 	virtual int GetNowLv() = 0;
 	virtual float GetPlayerSpeed() = 0;
+	virtual float GetCatchExpCircle() = 0;
 
 	int GetSize(int attacknum);
 	Vec2 GetBulletPos(int attacknum,int j);

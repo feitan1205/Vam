@@ -29,6 +29,7 @@ public:
     void GetExp(float exppoint);
     int GetNowLv() { return nowLv_; }
     float GetPlayerSpeed() { return (speed_ + (speed_ / 100 * movespeedpercentage_)); }
+    float GetCatchExpCircle() { return catchexpcircle_; }
 
 private:
 
@@ -57,6 +58,7 @@ private:
     int nowLv_;
     float speed_;
     int cooldownpercentage_;
+    float catchexpcircle_;
 
 };
 

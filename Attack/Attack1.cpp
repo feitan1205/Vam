@@ -4,7 +4,7 @@
 #include "../game.h"
 namespace {
 	constexpr int kMaxlv = 9;
-	constexpr int cooldowntime = 200;
+	constexpr int cooldowntime = 100;
 }
 
 Attack1::Attack1():

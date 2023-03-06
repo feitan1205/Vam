@@ -4,11 +4,11 @@
 InputState::InputState()
 {
 	inputMapTable_[InputType::next] = { {InputCategory::keybd, KEY_INPUT_RETURN},
-										{InputCategory::pad, PAD_INPUT_R },			//スタートボタン
+										{InputCategory::pad, PAD_INPUT_1 },			//スタートボタン
 										{InputCategory::mouse, MOUSE_INPUT_LEFT }};
 
 	inputMapTable_[InputType::prev] = { {InputCategory::keybd, KEY_INPUT_SPACE},
-										{InputCategory::pad, PAD_INPUT_B } };
+										{InputCategory::pad, PAD_INPUT_2 } };
 
 	inputMapTable_[InputType::pause] = { {InputCategory::keybd, KEY_INPUT_P},
 										{InputCategory::pad, PAD_INPUT_L }};		//セレクトボタン

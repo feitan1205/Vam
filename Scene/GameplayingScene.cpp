@@ -38,9 +38,9 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		player_ = new Blue(playerpos_);
 	}
-	else if (selectcharacter == static_cast<int>(Character::red)) {
+	/*else if (selectcharacter == static_cast<int>(Character::red)) {
 		player_ = new Red(playerpos_);
-	}
+	}*/
 
 	player_->Init();
 	

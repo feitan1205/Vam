@@ -22,7 +22,7 @@ FlyingEye::FlyingEye() :
 	isEnabledexp_(false),
 	explv_(),
 	exppoint_(),
-	speed_(0.5)
+	speed_(1.0)
 {
 	expH1_ = my::MyLoadGraph(L"Data/exp/orb6.png");
 	expH2_ = my::MyLoadGraph(L"Data/exp/orb4.png");

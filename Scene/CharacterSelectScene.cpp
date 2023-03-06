@@ -52,7 +52,7 @@ CharacterSelectScene::CharacterSelectScene(SceneManager& manager) :
 {
 
 	blue_ = new Blue(Vec2(0, 0));
-	red_ = new Red(Vec2(0, 0));
+	//red_ = new Red(Vec2(0, 0));
 
 	m_background = my::MyLoadGraph(L"Data/background/red.jpg");
 	characterbordH_ = my::MyLoadGraph(L"Data/img/Characterbord.png");

@@ -40,7 +40,7 @@ void PlayerBase::Init(int cooldownpercentage)
 	for (int i = 0; i < PlayerStatus::kindmax; i++) {
 		item[i].level = 0;
 
-		if (i < 4) {
+		if (i < 3) {
 			item[i].maxlevel = attack_[i]->GetMaxLv();
 		}
 		else {
@@ -110,7 +110,7 @@ float PlayerBase::GetAttackHitCircle(int attacknum)
 	return attack_[attacknum]->GetAttackHitCircle();
 }
 
-int PlayerBase::GetAttackingNumber(int attacknum) {
+int PlayerBase::GetAttackingNumber(int attacknum) {                                                            
 	return attack_[attacknum]->GetMyNumber();
 }
 
@@ -131,7 +131,7 @@ void PlayerBase::SetLv(int i)
 	case ao:item[ao].level++; attack_[i]->SetLv(item[i].level); break;
 	case murasaki:item[murasaki].level++; attack_[i]->SetLv(item[i].level); break;
 	case aka:item[aka].level++; attack_[i]->SetLv(item[i].level); break;
-	case bullet:item[bullet].level++; attack_[i]->SetLv(item[i].level); break;
+	//case bullet:item[bullet].level++; attack_[i]->SetLv(item[i].level); break;
 	case boots:item[boots].level++; movespeedpercentage_ += 10; break;
 	case book:item[book].level++; cooltimepercentage_ += 10; break;
 	case candle:item[candle].level++; attackscalepercentage_ += 20; break;
