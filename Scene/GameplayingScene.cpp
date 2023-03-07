@@ -79,7 +79,11 @@ void GameplayingScene::Update(const InputState& input)
 		}
 	}
 
-	
+	if (player_->GetNowHp() <= 0) {
+		this->Draw();
+		manager_.PushScene(new GameoverScene(manager_));
+		return;
+	}
 
 	printfDx(L"%d\n", enemylv_);
 
@@ -231,10 +235,17 @@ void GameplayingScene::Update(const InputState& input)
 			//	}*/
 			//}
 		}
-	}	
+	}
+
+	/*for (auto& enem : enemies_) {
+		if (CheckHitCircle(playerpos_, player_->GetCatchExpCircle(), enem->GetPos(), enem->GetCircle())) {
+			player_->GetExp(enem->GetExpPoint());
+			enem->DeleteEnable();
+		}
+	}*/
 
 	for (auto& enem : enemies_) {
-		if (CheckHit(player_->GetMinHitBox(), player_->GetMaxHitBox(), enem->GetMinHitBox(), enem->GetMaxHitBox()) && enem->GetIsExp()) {
+		if(CheckHitCircle(playerpos_, player_->GetCatchExpCircle(), enem->GetPos(), enem->GetCircle())) {
 			player_->GetExp(enem->GetExpPoint());
 			enem->DeleteEnable();
 		}

@@ -19,6 +19,7 @@ enum PlayerStatus {
 	candle,
 	spinach,
 	crown,
+	orb,
 	kindmax
 };
 
@@ -56,6 +57,7 @@ public:
 	virtual int GetNowLv() = 0;
 	virtual float GetPlayerSpeed() = 0;
 	virtual float GetCatchExpCircle() = 0;
+	virtual int GetNowHp() = 0;
 
 	int GetSize(int attacknum);
 	Vec2 GetBulletPos(int attacknum,int j);
@@ -86,5 +88,6 @@ protected:
 	int exppointpercentage_ = 0;
 	int attackscalepercentage_ = 0;
 	int cooltimepercentage_ = 0;
+	int circlescale_ = 0;
 };
 

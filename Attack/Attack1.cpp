@@ -59,7 +59,7 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 			cooldowntime_ -= 40;
 		}
 		if (nowlv_ >= 3) {
-			attackpoint_ += 3;
+			attackpoint_ += 10;
 			randattackpoint_ += 2;
 		}
 		if (nowlv_ >= 4) {

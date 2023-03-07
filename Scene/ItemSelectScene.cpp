@@ -109,6 +109,7 @@ void ItemSelectScene::Draw()
 	
 	for (int i = 0; i < selectnum_; i++) {
 		DrawBox(pw_start_x + 20, ((pw_start_y + 15 * (i + 1))+ (itemboxsize_.y * i)) + 50, pw_start_x + itemboxsize_.x, ((pw_start_y + 15 * i) + (itemboxsize_.y * (i + 1))) + 30, 0x8f8f8f, true);
+
 		if (player_->GetWeaponLv(selectkind_[i]) == 0) {
 			DrawFormatString(pw_start_x + 400, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffff00, L"new", true);
 		}
@@ -118,38 +119,90 @@ void ItemSelectScene::Draw()
 		else {
 			DrawFormatString(pw_start_x + 400, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"Lv：%d", player_->GetWeaponLv(selectkind_[i]) + 1, true);
 		}
+
 		switch (selectkind_[i])
 		{
 		case PlayerStatus::ao:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"青", true);
+			if (player_->GetWeaponLv(selectkind_[i]) == 0) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"向いている方向に青い斬撃を放つ。", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 1) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 2) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が10上昇", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 3) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 4) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 5) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が20上昇", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 6) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 7) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が20上昇", true);
+			}
 			break;
 		case PlayerStatus::murasaki:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"紫", true);
+			if (player_->GetWeaponLv(selectkind_[i]) == 0) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"一定時間頭上に回転を放つ。", true);
+			}
 			break;
 		case PlayerStatus::aka:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"赤", true);
+			if (player_->GetWeaponLv(selectkind_[i]) == 0) {
+				DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"自分を中心にダメージエリアを展開する。", true);
+			}
 			break;
 		/*case PlayerStatus::bullet:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"弾", true);
 			break;*/
 		case PlayerStatus::boots:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"ブーツ", true);
-			DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 70, 0xffffff,
+			DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
 				L"移動速度が10%%上昇", true);
 			break;
 		case PlayerStatus::book:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"本", true);
+			DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+				L"クールタイムが10%%減少", true);
 			break;
 		case PlayerStatus::candle:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"ろうそく", true);
+			DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+				L"攻撃範囲が20%%上昇", true);
 			break;
 		case PlayerStatus::spinach:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"ほうれん草", true);
-			DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 70, 0xffffff,
+			DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
 				L"攻撃力が20%%上昇", true);
 			break;
 		case PlayerStatus::crown:
 			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"王冠", true);
+			DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+				L"獲得経験値が20%%上昇", true);
+			break;
+		case PlayerStatus::orb:
+			DrawFormatString(pw_start_x + 50, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"オーブ", true);
+			DrawFormatString(pw_start_x + 100, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+				L"経験値回収エリアが20%%上昇", true);
 			break;
 		default:
 			break;

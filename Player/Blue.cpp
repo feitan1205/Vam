@@ -10,8 +10,8 @@ Blue::Blue(Vec2 playerpos) :
 	flamecount(),
 	cooldownpercentage_(100),
 	playerpos_(playerpos),
-	maxhp_(100),
-	nowhp_(100),
+	maxhp_(1),
+	nowhp_(1),
 	hppercentage_(),
 	maxexp_(),
 	nowexp_(),
@@ -227,9 +227,7 @@ void Blue::GetExp(float exppoint)
 		if (nowLv_ % 4 == 2) {
 			maxexp_ += 10;
 		}
-
 		//maxexp_ *= maxexpscale_;
-
 	}
 }
 

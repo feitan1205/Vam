@@ -57,6 +57,7 @@ private:
     bool damageflag_[3];
     int damagedrawframe_[3];
     bool left_or_right;
+    bool expmove_;
 
 private:
 

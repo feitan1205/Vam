@@ -13,8 +13,8 @@ private:
 
 	static constexpr int fade_interval = 60;
 
-	int fadeTimer_ = fade_interval;
-	int fadeValue_ = 255;
+	int fadeTimer_ = 0;
+	int fadeValue_ = 0;
 
 	unsigned int fadeColor_ = 0xff0000;
 

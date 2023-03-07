@@ -137,6 +137,7 @@ void PlayerBase::SetLv(int i)
 	case candle:item[candle].level++; attackscalepercentage_ += 20; break;
 	case spinach:item[spinach].level++; attackpointpercentage_ += 10; break;
 	case crown:item[crown].level++; exppointpercentage_ += 20; break;
+	case orb:item[orb].level++; circlescale_++; break;
 	default:
 		break;
 	}
