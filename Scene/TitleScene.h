@@ -33,13 +33,15 @@ private:
 
 	int m_startbuttonH = -1;
 	Vec2 m_startbutton;
-	int m_startbuttonsizeX;
-	int m_startbuttonsizeY;
+	Vec2 m_buttonsize;
 	int m_optionbuttonH = -1;
 	int m_optionbuttonX;
 	int m_optionbuttonY;
 	int m_optionbuttonsizeX;
 	int m_optionbuttonsizeY;
+	bool isnextscene_;
+	int titleBGM_;
+	int selectsound_;
 
 public:
 	TitleScene(SceneManager& manager);

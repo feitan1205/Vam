@@ -51,14 +51,18 @@ void Attack2::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 	if (cooldowntime_ <= 0) {
 		attackflag_ = true;
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
+		PlaySoundMem(attack2sound_, DX_PLAYTYPE_LOOP);
 	}
 
 	if (!attackflag_) {
 		cooldowntime_--;
 		attackvector_ = charactervector;		
+		StopSoundMem(attack2sound_);
 	}
 
 	if (attackflag_) {
+
+
 		flamecount_++;
 		animationcount_++;
 		if (flamecount_ <= 20) {

@@ -8,8 +8,8 @@ namespace {
 
 	constexpr int map_size = 32;
 
-	constexpr int map_maxwidth = 128;
-	constexpr int map_maxheight = 64;
+	constexpr int map_maxwidth = 32;
+	constexpr int map_maxheight = 16;
 
 }
 

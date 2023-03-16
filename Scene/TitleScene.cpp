@@ -20,19 +20,27 @@ void TitleScene::FadeInUpdate(const InputState& input)
 		fadeValue_ = 0;
 	}
 
+	ChangeVolumeSoundMem((255 - fadeValue_), titleBGM_);
 }
 
 void TitleScene::NormalUpdate(const InputState& input)
 {
 	//次へのボタンが押されたら次のシーンへ行く
-	if (CheckHit(m_startbutton.x, m_startbutton.y, m_startbuttonsizeX, m_startbuttonsizeY)) {
+	if (CheckHit(m_startbutton.x, m_startbutton.y, m_buttonsize.x, m_buttonsize.y)) {
 		if (input.IsTriggered(InputType::next))
 		{
+			StopSoundMem(titleBGM_);
+			PlaySoundMem(selectsound_, DX_PLAYTYPE_BACK);
 			//updateFunc_ = &TitleScene::FadeOutUpdate;
-			manager_.ChangeScene(new GameplayingScene(manager_,0,input));
-			return;
+			isnextscene_ = true;
 		}
 	}
+
+	if (!CheckSoundMem(selectsound_) && isnextscene_) {
+		manager_.ChangeScene(new GameplayingScene(manager_, 0, input));
+		return;
+	}
+
 	/*if ()
 	{
 		manager_.ChangeScene(new OptionScene(manager_));
@@ -54,30 +62,39 @@ void TitleScene::FadeOutUpdate(const InputState& input)
 		manager_.ChangeScene(new CharacterSelectScene(manager_));
 		return;
 	}
+
 }
 
 TitleScene::TitleScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&TitleScene::FadeInUpdate),
 	m_startbutton(),
-	m_startbuttonsizeX(),
-	m_startbuttonsizeY(),
+	m_buttonsize(),
 	m_optionbuttonX(),
 	m_optionbuttonY(),
 	m_optionbuttonsizeX(),
-	m_optionbuttonsizeY()
+	m_optionbuttonsizeY(),
+	isnextscene_(false)
 {
 
-	m_background = my::MyLoadGraph(L"Data/background/red.jpg");
-	m_startbuttonH = my::MyLoadGraph(L"Data/img/startbutton.png");
+	m_background = my::MyLoadGraph(L"Data/background/titlebackground.png");
+	m_startbuttonH = my::MyLoadGraph(L"Data/img/buttons.png");
 	gradH_ = my::MyLoadGraph(L"Data/img/gradetion.jpg");
+	titleBGM_ = LoadSoundMem(L"Data/Sound/TitleBGM.wav");
+	selectsound_ = LoadSoundMem(L"Data/Sound/select.wav");
 
-	GetGraphSize(m_startbuttonH, &m_startbuttonsizeX, &m_startbuttonsizeY);
+	m_buttonsize.x = 150;
+	m_buttonsize.y = m_buttonsize.x / 3;
+
+	PlaySoundMem(titleBGM_, DX_PLAYTYPE_LOOP);
+
 }
 
 TitleScene::~TitleScene()
 {
 	DeleteGraph(m_background);
+	DeleteSoundMem(titleBGM_);
+	DeleteSoundMem(selectsound_);
 }
 
 void TitleScene::Update(const InputState& input)
@@ -90,12 +107,10 @@ void TitleScene::Draw()
 	//普通の描画
 	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_background, true);
 
-	DrawString(Game::kScreenWidth / 2 - (16 * 11) / 2, 200, L"ヴァンパイアサバイバー", 0xffffff, true);
+	m_startbutton.x = Game::kScreenWidth / 2 - m_buttonsize.x / 2;
+	m_startbutton.y = (Game::kScreenHeight / 3) * 2;
 
-	m_startbutton.x = Game::kScreenWidth / 2 - m_startbuttonsizeX / 2;
-	m_startbutton.y = Game::kScreenHeight / 2;
-
-	DrawGraph(m_startbutton.x, m_startbutton.y, m_startbuttonH, false);
+	DrawExtendGraph(m_startbutton.x, m_startbutton.y, m_startbutton.x + m_buttonsize.x, m_startbutton.y + m_buttonsize.y, m_startbuttonH, true);
 
 	//今から書く画像と、すでに描画されているスクリーンとの
 	//ブレンドの仕方を指定している。

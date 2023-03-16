@@ -8,6 +8,11 @@
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+
+	SetWindowText(L"DINO SURVIVOR");
+
+	SetMouseDispFlag(true);
+
 	SetGraphMode(Game::kScreenWidth, Game::kScreenHeight, 16);
 	ChangeWindowMode(true);
 	if (DxLib_Init() == -1) 
@@ -16,6 +21,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	}
 
 	SetDrawScreen(DX_SCREEN_BACK);
+
+	SetMouseDispFlag(TRUE);
 
 	InputState input;
 

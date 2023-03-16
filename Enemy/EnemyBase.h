@@ -5,13 +5,14 @@ class EnemyBase
 {
 public:
 
-	EnemyBase(){};
-	virtual ~EnemyBase(){};
+	EnemyBase();
+	virtual ~EnemyBase();
 
 	virtual void Init(Vec2 playerpos) = 0;
 	virtual void End() = 0;
 	virtual void Update(Vec2 playerpos) = 0;
 	virtual void Draw(bool charactervector,Vec2 playerpos) = 0;
+	virtual void SetData(int hitsound) = 0;
 	virtual void PlayerMove(Vec2 playermove) = 0;
 
 	virtual void Damage(int attackpoint,int attacknumber) = 0;
@@ -23,6 +24,8 @@ public:
 
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
+	virtual Vec2 GetExpMinHitBox() = 0;
+	virtual Vec2 GetExpMaxHitBox() = 0;
 	virtual int GetNowHP() = 0;
 	virtual int GetCoolDownTime() = 0;
 	virtual int GetAttackPoint() = 0;
@@ -35,10 +38,15 @@ public:
 	virtual void DeleteEnable() = 0;
 	virtual void EnemyLvUp(int level) = 0;
 	virtual void ChangeExp(Vec2 pos) = 0;
+	virtual void HitExp() = 0;
+	virtual void ExpMove() = 0;
+	virtual bool GetIsExpMove() = 0;
 
 private:
 
+protected:
 
+	int FlyinteyeH_[8];
 
 };
 

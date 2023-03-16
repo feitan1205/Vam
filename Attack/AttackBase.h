@@ -34,6 +34,7 @@ private:
 protected:
 
 	int attackscalepercentage_;
+	int attack2sound_;
 
 };
 

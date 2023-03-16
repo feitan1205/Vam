@@ -47,6 +47,7 @@
     <ClCompile Include="Attack\AttackBase.cpp" />
     <ClCompile Include="Scene\ItemSelectScene.cpp" />
     <ClCompile Include="Attack\Attack4.cpp" />
+    <ClCompile Include="Enemy\GrimReaper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\GameoverScene.h">
@@ -90,5 +91,6 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="Scene\ItemSelectScene.h" />
     <ClInclude Include="Attack\Attack4.h" />
+    <ClInclude Include="Enemy\GrimReaper.h" />
   </ItemGroup>
 </Project>

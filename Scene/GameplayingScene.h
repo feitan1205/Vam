@@ -45,5 +45,15 @@ private:
 	int enemylv_;
 	int enemynum_;
 	Vec2 enemypos_;
+	int hitsoundhandle_;
+	int lvupsoundhandle_;
+	int catchexpsoundhandle_;
+	int gamebgm_;
+	bool timeenemycreat_;
+
+	static constexpr int fade_interval = 60;
+	int fadeTimer_ = 0;	//フェードタイマー
+	int fadeVolume_ = 0;	//黒矩形とのブレンド具合
+
 };
 

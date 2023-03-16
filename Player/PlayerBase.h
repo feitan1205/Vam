@@ -45,6 +45,7 @@ public:
 	virtual void Update(Vec2 playerpos, bool charactervector,Vec2 enemypos) = 0;
 	virtual void Update(int cooldownpercentage, bool charactervector,Vec2 playerpos,Vec2 enemypos);
 	virtual void Draw(bool charactervector);
+	virtual void SetData(int lvupsound,int catchexpsound) = 0;
 	virtual void IdleAnimation(bool charactervector) = 0;
 	virtual void MoveAnimation(bool charactervector) = 0;
 	virtual void SetHitBox(Vec2 playerpos) = 0;
@@ -52,6 +53,8 @@ public:
 
 	virtual Vec2 GetMinHitBox() = 0;
 	virtual Vec2 GetMaxHitBox() = 0;
+	virtual Vec2 GetExpMinHitBox() = 0;
+	virtual Vec2 GetExpMaxHitBox() = 0;
 
 	virtual void GetExp(float exppoint) = 0;
 	virtual int GetNowLv() = 0;

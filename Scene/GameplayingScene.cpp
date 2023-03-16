@@ -12,6 +12,7 @@
 #include "../Map/Map.h"
 #include "../Enemy/EnemyBase.h"
 #include "../Enemy/FlyingEye.h"
+#include "../Enemy/GrimReaper.h"
 #include <cmath>
 #include "../Attack/AttackBase.h"
 #include "ItemSelectScene.h"
@@ -33,8 +34,25 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	timer(),
 	maxenemynum_(10),
 	enemylv_(0),
-	enemynum_ ()
+	enemynum_ (),
+	hitsoundhandle_(0),
+	lvupsoundhandle_(0),
+	catchexpsoundhandle_(0)
 {
+
+	hitsoundhandle_ = LoadSoundMem(L"Data//Sound//hit.wav");
+	lvupsoundhandle_ = LoadSoundMem(L"Data//Sound//lvup.wav");
+	catchexpsoundhandle_ = LoadSoundMem(L"Data//Sound//catchexp.wav");
+	//gamebgm_ = LoadSoundMem(L"Data/Sound/GameMainBGM.wav");
+
+	//ChangeVolumeSoundMem(0, gamebgm_);
+
+	//PlaySoundMem(gamebgm_, DX_PLAYTYPE_LOOP);
+
+	SetVolumeMusic(0);
+
+	PlayMusic(L"Data/Sound/GameMainBGM.wav",DX_PLAYTYPE_LOOP);
+
 	if (selectcharacter == static_cast<int>(Character::blue)) {
 		player_ = new Blue(playerpos_);
 	}
@@ -43,7 +61,8 @@ GameplayingScene::GameplayingScene(SceneManager& manager, int selectcharacter, c
 	}*/
 
 	player_->Init();
-	
+	player_->SetData(lvupsoundhandle_,catchexpsoundhandle_);
+
 	enemies_.push_back(std::make_shared<FlyingEye>());
 
 	for (auto& enem : enemies_) {
@@ -63,10 +82,27 @@ GameplayingScene::~GameplayingScene()
 	delete player_;
 	delete map_;
 
+	DeleteSoundMem(hitsoundhandle_);
+	DeleteSoundMem(lvupsoundhandle_);
+
 }
 
 void GameplayingScene::Update(const InputState& input)
 {
+
+	if (fadeVolume_ < 255) {
+		fadeVolume_++;
+	}
+
+	SetVolumeMusic(fadeVolume_);
+
+	/*if (fadeTimer_ != fade_interval) {
+		fadeVolume_ = 255.0f * (static_cast<float>(fadeTimer_) / static_cast<float>(fade_interval));
+		fadeTimer_++;
+	}*/
+
+	
+
 
 	frametimer++;
 
@@ -79,11 +115,7 @@ void GameplayingScene::Update(const InputState& input)
 		}
 	}
 
-	if (player_->GetNowHp() <= 0) {
-		this->Draw();
-		manager_.PushScene(new GameoverScene(manager_));
-		return;
-	}
+	
 
 	printfDx(L"%d\n", enemylv_);
 
@@ -100,11 +132,7 @@ void GameplayingScene::Update(const InputState& input)
 	enemflamecount_--;
 
 	//シーンの変更
-	if (input.IsTriggered(InputType::prev))
-	{
-		manager_.ChangeScene(new TitleScene(manager_));
-		return;
-	}
+	
 	if (input.IsTriggered(InputType::pause))
 	{
 		manager_.PushScene(new PauseScene(manager_));
@@ -182,6 +210,13 @@ void GameplayingScene::Update(const InputState& input)
 				player_->Damage(enem->GetAttackPoint());
 				enem->SetCoolDownTime();
 			}
+
+			if (player_->GetNowHp() <= 0) {
+				this->Draw();
+				manager_.PushScene(new GameoverScene(manager_));
+				return;
+			}
+
 		}
 	}
 
@@ -237,15 +272,20 @@ void GameplayingScene::Update(const InputState& input)
 		}
 	}
 
-	/*for (auto& enem : enemies_) {
-		if (CheckHitCircle(playerpos_, player_->GetCatchExpCircle(), enem->GetPos(), enem->GetCircle())) {
-			player_->GetExp(enem->GetExpPoint());
-			enem->DeleteEnable();
+	for (auto& enem : enemies_) {
+		if (enem->GetIsExpMove()) {
+			continue;
 		}
-	}*/
+		if (CheckHitCircle(playerpos_, player_->GetCatchExpCircle(), enem->GetPos(), enem->GetCircle()) && enem->GetIsExp()) {
+			enem->HitExp();
+		}
+	}
 
 	for (auto& enem : enemies_) {
-		if(CheckHitCircle(playerpos_, player_->GetCatchExpCircle(), enem->GetPos(), enem->GetCircle())) {
+		if (!(enem->GetIsExpMove())) {
+			continue;
+		}
+		if (CheckHit(player_->GetExpMinHitBox(), player_->GetExpMaxHitBox(), enem->GetExpMinHitBox(), enem->GetExpMaxHitBox())) {
 			player_->GetExp(enem->GetExpPoint());
 			enem->DeleteEnable();
 		}
@@ -275,11 +315,33 @@ void GameplayingScene::Update(const InputState& input)
 		if ((CheckHitKey(KEY_INPUT_O) && !tmpishitkey_) || enemflamecount_ < 0) {
 			enemies_.push_back(std::make_shared<FlyingEye>());
 			enemies_.back()->Init(playerpos_);
+			enemies_.back()->SetData(hitsoundhandle_);
 			enemies_.back()->EnemyLvUp(enemylv_);
 			enemflamecount_ = 10;
 		}
 	}
+
+	if (timer % 6 == 1 && timeenemycreat_ == false) {
+		for (int i = 0; i < 10; i++) {
+			enemies_.push_back(std::make_shared<FlyingEye>());
+			enemies_.back()->Init(playerpos_);
+			enemies_.back()->SetData(hitsoundhandle_);
+			enemies_.back()->EnemyLvUp(enemylv_);
+			timeenemycreat_ = true;
+		}
+	}
+	if(timer % 6 == 2) {
+		timeenemycreat_ = false;
+	}
+
 	tmpishitkey_ = CheckHitKey(KEY_INPUT_O);
+
+	if (timer / 60 == 5) {
+		enemies_.push_back(std::make_shared<GrimReaper>());
+		enemies_.back()->Init(playerpos_);
+		enemies_.back()->SetData(hitsoundhandle_);
+		enemies_.back()->EnemyLvUp(enemylv_);
+	}
 
 	//プレイヤーのベクトルを初期化
 
@@ -317,6 +379,7 @@ void GameplayingScene::Draw()
 	SetFontSize(32);
 
 	DrawFormatString((Game::kScreenWidth / 2) - 48, 10, 0xffffff, L"%02d：%02d", timer / 60 ,timer % 60, true);
+	DrawFormatString(0,0, 0xffffff, L"%d", enemies_.size(), true);
 
 	SetFontSize(16);
 
@@ -344,6 +407,6 @@ bool GameplayingScene::CheckHitCircle(Vec2 playerpos,float circle,Vec2 enemypos,
 	if (vecdistance <= num) {
 		return true;
 	}
-	
+
 	return false;
 }

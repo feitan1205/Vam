@@ -2,6 +2,7 @@
 #include "FlyingEye.h"
 #include "../DrawFunctions.h"
 #include "../game.h"
+#include <cmath>
 
 constexpr int standardcooldowntime = 30;
 
@@ -23,11 +24,11 @@ FlyingEye::FlyingEye() :
 	explv_(),
 	exppoint_(),
 	speed_(1.0),
-	expmove_(false)
+	expmove_(false),
+	expspeed_(0.6)
 {
 	expH1_ = my::MyLoadGraph(L"Data/exp/orb6.png");
 	expH2_ = my::MyLoadGraph(L"Data/exp/orb4.png");
-	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, handle_);
 	for (int i = 0; i < 3; i++) {
 		attackhit_[i] = false;
 		damagedrawframe_ [i] = -1;
@@ -36,14 +37,16 @@ FlyingEye::FlyingEye() :
 
 FlyingEye::~FlyingEye()
 {
-	for (int i = 0; i < 8; i++) {
-		DeleteGraph(handle_[i]);
-	}
 }
 
 void FlyingEye::Init(Vec2 playerpos)
 {
+
+	ChangeVolumeSoundMem(100, hitsound_);
+
 	isEnabled_ = true;
+
+	playerpos_ = playerpos;
 
 	//nowhp_ = 5;
 	
@@ -69,6 +72,12 @@ void FlyingEye::End()
 void FlyingEye::Update(Vec2 playerpos)
 {
 
+	playerpos_ = playerpos;
+
+	if (expmove_) {
+		ExpMove();
+	}
+
 	for (int i = 0; i < 3; i++) {
 		damagedrawframe_[i]--;
 	}
@@ -91,6 +100,14 @@ void FlyingEye::Update(Vec2 playerpos)
 	}
 	else if (vector_.x > 0) {
 		left_or_right = false;
+	}
+
+	if (pos_.x + (Game::kScreenWidth / 2) - playerpos.x < -100 ||
+		pos_.x + (Game::kScreenWidth / 2) - playerpos.x > Game::kScreenWidth + 100 ||
+		pos_.y + (Game::kScreenHeight / 2) - playerpos.y < -100 ||
+		pos_.y + (Game::kScreenHeight / 2) - playerpos.y > Game::kScreenHeight + 100) {
+		isEnabled_ = false;
+		isEnabledexp_ = false;
 	}
 
 
@@ -122,7 +139,7 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 		}
 		for (int i = 0; i < 3; i++) {
 			if (damagedrawframe_[i] >= 0) {
-				DrawFormatString(pos_.x + (Game::kScreenWidth / 2) - playerpos.x - 5, pos_.y + (Game::kScreenHeight / 2) - playerpos.y - 5, 0xffffff, L"%d", damagepoint_[i], true);
+				DrawFormatString(damagepos_.x + (Game::kScreenWidth / 2) - playerpos.x - 5, damagepos_.y + (Game::kScreenHeight / 2) - playerpos.y - 5, 0xffffff, L"%d", damagepoint_[i], true);
 			}
 		}
 		return;
@@ -131,28 +148,28 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 	
 
 	if (flamecount_ >= 0 && flamecount_ < 10) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, handle_[0], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[0], true, left_or_right);
 	}
 	else if (flamecount_ >= 10 && flamecount_ < 20) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, handle_[1], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[1], true, left_or_right);
 	}
 	else if (flamecount_ >= 20 && flamecount_ < 30) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, handle_[2], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[2], true, left_or_right);
 	}
 	else if (flamecount_ >= 30 && flamecount_ < 40) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, handle_[3], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[3], true, left_or_right);
 	}
 	else if (flamecount_ >= 40 && flamecount_ < 50) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, handle_[4], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[4], true, left_or_right);
 	}
 	else if (flamecount_ >= 50 && flamecount_ < 60) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, handle_[5], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[5], true, left_or_right);
 	}
 	else if (flamecount_ >= 60 && flamecount_ < 70) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, handle_[6], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[6], true, left_or_right);
 	}
 	else if (flamecount_ >= 70 && flamecount_ < 80) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, handle_[7], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[7], true, left_or_right);
 	}
 
 	/*DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, 0x000000, false);
@@ -166,6 +183,11 @@ void FlyingEye::Draw(bool charactervector,Vec2 playerpos)
 
 }
 
+void FlyingEye::SetData(int hitsound)
+{
+	hitsound_ = hitsound;
+}
+
 void FlyingEye::PlayerMove(Vec2 playermove)
 {
 
@@ -176,8 +198,14 @@ void FlyingEye::PlayerMove(Vec2 playermove)
 void FlyingEye::Damage(int attackpoint,int attacknumber)
 {
 
+	damagepos_ = pos_;
+
 	nowhp_ -= attackpoint;
 	damagepoint_[attacknumber] = attackpoint;
+
+	ChangeVolumeSoundMem(255, hitsound_);
+
+	PlaySoundMem(hitsound_,DX_PLAYTYPE_BACK);
 
 }
 
@@ -189,7 +217,7 @@ void FlyingEye::Death()
 		isEnabledexp_ = true;
 		isEnabled_ = false;
 		for (int i = 0; i < 8; i++) {
-			DeleteGraph(handle_[i]);
+			DeleteGraph(FlyinteyeH_[i]);
 		}
 		explv_ = 1;
 	}
@@ -216,6 +244,10 @@ void FlyingEye::SetHitBox(Vec2 playerpos)
 	minhitbox_.y = pos_.y - 10;
 	maxhitbox_.x = pos_.x + 20;
 	maxhitbox_.y = pos_.y + 20;
+	minexphitbox_.x = pos_.x - 3;
+	minexphitbox_.y = pos_.y - 3;
+	maxexphitbox_.x = pos_.x + 3;
+	maxexphitbox_.y = pos_.y + 3;
 
 	hitcircle_ = 15;
 
@@ -256,10 +288,42 @@ void FlyingEye::ChangeExp(Vec2 pos)
 	isEnabledexp_ = true;
 	isEnabled_ = false ;
 	for (int i = 0; i < 8; i++) {
-		DeleteGraph(handle_[i]);
+		DeleteGraph(FlyinteyeH_[i]);
 	}
 	explv_ = 1;
 	exppoint_ = 1;
 	cooldowntime_ = 1;
 
+}
+
+void FlyingEye::HitExp()
+{
+
+	expmove_ = true;
+
+	expvector_ = playerpos_ - pos_;
+
+	expvector_ = (expvector_.normalize()) * 5;
+	//tmpexpvector_ = expvector_;
+
+}
+
+void FlyingEye::ExpMove()
+{
+
+	if (abs(expvector_.x) > abs(tmpexpvector_.x) || abs(expvector_.y) > abs(tmpexpvector_.y)) {
+
+		vector_ = ((playerpos_ - pos_) / 10) * expspeed_;
+		pos_ += vector_;
+		expspeed_ += 0.1;
+		//expvector_ = vector_;
+
+	}
+	else {
+		expvector_ -= (expvector_ / 2);
+		tmpexpvector_ = expvector_;
+		pos_ -= (expvector_ * expspeed_);
+	}
+
+	
 }

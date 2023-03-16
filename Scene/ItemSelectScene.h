@@ -36,4 +36,6 @@ private:
 	int selectnum_;
 	bool selectok_;
 	int selectkind_[4];
+	Vec2 allmoveposition_;
+
 };

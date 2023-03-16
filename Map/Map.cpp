@@ -8,7 +8,7 @@ Map::Map():
 {
 	groundH_ = my::MyLoadGraph(L"Data/maptip/jimen1.png");
 	startmappos_.x = -(32 * 32 * 2);
-	startmappos_.y = -(16 * 32 * 2);
+	startmappos_.y = -(32 * 16 * 2);
 
 	SetMapData();
 

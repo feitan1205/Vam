@@ -14,6 +14,9 @@ public:
     void End();
     void Update(Vec2 playerpos, bool charactervector, Vec2 enemypos);
     void Draw();
+
+    void SetData(int lvupsound,int catchexpsound);
+
     //•`‰æ
     void IdleAnimation(bool charactervector);
     void MoveAnimation(bool charactervector);
@@ -25,11 +28,13 @@ public:
 
     Vec2 GetMinHitBox() { return minhitbox_; }
     Vec2 GetMaxHitBox() { return maxhitbox_; }
+    Vec2 GetExpMinHitBox() { return minexphitbox_; }
+    Vec2 GetExpMaxHitBox() { return maxexphitbox_; }
 
     void GetExp(float exppoint);
     int GetNowLv() { return nowLv_; }
     float GetPlayerSpeed() { return (speed_ + (speed_ / 100 * movespeedpercentage_)); }
-    float GetCatchExpCircle() { return catchexpcircle_ + (10 * circlescale_); }
+    float GetCatchExpCircle() { return catchexpcircle_ + (40 * circlescale_); }
     int GetNowHp() { return nowhp_; }
 
 private:
@@ -46,8 +51,12 @@ private:
     Vec2 playerpos_;
     Vec2 minhitbox_;
     Vec2 maxhitbox_;
+    Vec2 minexphitbox_;
+    Vec2 maxexphitbox_;
     float hppercentage_;
     float exppercentage_;
+    int lvupsound_;
+    int catchexpsound_;
 
 private:
 

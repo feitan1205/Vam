@@ -10,8 +10,8 @@ Blue::Blue(Vec2 playerpos) :
 	flamecount(),
 	cooldownpercentage_(100),
 	playerpos_(playerpos),
-	maxhp_(1),
-	nowhp_(1),
+	maxhp_(100),
+	nowhp_(100),
 	hppercentage_(),
 	maxexp_(),
 	nowexp_(),
@@ -19,7 +19,9 @@ Blue::Blue(Vec2 playerpos) :
 	speed_(3),
 	maxexpscale_(2),
 	damageflame_(0),
-	catchexpcircle_(5)
+	catchexpcircle_(40),
+	lvupsound_(0),
+	catchexpsound_(0)
 {
 	m_blueH_ = my::MyLoadGraph(L"Data/blue/Blue.png");
 	LoadDivGraph(L"Data/blue/Idledamage.png", 4, 4, 1, 24, 24, idledamageH_);
@@ -61,7 +63,7 @@ void Blue::Update(Vec2 playerpos, bool charactervector, Vec2 enemypos)
 {
 	PlayerBase::Update(cooldownpercentage_, charactervector,playerpos, enemypos);
 
-	hppercentage_ = static_cast <float>(nowhp_) / static_cast <float>(maxhp_);
+	
 	exppercentage_ = static_cast <float>(nowexp_) / static_cast <float>(maxexp_);
 	playerpos_ = playerpos;
 
@@ -72,6 +74,14 @@ void Blue::Draw()
 	DrawGraph((1280 / 2) - (sizeX / 2), (740 / 2) - (sizeY / 2), m_blueH_, true);
 }
 
+void Blue::SetData(int lvupsound,int catchexpsound)
+{
+
+	lvupsound_ = lvupsound;
+	catchexpsound_ = catchexpsound;
+
+}
+
 void Blue::IdleAnimation(bool charactervector)
 {
 	flamecount++;
@@ -79,6 +89,8 @@ void Blue::IdleAnimation(bool charactervector)
 	if (flamecount >= 40) {
 		flamecount = 0;
 	}
+
+	hppercentage_ = static_cast <float>(nowhp_) / static_cast <float>(maxhp_);
 
 	if (damageflame_ == 0) {
 		if (flamecount >= 0 && flamecount < 10) {
@@ -192,6 +204,8 @@ void Blue::MoveAnimation(bool charactervector)
 
 	DrawFormatString(Game::kScreenWidth - 60, 3, 0xffffff, L"LvF%d", nowLv_, true);
 
+	//DrawCircle(Game::kScreenWidth / 2, Game::kScreenHeight / 2, catchexpcircle_ + (40 * circlescale_), 0xffffff,false);
+
 	PlayerBase::Draw(charactervector);
 }
 
@@ -202,6 +216,10 @@ void Blue::SetHitBox(Vec2 playerpos)
 	minhitbox_.y = playerpos.y - 10;
 	maxhitbox_.x = playerpos.x + 10;
 	maxhitbox_.y = playerpos.y + 10;
+	minexphitbox_.x = playerpos.x - 7;
+	minexphitbox_.y = playerpos.y - 7;
+	maxexphitbox_.x = playerpos.x + 7;
+	maxexphitbox_.y = playerpos.y + 7;
 
 }
 
@@ -209,6 +227,10 @@ void Blue::Damage(int enemyattackpoint)
 {
 
 	nowhp_ -= enemyattackpoint;
+
+	if (nowhp_ < 0) {
+		nowhp_ = 0;
+	}
 
 	damageflame_ = 10;
 
@@ -221,9 +243,21 @@ void Blue::GetExp(float exppoint)
 
 	nowexp_ += exppoint;
 
+
+	if (nowLv_ != 0) {
+		PlaySoundMem(catchexpsound_, DX_PLAYTYPE_BACK);
+	}
+
 	if (nowexp_ >= maxexp_) {
 		nowLv_++;
 		nowexp_ = 0;
+		if (nowLv_ == 1) {
+			maxexp_ += 1;
+		}
+		else {
+			PlaySoundMem(lvupsound_, DX_PLAYTYPE_BACK);
+		}
+
 		if (nowLv_ % 4 == 2) {
 			maxexp_ += 10;
 		}
