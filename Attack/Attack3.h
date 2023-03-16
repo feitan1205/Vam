@@ -32,6 +32,9 @@ public:
 
 private:
 
+	int attack3H_;
+	int alpha_;
+	int add_;	//アルファの変化値
 	int nowlv_;
 	int maxlv_;
 	float circle_;

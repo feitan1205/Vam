@@ -90,6 +90,7 @@ void Blue::IdleAnimation(bool charactervector)
 		flamecount = 0;
 	}
 
+
 	hppercentage_ = static_cast <float>(nowhp_) / static_cast <float>(maxhp_);
 
 	if (damageflame_ == 0) {
@@ -125,6 +126,8 @@ void Blue::IdleAnimation(bool charactervector)
 		damageflame_--;
 	}
 
+	PlayerBase::Draw(charactervector);
+
 	DrawBox((Game::kScreenWidth / 2) - 20 - 1, (Game::kScreenHeight / 2) + 27 - 1, (Game::kScreenWidth / 2) - 20 + (40 * 1) + 1, (Game::kScreenHeight / 2) + 35 + 1, 0x000000, true);
 	DrawBox((Game::kScreenWidth / 2) - 20 , (Game::kScreenHeight / 2) + 27 , (Game::kScreenWidth / 2) - 20 + (40 * hppercentage_), (Game::kScreenHeight / 2) + 35,0xff0000, true);
 
@@ -136,7 +139,6 @@ void Blue::IdleAnimation(bool charactervector)
 
 	DrawFormatString(Game::kScreenWidth - 60, 3, 0xffffff, L"LvÅF%d", nowLv_, true);
 
-	PlayerBase::Draw(charactervector);
 	
 	/*DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
 	DrawFormatString(0, 64, 0xffffff, L"%f", minhitbox_.y, true);*/
@@ -193,6 +195,8 @@ void Blue::MoveAnimation(bool charactervector)
 		damageflame_--;
 	}
 
+	PlayerBase::Draw(charactervector);
+
 	DrawBox((Game::kScreenWidth / 2) - 20 - 1, (Game::kScreenHeight / 2) + 27 - 1, (Game::kScreenWidth / 2) - 20 + (40 * 1) + 1, (Game::kScreenHeight / 2) + 35 + 1, 0x000000, true);
 	DrawBox((Game::kScreenWidth / 2) - 20, (Game::kScreenHeight / 2) + 27, (Game::kScreenWidth / 2) - 20 + (40 * hppercentage_), (Game::kScreenHeight / 2) + 35, 0xff0000, true);
 
@@ -206,7 +210,6 @@ void Blue::MoveAnimation(bool charactervector)
 
 	//DrawCircle(Game::kScreenWidth / 2, Game::kScreenHeight / 2, catchexpcircle_ + (40 * circlescale_), 0xffffff,false);
 
-	PlayerBase::Draw(charactervector);
 }
 
 void Blue::SetHitBox(Vec2 playerpos)

@@ -356,9 +356,6 @@ void GameplayingScene::Draw()
 
 	map_->Draw();
 
-	for (auto& enem : enemies_) {
-		enem->Draw(true, playerpos_);
-	}
 
 	if (input_.IsPressed(InputType::up)) {
 		player_->MoveAnimation(charactervector_);
@@ -374,6 +371,10 @@ void GameplayingScene::Draw()
 	}
 	else {
 		player_->IdleAnimation(charactervector_);
+	}
+
+	for (auto& enem : enemies_) {
+		enem->Draw(true, playerpos_);
 	}
 
 	SetFontSize(32);

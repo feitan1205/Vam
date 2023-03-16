@@ -221,6 +221,9 @@ void ItemSelectScene::Draw()
 	if (player_->GetNowLv() == 1) {
 		DrawFormatString(pw_start_x + 140 + allmoveposition_.x, pw_start_y + 530, 0xffffff, L"使用する武器を\n 選択しよう！", true);
 	}
+	else {
+		DrawFormatString(pw_start_x + 125 + allmoveposition_.x, pw_start_y + 590, 0xffffff, L"アイテム・武器を\n  選択しよう！", true);
+	}
 
 	SetFontSize(76);
 
@@ -246,6 +249,23 @@ void ItemSelectScene::SetPlayer(PlayerBase* player)
 		//selectkind_[0] = PlayerStatus::boots;
 		//selectkind_[1] = PlayerStatus::spinach;
 		return;
+	}
+
+	int isselectnum = 0;
+
+	for (int i = 0; i < PlayerStatus::kindmax; i++) {
+		if (player_->GetWeaponLv(i) == player_->GetWeaponMaxLv(i)) {
+			continue;
+		}
+		isselectnum++;
+	}
+
+	if (isselectnum == 0) {
+		finishlvup = true;
+	}
+
+	if (isselectnum < selectnum_) {
+		selectnum_ = isselectnum;
 	}
 
 	for (int i = 0; i < selectnum_; i++) {

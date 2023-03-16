@@ -14,9 +14,11 @@ Attack3::Attack3() :
 	randattackpoint_(3),
 	attackvector_(),
 	nowlv_(0),
-	maxlv_(9)
+	maxlv_(9),
+	alpha_(200),
+	add_(-2)
 {
-	
+	attack3H_ = my::MyLoadGraph(L"Data/Effect/attack3/attack3.png");
 }
 
 Attack3::~Attack3()
@@ -42,6 +44,14 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 		return;
 	}
 
+	alpha_ += add_;
+
+	if (alpha_ <= 80 || alpha_ >= 255)
+	{
+		add_ = -add_;
+	}
+
+
 	playerpos_ = playerpos;
 
 	cooldowntime_--;
@@ -62,8 +72,19 @@ void Attack3::Draw()
 		return;
 	}
 	
-	DrawCircle(Game::kScreenWidth / 2, Game::kScreenHeight / 2, circle_, 0xff0000, false);
+	//DrawCircle(Game::kScreenWidth / 2, Game::kScreenHeight / 2, circle_, 0xff0000, false);
 	
+	
+	// 画像のアルファブレンドで描画
+	// ( 描画した後ブレンドモードを元に戻す )
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha_);
+	DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, circle_ / 7, 0, attack3H_, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+
+
+	//DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight / 2, circle_/7, 0, attack3H_, true);
+
 	/*DrawFormatString(0, 32, 0xffffff, L"%f", minhitbox_.x, true);
 	DrawFormatString(0, 48, 0xffffff, L"%f", minhitbox_.y, true);*/
 

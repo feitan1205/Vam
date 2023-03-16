@@ -37,6 +37,7 @@ FlyingEye::FlyingEye() :
 
 FlyingEye::~FlyingEye()
 {
+	//DeleteSoundMem(hitsound_);
 }
 
 void FlyingEye::Init(Vec2 playerpos)
