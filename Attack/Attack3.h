@@ -37,6 +37,7 @@ private:
 	int add_;	//アルファの変化値
 	int nowlv_;
 	int maxlv_;
+	float defaultcircle_;
 	float circle_;
 	int flamecount_;
 	float cooldowntime_;

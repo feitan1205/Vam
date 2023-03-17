@@ -6,6 +6,7 @@
 constexpr int cooldowntime = 200;
 
 Attack3::Attack3() :
+	defaultcircle_(),
 	circle_(),
 	flamecount_(),
 	cooldowntime_(0),
@@ -28,7 +29,7 @@ Attack3::~Attack3()
 void Attack3::Init(int cooldownpercentage)
 {
 
-	circle_ = 35;
+	defaultcircle_ = 35;
 	cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 
 }
@@ -51,6 +52,7 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 		add_ = -add_;
 	}
 
+	circle_ = defaultcircle_ + ((defaultcircle_ * attackscalepercentage_) / 100);
 
 	playerpos_ = playerpos;
 
@@ -99,7 +101,7 @@ void Attack3::SetLv(int i)
 	nowlv_++;
 	cooldowntime_ = 0;
 	if (nowlv_ == 2) {
-		circle_ *= 3;
+		defaultcircle_ *= 3;
 	}
 	if (nowlv_ == 3) {
 		attackpoint_ += 5;
@@ -107,7 +109,7 @@ void Attack3::SetLv(int i)
 	}
 	if (nowlv_ == 4) {
 		cooldowntime_ -= 30;
-		circle_ *= 2;
+		defaultcircle_ *= 2;
 	}
 	if (nowlv_ == 5) {
 		attackpoint_ += 7;

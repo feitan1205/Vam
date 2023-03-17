@@ -130,7 +130,7 @@ void PlayerBase::SetLv(int i)
 	{
 	case ao:item[ao].level++; attack_[i]->SetLv(item[i].level); break;
 	case murasaki:item[murasaki].level++; attack_[i]->SetLv(item[i].level); break;
-	case aka:item[aka].level++; attack_[i]->SetLv(item[i].level); break;
+	case siro:item[siro].level++; attack_[i]->SetLv(item[i].level); break;
 	//case bullet:item[bullet].level++; attack_[i]->SetLv(item[i].level); break;
 	case boots:item[boots].level++; movespeedpercentage_ += 10; break;
 	case book:item[book].level++; cooltimepercentage_ += 10; break;

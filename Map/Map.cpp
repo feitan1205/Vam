@@ -1,14 +1,17 @@
 #include "DxLib.h"
 #include "Map.h"
+#include "../game.h"
 #include "../DrawFunctions.h"
 
 Map::Map():
 	map_(),
-	mappos_()
+	mappos_(),
+	drawindexX_(0),
+	drawindexY_(0)
 {
 	groundH_ = my::MyLoadGraph(L"Data/maptip/jimen1.png");
-	startmappos_.x = -(32 * 32 * 2);
-	startmappos_.y = -(32 * 16 * 2);
+	startmappos_.x = (Game::kScreenWidth / 2) - ((32 * 32) / 2);
+	startmappos_.y = (Game::kScreenHeight / 2) - ((32 * 16) / 2);
 
 	SetMapData();
 
@@ -31,22 +34,25 @@ void Map::Update(Vec2 playerpos)
 {
 	mappos_.x = playerpos.x;
 	mappos_.y = playerpos.y;
+
+	drawindexX_ = (static_cast<int>(mappos_.x) - ((32 * 32) / 2)) / (32 * 32);
+	drawindexY_ = (static_cast<int>(mappos_.y) - ((32 * 16) / 2)) / (32 * 16);
 }
 
 void Map::Draw()
 {
-	for (int y = 0; y < map_numY; y++) {
-		for (int x = 0; x < map_numX; x++) {
-			for (int i = 0; i < map_[y][x].height; i++) {
-				for (int j = 0; j < map_[y][x].width; j++) {
-					if (map_[y][x].data[i][j] == 1) {
-						DrawGraph(startmappos_.x - mappos_.x + (32 * j) + (32 * 32 * x), 
-							startmappos_.y - mappos_.y + (32 * i) + (32 * 16 * y), groundH_, true);
+	for (int y = drawindexY_ - 1; y <= drawindexY_ + 2; y++) {
+		for (int x = drawindexX_ - 1; x <= drawindexX_ + 2; x++) {
+			for (int i = 0; i < map_[0][0].height; i++) {
+				for (int j = 0; j < map_[0][0].width; j++) {
+					if (map_[0][0].data[i][j] == 1) {
+						DrawGraph((x * (32 * 32)) + startmappos_.x + (32 * j) - mappos_.x, (y * (32 * 16)) + startmappos_.y + (32 * i) - mappos_.y, groundH_, true);
 					}
 				}
 			}
 		}
 	}
+	//DrawFormatString(200, 200, 0xffffff, L"%f,%f", mappos_.x, mappos_.y, true);
 
 }
 

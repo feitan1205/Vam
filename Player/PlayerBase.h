@@ -12,7 +12,7 @@ class Attack4;
 enum PlayerStatus {
 	ao,
 	murasaki,
-	aka,
+	siro,
 	//bullet,
 	boots,
 	book,

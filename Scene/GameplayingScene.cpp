@@ -117,7 +117,7 @@ void GameplayingScene::Update(const InputState& input)
 
 	
 
-	printfDx(L"%d\n", enemylv_);
+	//printfDx(L"%d\n", enemylv_);
 
 	//レベルアップ時の選択画面へ移動
 	if (player_->GetNowLv() != tmpLv_) {
@@ -214,6 +214,8 @@ void GameplayingScene::Update(const InputState& input)
 			if (player_->GetNowHp() <= 0) {
 				this->Draw();
 				manager_.PushScene(new GameoverScene(manager_));
+				
+				//manager_.ChangeScene(new TitleScene(manager_));
 				return;
 			}
 
@@ -380,7 +382,7 @@ void GameplayingScene::Draw()
 	SetFontSize(32);
 
 	DrawFormatString((Game::kScreenWidth / 2) - 48, 10, 0xffffff, L"%02d：%02d", timer / 60 ,timer % 60, true);
-	DrawFormatString(0,0, 0xffffff, L"%d", enemies_.size(), true);
+	//DrawFormatString(0,0, 0xffffff, L"%d", enemies_.size(), true);
 
 	SetFontSize(16);
 

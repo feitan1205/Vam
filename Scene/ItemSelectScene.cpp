@@ -171,8 +171,8 @@ void ItemSelectScene::Draw()
 					L"一定時間頭上に回転を放つ。", true);
 			}
 			break;
-		case PlayerStatus::aka:
-			DrawFormatString(pw_start_x + 50 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"赤", true);
+		case PlayerStatus::siro:
+			DrawFormatString(pw_start_x + 50 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"白", true);
 			if (player_->GetWeaponLv(selectkind_[i]) == 0) {
 				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
 					L"自分を中心にダメージエリアを展開する。", true);

@@ -45,5 +45,7 @@ private:
 
 	Vec2 mappos_;
 	Vec2 startmappos_;
+	int drawindexX_;
+	int drawindexY_;
 
 };

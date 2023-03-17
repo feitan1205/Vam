@@ -36,6 +36,13 @@ void TitleScene::NormalUpdate(const InputState& input)
 		}
 	}
 
+	if (CheckHitKey(KEY_INPUT_P) || input.IsTriggered(InputType::prev)) {
+		StopSoundMem(titleBGM_);
+		PlaySoundMem(selectsound_, DX_PLAYTYPE_BACK);
+		//updateFunc_ = &TitleScene::FadeOutUpdate;
+		isnextscene_ = true;
+	}
+
 	if (!CheckSoundMem(selectsound_) && isnextscene_) {
 		manager_.ChangeScene(new GameplayingScene(manager_, 0, input));
 		return;
@@ -47,10 +54,6 @@ void TitleScene::NormalUpdate(const InputState& input)
 		return;
 	}*/
 
-	if (CheckHitKey(KEY_INPUT_P) || input.IsTriggered(InputType::prev)) {
-		manager_.ChangeScene(new GameplayingScene(manager_,0,input));
-		return;
-	}
 
 }
 
@@ -111,7 +114,9 @@ void TitleScene::Draw()
 	m_startbutton.y = (Game::kScreenHeight / 3) * 2;
 
 	DrawExtendGraph(m_startbutton.x, m_startbutton.y, m_startbutton.x + m_buttonsize.x, m_startbutton.y + m_buttonsize.y, m_startbuttonH, true);
-
+	SetFontSize(28);
+	DrawFormatString(m_startbutton.x + 18, m_startbutton.y + 9, 0xffffff, L"スタート", true);
+	SetFontSize(16);
 	//今から書く画像と、すでに描画されているスクリーンとの
 	//ブレンドの仕方を指定している。
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue_);
