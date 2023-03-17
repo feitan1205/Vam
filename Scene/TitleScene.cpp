@@ -27,7 +27,7 @@ void TitleScene::NormalUpdate(const InputState& input)
 {
 	//次へのボタンが押されたら次のシーンへ行く
 	if (CheckHit(m_startbutton.x, m_startbutton.y, m_buttonsize.x, m_buttonsize.y)) {
-		if (input.IsTriggered(InputType::next))
+		if (input.IsTriggered(InputType::next) && !isnextscene_)
 		{
 			StopSoundMem(titleBGM_);
 			PlaySoundMem(selectsound_, DX_PLAYTYPE_BACK);
@@ -36,7 +36,7 @@ void TitleScene::NormalUpdate(const InputState& input)
 		}
 	}
 
-	if (CheckHitKey(KEY_INPUT_P) || input.IsTriggered(InputType::prev)) {
+	if (CheckHitKey(KEY_INPUT_P) || input.IsTriggered(InputType::prev) && !isnextscene_) {
 		StopSoundMem(titleBGM_);
 		PlaySoundMem(selectsound_, DX_PLAYTYPE_BACK);
 		//updateFunc_ = &TitleScene::FadeOutUpdate;
