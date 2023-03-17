@@ -52,6 +52,7 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 
 	if (cooldowntime_ < 0) {
 		attackflag_ = true;
+		attackvector_ = charactervector;
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 		attackpoint_ = 6;
 		randattackpoint_ = 3;
@@ -69,20 +70,18 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 			cooldowntime_ -= 40;
 		}
 		if (nowlv_ >= 6) {
-			attackpoint_ += 10;
+			attackpoint_ += 20;
 			randattackpoint_ += 8;
 		}
 		if (nowlv_ >= 7) {
 			cooldowntime_ -= 40;
 		}
 		if (nowlv_ >= 8) {
-			attackpoint_ += 15;
+			attackpoint_ += 20;
 			randattackpoint_ += 5;
 		}
 	}
-	else{
-		attackvector_ = charactervector;
-	}
+	
 
 }
 

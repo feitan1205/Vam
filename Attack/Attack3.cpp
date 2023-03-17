@@ -46,7 +46,7 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 
 	alpha_ += add_;
 
-	if (alpha_ <= 80 || alpha_ >= 255)
+	if (alpha_ <= 80 || alpha_ >= 210)
 	{
 		add_ = -add_;
 	}
@@ -115,5 +115,8 @@ void Attack3::SetLv(int i)
 	}
 	if (nowlv_ == 6) {
 		cooldowntime_ -= 50;
+	}
+	if (nowlv_ == 7) {
+
 	}
 }
