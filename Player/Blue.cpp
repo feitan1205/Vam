@@ -200,7 +200,7 @@ void Blue::MoveAnimation(bool charactervector)
 	DrawBox((Game::kScreenWidth / 2) - 20 - 1, (Game::kScreenHeight / 2) + 27 - 1, (Game::kScreenWidth / 2) - 20 + (40 * 1) + 1, (Game::kScreenHeight / 2) + 35 + 1, 0x000000, true);
 	DrawBox((Game::kScreenWidth / 2) - 20, (Game::kScreenHeight / 2) + 27, (Game::kScreenWidth / 2) - 20 + (40 * hppercentage_), (Game::kScreenHeight / 2) + 35, 0xff0000, true);
 
-	DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
+	//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos_.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos_.y, 0xff0000, false);
 
 	DrawBox(0, 1, Game::kScreenWidth, 20, 0x000000, true);
 	DrawBox(1, 1, Game::kScreenWidth * exppercentage_, 20, 0x00ffff, true);
