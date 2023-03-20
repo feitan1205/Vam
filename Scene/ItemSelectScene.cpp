@@ -170,12 +170,67 @@ void ItemSelectScene::Draw()
 				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
 					L"一定時間頭上に回転を放つ。", true);
 			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 1) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 2) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が10上昇", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 3) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 4) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 5) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が20上昇", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 6) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 7) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が20上昇", true);
+			}
 			break;
 		case PlayerStatus::siro:
 			DrawFormatString(pw_start_x + 50 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 50, 0xffffff, L"白", true);
 			if (player_->GetWeaponLv(selectkind_[i]) == 0) {
 				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
 					L"自分を中心にダメージエリアを展開する。", true);
+			}if (player_->GetWeaponLv(selectkind_[i]) == 1) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"エリアの範囲が100%%拡大する。", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 2) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が10上昇", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 3) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 4) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 5) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が20上昇", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 6) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"クールタイムが0.4秒減少", true);
+			}
+			if (player_->GetWeaponLv(selectkind_[i]) == 7) {
+				DrawFormatString(pw_start_x + 100 + allmoveposition_.x, ((pw_start_y + 15 * (i + 1)) + (itemboxsize_.y * i) + 5) + 75, 0xffffff,
+					L"基礎攻撃力が20上昇", true);
 			}
 			break;
 		/*case PlayerStatus::bullet:

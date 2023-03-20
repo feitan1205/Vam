@@ -213,7 +213,7 @@ void GameplayingScene::Update(const InputState& input)
 
 			if (player_->GetNowHp() <= 0) {
 				this->Draw();
-				manager_.PushScene(new GameoverScene(manager_));
+				manager_.ChangeScene(new GameoverScene(manager_));
 				
 				//manager_.ChangeScene(new TitleScene(manager_));
 				return;

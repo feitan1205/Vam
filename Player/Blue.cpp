@@ -67,6 +67,7 @@ void Blue::Update(Vec2 playerpos, bool charactervector, Vec2 enemypos)
 	exppercentage_ = static_cast <float>(nowexp_) / static_cast <float>(maxexp_);
 	playerpos_ = playerpos;
 
+	flamecount++;
 }
 
 void Blue::Draw()
@@ -84,7 +85,6 @@ void Blue::SetData(int lvupsound,int catchexpsound)
 
 void Blue::IdleAnimation(bool charactervector)
 {
-	flamecount++;
 
 	if (flamecount >= 40) {
 		flamecount = 0;
@@ -146,7 +146,6 @@ void Blue::IdleAnimation(bool charactervector)
 
 void Blue::MoveAnimation(bool charactervector)
 {
-	flamecount++;
 
 	if (flamecount >= 60) {
 		flamecount = 0;
