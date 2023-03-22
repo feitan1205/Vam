@@ -23,10 +23,11 @@ GrimReaper::GrimReaper() :
 	isEnabledexp_(false),
 	explv_(),
 	exppoint_(),
-	speed_(10.0),
+	speed_(1.0),
 	expmove_(false),
 	expspeed_(0.6)
 {
+	LoadDivGraph(L"Data/Enemy/GrimReaper.png", 8, 8, 1, 1280 / 8, 108, grimreaperH_);
 	expH1_ = my::MyLoadGraph(L"Data/exp/orb6.png");
 	expH2_ = my::MyLoadGraph(L"Data/exp/orb4.png");
 	for (int i = 0; i < 3; i++) {
@@ -148,32 +149,32 @@ void GrimReaper::Draw(bool charactervector, Vec2 playerpos)
 
 
 	if (flamecount_ >= 0 && flamecount_ < 10) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[0], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, grimreaperH_[0], true, left_or_right);
 	}
 	else if (flamecount_ >= 10 && flamecount_ < 20) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[1], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, grimreaperH_[1], true, left_or_right);
 	}
 	else if (flamecount_ >= 20 && flamecount_ < 30) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[2], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, grimreaperH_[2], true, left_or_right);
 	}
 	else if (flamecount_ >= 30 && flamecount_ < 40) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[3], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, grimreaperH_[3], true, left_or_right);
 	}
 	else if (flamecount_ >= 40 && flamecount_ < 50) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[4], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, grimreaperH_[4], true, left_or_right);
 	}
 	else if (flamecount_ >= 50 && flamecount_ < 60) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[5], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, grimreaperH_[5], true, left_or_right);
 	}
 	else if (flamecount_ >= 60 && flamecount_ < 70) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[6], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, grimreaperH_[6], true, left_or_right);
 	}
 	else if (flamecount_ >= 70 && flamecount_ < 80) {
-		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, FlyinteyeH_[7], true, left_or_right);
+		DrawRotaGraph(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, 1, 0, grimreaperH_[7], true, left_or_right);
 	}
 
-	/*DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, 0x000000, false);
-	DrawCircle(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, hitcircle_, 0xff0000, false);*/
+	//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, 0x000000, false);
+	DrawCircle(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, hitcircle_, 0xff0000, false);
 
 	for (int i = 0; i < 3; i++) {
 		if (damagedrawframe_[i] >= 0) {
@@ -217,7 +218,7 @@ void GrimReaper::Death()
 		isEnabledexp_ = true;
 		isEnabled_ = false;
 		for (int i = 0; i < 8; i++) {
-			DeleteGraph(FlyinteyeH_[i]);
+			DeleteGraph(grimreaperH_[i]);
 		}
 		explv_ = 1;
 	}
@@ -240,10 +241,10 @@ void GrimReaper::Death()
 void GrimReaper::SetHitBox(Vec2 playerpos)
 {
 
-	minhitbox_.x = pos_.x - 20;
+	minhitbox_.x = pos_.x - 10;
 	minhitbox_.y = pos_.y - 10;
-	maxhitbox_.x = pos_.x + 20;
-	maxhitbox_.y = pos_.y + 20;
+	maxhitbox_.x = pos_.x + 10;
+	maxhitbox_.y = pos_.y + 25;
 	minexphitbox_.x = pos_.x - 3;
 	minexphitbox_.y = pos_.y - 3;
 	maxexphitbox_.x = pos_.x + 3;
@@ -288,7 +289,7 @@ void GrimReaper::ChangeExp(Vec2 pos)
 	isEnabledexp_ = true;
 	isEnabled_ = false;
 	for (int i = 0; i < 8; i++) {
-		DeleteGraph(FlyinteyeH_[i]);
+		DeleteGraph(grimreaperH_[i]);
 	}
 	explv_ = 1;
 	exppoint_ = 1;

@@ -65,6 +65,7 @@ private:
     int tmprand_;
     bool damageflag_[3];
     int damagedrawframe_[3];
+    int grimreaperH_[8];
     bool left_or_right;
     bool expmove_;
     int hitsound_;

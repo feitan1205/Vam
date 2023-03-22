@@ -27,6 +27,7 @@ FlyingEye::FlyingEye() :
 	expmove_(false),
 	expspeed_(0.6)
 {
+	LoadDivGraph(L"Data/Enemy/FlyingEye.png", 8, 8, 1, 150, 63, FlyinteyeH_);
 	expH1_ = my::MyLoadGraph(L"Data/exp/orb6.png");
 	expH2_ = my::MyLoadGraph(L"Data/exp/orb4.png");
 	for (int i = 0; i < 3; i++) {
@@ -38,6 +39,9 @@ FlyingEye::FlyingEye() :
 FlyingEye::~FlyingEye()
 {
 	//DeleteSoundMem(hitsound_);
+	for (int i = 0; i < 8; i++) {
+		DeleteGraph(FlyinteyeH_[i]);
+	}
 }
 
 void FlyingEye::Init(Vec2 playerpos)

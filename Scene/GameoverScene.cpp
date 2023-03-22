@@ -8,7 +8,7 @@
 
 void GameoverScene::FadeInUpdate(const InputState& input)
 {
-	fadeValue_ = 128 * static_cast<float>(fadeTimer_) / static_cast<float>(fade_interval);
+	fadeValue_ = 255 * static_cast<float>(fadeTimer_) / static_cast<float>(fade_interval);
 	if (++fadeTimer_ == fade_interval)
 	{
 		updateFunc_ = &GameoverScene::NormalUpdate;
@@ -43,7 +43,8 @@ GameoverScene::GameoverScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&GameoverScene::FadeInUpdate)
 {
-	gameOverH_ = my::MyLoadGraph(L"Data/img/red.jpg");
+	gameOverH_ = my::MyLoadGraph(L"Data/background/red.jpg");
+	gameovertextH_ = my::MyLoadGraph(L"Data/background/GameOver.png");
 }
 
 
@@ -57,5 +58,6 @@ void GameoverScene::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue_);
 	//DrawBox(0, 0, 640, 480, fadeColor_, true);
 	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, gameOverH_, true);
+	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, gameovertextH_, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

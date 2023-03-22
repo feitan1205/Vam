@@ -10,6 +10,7 @@ private:
 
 
 	int gameOverH_ = -1;
+	int gameovertextH_ = -1;
 
 	static constexpr int fade_interval = 60;
 

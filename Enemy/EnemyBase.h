@@ -46,7 +46,7 @@ private:
 
 protected:
 
-	int FlyinteyeH_[8];
+	
 
 };
 
