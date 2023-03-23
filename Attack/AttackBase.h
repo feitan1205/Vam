@@ -26,8 +26,10 @@ public:
 	virtual int GetMaxLv() = 0;
 	virtual void SetLv(int i) = 0;
 	virtual void SetEnemyPos(Vec2 enempos) = 0;
+	virtual void SoundStop() = 0;
 
 	void SetScale(int attackscalepercentage) { attackscalepercentage_ = attackscalepercentage; }
+
 
 private:
 

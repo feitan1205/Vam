@@ -80,6 +80,10 @@ void Attack1::Update(int cooldownpercentage,bool charactervector,Vec2 playerpos)
 			attackpoint_ += 20;
 			randattackpoint_ += 5;
 		}
+		if (nowlv_ >= 9)
+		{
+			attackpoint_ += 30;
+		}
 	}
 	
 
@@ -201,4 +205,8 @@ void Attack1::SetHitBox()
 	minhitbox_.x = (minhitbox_.x + (minhitbox_.x / 100 * attackscalepercentage_)) - (playerpos_.x / 100 * attackscalepercentage_);
 	minhitbox_.y = (minhitbox_.y + (minhitbox_.y / 100 * attackscalepercentage_)) - (playerpos_.y / 100 * attackscalepercentage_);
 
+}
+
+void Attack1::SoundStop()
+{
 }

@@ -30,6 +30,7 @@ public:
 	int GetMaxLv() { return maxlv_; }
 	void SetLv(int i);
 	void SetEnemyPos(Vec2 enempos) { enempos_ = enempos; }
+	void SoundStop();
 
 	class Shot {
 	public:

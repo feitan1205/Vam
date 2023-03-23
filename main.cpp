@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	SetMouseDispFlag(true);
 
 	SetGraphMode(Game::kScreenWidth, Game::kScreenHeight, 16);
-	ChangeWindowMode(true);
+	ChangeWindowMode(false);
 	if (DxLib_Init() == -1) 
 	{
 		return -1;

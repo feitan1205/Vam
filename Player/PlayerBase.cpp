@@ -157,3 +157,10 @@ void PlayerBase::CreatAttack(int creatweapon) {
 		attack_.push_back(new Attack3());
 	}
 }
+
+void PlayerBase::AttackSoundStop()
+{
+	for (auto& at : attack_) {
+		at->SoundStop();
+	}
+}

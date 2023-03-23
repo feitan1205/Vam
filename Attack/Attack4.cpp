@@ -164,6 +164,10 @@ void Attack4::SetLv(int i)
 	nowlv_ = i;
 }
 
+void Attack4::SoundStop()
+{
+}
+
 Attack4::Shot::~Shot()
 {
 }

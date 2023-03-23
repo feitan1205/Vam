@@ -9,7 +9,7 @@ constexpr int standardcooldowntime = 30;
 
 GrimReaper::GrimReaper() :
 	flamecount_(),
-	attackpoint_(80),
+	attackpoint_(10),
 	cooldowntime_(),
 	tmprand_(),
 	level_(),
@@ -23,7 +23,7 @@ GrimReaper::GrimReaper() :
 	isEnabledexp_(false),
 	explv_(),
 	exppoint_(),
-	speed_(1.0),
+	speed_(20.0),
 	expmove_(false),
 	expspeed_(0.6)
 {
@@ -174,7 +174,7 @@ void GrimReaper::Draw(bool charactervector, Vec2 playerpos)
 	}
 
 	//DrawBox(minhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, minhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, maxhitbox_.x + (Game::kScreenWidth / 2) - playerpos.x, maxhitbox_.y + (Game::kScreenHeight / 2) - playerpos.y, 0x000000, false);
-	DrawCircle(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, hitcircle_, 0xff0000, false);
+	//DrawCircle(pos_.x + (Game::kScreenWidth / 2) - playerpos.x, pos_.y + (Game::kScreenHeight / 2) - playerpos.y, hitcircle_, 0xff0000, false);
 
 	for (int i = 0; i < 3; i++) {
 		if (damagedrawframe_[i] >= 0) {

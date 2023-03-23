@@ -25,6 +25,7 @@ public:
 
 	bool CheckHit(Vec2 minhitbox1, Vec2 maxhitbox1, Vec2 minhitbox2, Vec2 maxhitbox2);		//四角の当たり判定
 	bool CheckHitCircle(Vec2 playerpos, float circle, Vec2 enemypos, float enemycircle);	//円の当たり判定
+	void SetFinishFlag() { finishflag_ = true; }
 
 private:
 
@@ -50,6 +51,7 @@ private:
 	int catchexpsoundhandle_;
 	int gamebgm_;
 	bool timeenemycreat_;
+	bool finishflag_;
 
 	static constexpr int fade_interval = 60;
 	int fadeTimer_ = 0;	//フェードタイマー

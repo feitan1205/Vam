@@ -77,6 +77,7 @@ public:
 	int GetWeaponMaxLv(int weaponnum);
 	void SetLv(int i);
 	void CreatAttack(int creatweapon);
+	void AttackSoundStop();
 
 
 protected:

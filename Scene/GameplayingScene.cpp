@@ -121,6 +121,7 @@ void GameplayingScene::Update(const InputState& input)
 
 	//レベルアップ時の選択画面へ移動
 	if (player_->GetNowLv() != tmpLv_) {
+		player_->AttackSoundStop();
 		ItemSelectScene* pnextscene;
 		pnextscene = new ItemSelectScene(manager_);
 		pnextscene->SetPlayer(player_);
@@ -135,7 +136,18 @@ void GameplayingScene::Update(const InputState& input)
 	
 	if (input.IsTriggered(InputType::pause))
 	{
-		manager_.PushScene(new PauseScene(manager_));
+		player_->AttackSoundStop();
+		PauseScene* pnextscene;
+		pnextscene = new PauseScene(manager_);
+		pnextscene->SetPlayingScene(this);
+		manager_.PushScene(pnextscene);
+		//manager_.PushScene(new PauseScene(manager_));
+	}
+
+	if (finishflag_) {
+		StopSoundMem(gamebgm_);
+		manager_.ChangeScene(new TitleScene(manager_));
+		return;
 	}
 
 	//プレイヤーの移動入力/////////////////////
@@ -213,6 +225,7 @@ void GameplayingScene::Update(const InputState& input)
 
 			if (player_->GetNowHp() <= 0) {
 				this->Draw();
+				StopSoundMem(gamebgm_);
 				manager_.ChangeScene(new GameoverScene(manager_));
 				
 				//manager_.ChangeScene(new TitleScene(manager_));
@@ -338,7 +351,7 @@ void GameplayingScene::Update(const InputState& input)
 
 	tmpishitkey_ = CheckHitKey(KEY_INPUT_O);
 
-	if (timer / 60 == 5) {
+	if (timer / 60 == 3) {
 		enemies_.push_back(std::make_shared<GrimReaper>());
 		enemies_.back()->Init(playerpos_);
 		enemies_.back()->SetData(hitsoundhandle_);

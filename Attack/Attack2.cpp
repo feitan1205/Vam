@@ -10,6 +10,7 @@ Attack2::Attack2() :
 	cooldowntime_(0),
 	attackflag_(false),
 	attackpoint_(5),
+	randattackpoint_(0),
 	attackvector_(),
 	attackscale_(),
 	attackingtime_(100),
@@ -52,6 +53,34 @@ void Attack2::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 		attackflag_ = true;
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
 		PlaySoundMem(attack2sound_, DX_PLAYTYPE_LOOP);
+		if (nowlv_ >= 2) {
+			cooldowntime_ -= 40;
+		}
+		if (nowlv_ >= 3) {
+			attackpoint_ += 10;
+			randattackpoint_ += 2;
+		}
+		if (nowlv_ >= 4) {
+			cooldowntime_ -= 40;
+		}
+		if (nowlv_ >= 5) {
+			cooldowntime_ -= 40;
+		}
+		if (nowlv_ >= 6) {
+			attackpoint_ += 20;
+			randattackpoint_ += 8;
+		}
+		if (nowlv_ >= 7) {
+			cooldowntime_ -= 40;
+		}
+		if (nowlv_ >= 8) {
+			attackpoint_ += 20;
+			randattackpoint_ += 5;
+		}
+		if (nowlv_ >= 9)
+		{
+			attackpoint_ += 30;
+		}
 	}
 
 	if (!attackflag_) {
@@ -83,6 +112,10 @@ void Attack2::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 		attackflag_ = false;
 		return;
 	}
+
+	/*if (attackflag_ && !CheckSoundMem(attack2sound_)) {
+		PlaySoundMem(attack2sound_,DX_PLAYTYPE_LOOP);
+	}*/
 
 }
 
@@ -121,4 +154,11 @@ void Attack2::SetHitBox()
 	maxhitbox_.x = playerpos_.x + ((graphsize_.x * attackscale_) / 2);
 	maxhitbox_.y = playerpos_.y - 30 + (((graphsize_.y - 8.0f) * attackscale_) / 2);
 
+}
+
+void Attack2::SoundStop()
+{
+	if (CheckSoundMem(attack2sound_)) {
+		StopSoundMem(attack2sound_);
+	}
 }

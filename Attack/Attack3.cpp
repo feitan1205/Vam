@@ -62,7 +62,7 @@ void Attack3::Update(int cooldownpercentage, bool charactervector, Vec2 playerpo
 
 	if (cooldowntime_ < 0) {
 		cooldowntime_ = (float)((cooldowntime * cooldownpercentage) / 100);
-		attackflag_ = false;		
+		attackflag_ = false;
 	}
 
 }
@@ -101,7 +101,7 @@ void Attack3::SetLv(int i)
 	nowlv_++;
 	cooldowntime_ = 0;
 	if (nowlv_ == 2) {
-		defaultcircle_ *= 3;
+		defaultcircle_ *= 1.5;
 	}
 	if (nowlv_ == 3) {
 		attackpoint_ += 5;
@@ -116,9 +116,13 @@ void Attack3::SetLv(int i)
 		randattackpoint_ += 3;
 	}
 	if (nowlv_ == 6) {
-		cooldowntime_ -= 50;
+		cooldowntime_ -= 40;
 	}
 	if (nowlv_ == 7) {
-
+		defaultcircle_ *= 1.5;
 	}
+}
+
+void Attack3::SoundStop()
+{
 }
